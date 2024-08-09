@@ -9,8 +9,18 @@ function App() {
          paddingLeft: 150
         }}
         animate = {{
-          backgroundColor : "#FF0000",
+          // backgroundColor : "#FF0000",
           paddingLeft : 30
+        }}
+        responsiveConfig={{
+          xs : {minWidth:true,maxWidth :true}
+        }}
+        responsive = {{
+          xs : {
+            animate : {
+              backgroundColor : "#d3d3"
+            }
+          }
         }}
       >
         Testing component

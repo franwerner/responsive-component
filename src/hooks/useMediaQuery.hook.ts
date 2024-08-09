@@ -1,7 +1,6 @@
 
 import { useEffect, useMemo, useState } from "react"
-import getMediaQuerys, { GetMediaQuery, MediaQueryListEventModify } from "../utils/getMediaQuerys.utils"
-
+import getMediaQuerys, { GetMediaQuery, MediaQueryListEventModify } from "@/utils/getMediaQuerys.utils"
 
 const useMediaQuery = <T extends string>(query: GetMediaQuery<T>) => {
 
@@ -28,13 +27,13 @@ const useMediaQuery = <T extends string>(query: GetMediaQuery<T>) => {
 
         for (const key in InitialState) {
             const media = InitialState[key]
-            media?.addEventListener("change", onChange as EventListener)
+            media.addEventListener("change", onChange as EventListener)
         }
 
         return () => {
             for (const key in InitialState) {
                 const media = InitialState[key]
-                media?.removeEventListener("change", onChange as EventListener)
+                media.removeEventListener("change", onChange as EventListener)
             }
         }
 

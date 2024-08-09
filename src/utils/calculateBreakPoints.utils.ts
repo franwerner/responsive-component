@@ -1,5 +1,6 @@
 import { ResponsiveConfig } from "@/props.type";
 import { BreakPointsKeys, ISizesBreakPoints, breakPoints } from "../constant/breakpoints.constant";
+import { isNumber } from "my-utilities";
 
 interface ICalculateBreakPoints {
     activeBreakpoints: BreakPointsKeys[],
@@ -10,14 +11,10 @@ type NewISizes = {
     [K in keyof ISizesBreakPoints]?: ISizesBreakPoints[K] | false
 };
 
-const entries = Object.entries(breakPoints)
-
 const calculateGeneral = ({ activeBreakpoints, responsiveConfig = {} }: ICalculateBreakPoints) => {
 
-    const filter = entries.filter(([key]) => activeBreakpoints.includes(key));
-
-    return filter.map(([key, value]) => {
-        const { maxWidth, minWidth } = value //Valor definidos en el archivo de breakpoints.const
+ return activeBreakpoints.map(key => {
+        const { maxWidth, minWidth } = breakPoints[key] 
 
         const defaultConfig = { maxWidth: false, minWidth: true };
 
@@ -36,7 +33,7 @@ const calculateGeneral = ({ activeBreakpoints, responsiveConfig = {} }: ICalcula
 
 const GroupByBreakPoint = (array: ReturnType<typeof calculateGeneral>) => {
     return array.reduce((acc, current) => {
-        acc[current.breakpoint ] = {
+        acc[current.breakpoint] = {
             minWidth: current.minWidth,
             maxWidth: current.maxWidth,
         };
@@ -52,14 +49,14 @@ interface ICalculateBreakPointsForWidth extends ICalculateBreakPoints {
     width: number;
 }
 const calculateBreakPointsForWidth = ({ width: w, activeBreakpoints, responsiveConfig }: ICalculateBreakPointsForWidth) => {
-    
+
     const width = Math.abs(w)
 
     return GroupByBreakPoint(
         calculateGeneral({ activeBreakpoints, responsiveConfig })
             .filter(({ maxWidth, minWidth }) => {
-                const isMinWidth = typeof minWidth === "number" ? minWidth : Infinity;
-                const isMaxWidth = typeof maxWidth === "number" ? maxWidth : 0;
+                const isMinWidth = isNumber(minWidth) ? minWidth : Infinity;
+                const isMaxWidth = isNumber(maxWidth) ? maxWidth : 0;
 
                 const maxAndMin = (width >= isMinWidth && width <= isMaxWidth);
                 const min = !maxWidth && width >= isMinWidth;
