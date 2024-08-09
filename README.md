@@ -1,50 +1,25 @@
-# React + TypeScript + Vite
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+# Dependecias
 
-Currently, two official plugins are available:
+* 1. `React`
+* 2. `Framemotion`
+* 3. `Typescript`
+* 4. `myHelpers`
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
 
-## Expanding the ESLint configuration
 
-If you are developing a production application, we recommend updating the configuration to enable type aware lint rules:
+# Introducción 
 
-- Configure the top-level `parserOptions` property like this:
+# Características Principales:
+Compatibilidad con Estilos `CSS` siempre y cuando no esten definidos en la propiedad animate.
+Debido a que las propiedad identicas a las animadas que se resetean o se esten aplicando tiene mayor prioridad siempre.
+Entonces `RECOMIENDO` el uso de `CSS` siempre y cuando no esten definidas en animate para evitar inconsistencias.
 
-```js
-export default tseslint.config({
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
-```
+# Resteo de priopiedades:
+El resteo de las propiedades animadas se basan en la acomulacion del uso entre diferentes breakpoints.
+Es decir si utilizas {width : 300px} en el brekpoint XS, y pasas al LG, el reseteo seria {width: 0px}, ya que se debe indicar explicitamente el resteo con la propiedad en un valor inicial
+por lo tanto el reseteo de {width: 0px} esta presente siempre y cuando no haya otra propiedad igual.
 
-- Replace `tseslint.configs.recommended` to `tseslint.configs.recommendedTypeChecked` or `tseslint.configs.strictTypeChecked`
-- Optionally add `...tseslint.configs.stylisticTypeChecked`
-- Install [eslint-plugin-react](https://github.com/jsx-eslint/eslint-plugin-react) and update the config:
 
-```js
-// eslint.config.js
-import react from 'eslint-plugin-react'
-
-export default tseslint.config({
-  // Set the react version
-  settings: { react: { version: '18.3' } },
-  plugins: {
-    // Add the react plugin
-    react,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended rules
-    ...react.configs.recommended.rules,
-    ...react.configs['jsx-runtime'].rules,
-  },
-})
-```
+# Recomendación de Uso de la Propiedad style: 
+Para garantizar una aplicación coherente de animaciones, recomendamos el uso directo de la propiedad `style` en vez de `CSS`. Esto asegura que tus animaciones se apliquen de manera consistente y no se vean afectadas por reinicios de propiedades (reseteadas).

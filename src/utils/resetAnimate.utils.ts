@@ -1,5 +1,5 @@
-import isColor from "myUtilities/src/utils/isColor"
-import isNumber from "myUtilities/src/utils/isNumber"
+import isColor from "my-utilities/src/utils/isColor"
+import isNumber from "my-utilities/src/utils/isNumber"
 import { MotionAnimate } from ".."
 
 export const DefaultValues: MotionAnimate = { //Estos son valores que no puede resetear por defecto correctamente.

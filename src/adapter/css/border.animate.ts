@@ -1,5 +1,5 @@
-import isColor from "myUtilities/src/utils/isColor"
-import isString from "myUtilities/src/utils/isString"
+import isColor from "my-utilities/src/utils/isColor"
+import isString from "my-utilities/src/utils/isString"
 import getDirections from "./utils/getDirections.utils"
 import { MotionAnimate } from "../.."
 import { MotionStyle } from "framer-motion"

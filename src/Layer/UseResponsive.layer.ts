@@ -1,4 +1,4 @@
-import isObject from "myUtilities/src/utils/isObject";
+import isObject from "my-utilities/src/utils/isObject";
 import { breakPoints } from "../constant/breakpoints.constant.js";
 import useBreakPoints from "../hooks/useBreakPoints.hook.js";
 import useSyncBreakPoint from "../hooks/useSyncBreakPoint.js";

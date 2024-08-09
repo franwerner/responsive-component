@@ -18,7 +18,7 @@ const ResponsiveComponentControls =
 
         const localRef = useRef<HTMLElement>()
 
-        const { animate = {}, transition, lastestBreakPoint, style, ...responsiveProps } = useResponsiveLayer(props)
+        const { animate = {}, transition = {}, lastestBreakPoint, style, ...responsiveProps } = useResponsiveLayer(props)
 
         useImperativeHandle(_REF, () => {
             return {
