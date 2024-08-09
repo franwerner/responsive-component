@@ -1,7 +1,7 @@
 import { MotionProps, MotionValue, TargetAndTransition, motion } from "framer-motion";
 import { AllHTMLAttributes, AriaAttributes, ComponentProps, DOMAttributes, MutableRefObject, ReactNode, RefObject, SVGAttributes } from "react";
 import { BreakPointsKeys } from "./constant/breakpoints.constant";
-import { RequiredAllProperties } from "../myHelpers/types/RequiredAllProperties";
+import { RequiredAllProperties } from "my-utilities";
 
 type HTMLMotionComponents = keyof typeof motion
 
@@ -15,21 +15,21 @@ type RemoveNotStylesKeys<T> = {
 
 type OmitMotionProps = Omit<MotionProps, "variants" | "custom" | "animate" | "exit" | "initial" | "whileFocus" | "whileHover" | "whileInView" | "whileTap" | "whileDrag">
 
-type MotionAnimate = RemoveNotStylesKeys<TargetAndTransition>
+type AnimateProps = RemoveNotStylesKeys<TargetAndTransition>
 
 type RemoveFunctionsProperties<T> = {
     [K in keyof T as T[K] extends Function ? never : K]?: T[K];
 };
 
 type DefaultMotionPropsModification = {
-    animate?: MotionAnimate
-    exit?: MotionAnimate
-    initial?: MotionAnimate
-    whileFocus?: MotionAnimate
-    whileHover?: MotionAnimate
-    whileInView?: MotionAnimate
-    whileTap?: MotionAnimate
-    whileDrag?: MotionAnimate
+    animate?: AnimateProps
+    exit?: AnimateProps
+    initial?: AnimateProps
+    whileFocus?: AnimateProps
+    whileHover?: AnimateProps
+    whileInView?: AnimateProps
+    whileTap?: AnimateProps
+    whileDrag?: AnimateProps
 } & OmitMotionProps
 
 type MotionPropsModification = RemoveFunctionsProperties<RequiredAllProperties<DefaultMotionPropsModification>> //Se remueve las funciones,ya que no requieren ser diferentes entre los breakpoints.
@@ -60,4 +60,4 @@ type AllProps<T extends HTMLMotionComponents = HTMLMotionComponents> = {
 
 type LiteProps<T extends HTMLMotionComponents = HTMLMotionComponents> = Omit<AllProps<T>, "responsive" | "responsiveConfig">
 
-export type { DefaultProps, RefResponsiveComponent, HTMLMotionComponents, AllProps, LiteProps, ResponsiveProps, ResponsiveConfig, MotionAnimate, BreakPointConfig };
+export type {DefaultProps, RefResponsiveComponent, HTMLMotionComponents, AllProps, LiteProps, ResponsiveProps, ResponsiveConfig, AnimateProps };

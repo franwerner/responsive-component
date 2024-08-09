@@ -1,8 +1,8 @@
 import { useEffect, useMemo, useRef } from "react";
-import { cssAdapter } from "../adapter/css/css.adapter.js";
-import { DefaultProps, HTMLMotionComponents, MotionAnimate } from "../index.js";
-import resetAnimate, { resettableProperties } from "../utils/resetAnimate.utils.js";
-import isObject from "@/library/myHelpers/isObject.ts";
+import { cssAdapter } from "@/adapter/css/css.adapter.js";
+import { DefaultProps, HTMLMotionComponents, AnimateProps } from "@/props.type.js";
+import resetAnimate, { resettableProperties } from "@/utils/resetAnimate.utils.js";
+
 
 /**
  * @description
@@ -36,7 +36,8 @@ const useAnimationLayer = <T extends HTMLMotionComponents>({ lastestBreakPoint, 
 
     const dependencies = [lastestBreakPoint, JSON.stringify(animate)]
 
-    const ref = useRef<MotionAnimate>({})
+    const ref = useRef<AnimateProps>({})
+
 
     const animateAdapter = useMemo(() => cssAdapter(animate), dependencies)
     const styleAdapter = useMemo(() => cssAdapter(style), [JSON.stringify(style)])
@@ -68,7 +69,7 @@ const useAnimationLayer = <T extends HTMLMotionComponents>({ lastestBreakPoint, 
         whileDrag: whileDragAdapter,
         whileInView: whileInViewAdapter,
         whileTap: whileTapAdapter,
-    }
+    } as DefaultProps<T> //Si no aplicamos el AS, el proceso de empaquetado no se hara por que no puede inferir algo tan complejo.
 
 }
 

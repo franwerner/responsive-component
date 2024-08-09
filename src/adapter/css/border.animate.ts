@@ -1,7 +1,6 @@
-import isColor from "my-utilities/src/utils/isColor"
-import isString from "my-utilities/src/utils/isString"
+import {isString} from "my-utilities"
 import getDirections from "./utils/getDirections.utils"
-import { MotionAnimate } from "../.."
+import { AnimateProps } from "@/props.type"
 import { MotionStyle } from "framer-motion"
 
 const searchColor = (input: any) => {
@@ -16,7 +15,7 @@ const searchStyle = (input: any) => {
     }
 }
 
-const border = <T extends MotionAnimate | MotionStyle | (MotionAnimate & MotionStyle)>(css: T) => {
+const border = <T extends AnimateProps | MotionStyle | (AnimateProps & MotionStyle)>(css: T) => {
 
     const borderGlobal = css["border"]
     const borderColorGlobal = css["borderColor"]

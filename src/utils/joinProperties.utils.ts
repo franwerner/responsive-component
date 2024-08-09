@@ -1,4 +1,4 @@
-import isObject from "my-utilities/src/utils/isObject"
+import {isObject} from "my-utilities"
 
 type JoinProperties<T, U> = {
     props: T & object;

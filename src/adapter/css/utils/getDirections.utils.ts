@@ -1,4 +1,4 @@
-import isObject from "my-utilities/src/utils/isObject"
+import {isObject} from "my-utilities"
 type Directions = "Top" | "Left" | "Right" | "Bottom"
 type Fn = (i: Directions) => object | undefined
 

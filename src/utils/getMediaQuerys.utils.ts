@@ -1,6 +1,4 @@
-import isNumber from "my-utilities/src/utils/isNumber"
-import isObject from "my-utilities/src/utils/isObject"
-import isString from "my-utilities/src/utils/isString"
+import {isNumber,isObject,isString} from "my-utilities"
 
 type size = number | false
 

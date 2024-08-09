@@ -1,18 +1,18 @@
 import { MotionStyle } from "framer-motion"
-import { MotionAnimate } from "../.."
-import { cssAdapter } from "../../adapter/css/css.adapter"
-import resetAnimate from "../../utils/resetAnimate.utils"
+import { AnimateProps } from "../../props.type"
+import { cssAdapter } from "@/adapter/css/css.adapter"
+import resetAnimate from "@/utils/resetAnimate.utils"
 import { IRefAnimationControls } from "./useAnimateResponsive.hook"
 
 interface IApplyAnimations {
     current: IRefAnimationControls["current"],
-    animate: MotionAnimate | false,
+    animate: AnimateProps | false,
     style: MotionStyle
 }
 
 const applyAnimations = ({ animate, current, style }: IApplyAnimations) => {
 
-    const newAnimate = cssAdapter(animate ? {...style,...animate} : cssAdapter(style)) as MotionAnimate
+    const newAnimate = cssAdapter(animate ? {...style,...animate} : cssAdapter(style)) as AnimateProps
 
     const reset = resetAnimate(current.cache)
 

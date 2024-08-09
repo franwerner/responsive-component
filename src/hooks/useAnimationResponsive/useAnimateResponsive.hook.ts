@@ -1,7 +1,7 @@
 import { AnimationPlaybackControls, MotionStyle, ValueAnimationTransition, useAnimate } from "framer-motion";
 import { useRef } from "react";
-import { MotionAnimate } from "../..";
-import { BreakPointsKeys } from "../../constant/breakpoints.constant";
+import { AnimateProps } from "@/props.type";
+import { BreakPointsKeys } from "@/constant/breakpoints.constant";
 import NewAnimationsControllers, { IReturnNewAnimationsControllers } from "./NewAnimationsControllers";
 import applyAnimations from "./applyAnimations";
 
@@ -13,20 +13,20 @@ import applyAnimations from "./applyAnimations";
  */
 
 type ResponsiveAnimate = {
-    [K in BreakPointsKeys]?: MotionAnimate
+    [K in BreakPointsKeys]?: AnimateProps
 }
 
 interface IRefAnimationControls {
     current: {
         animationState: "play" | "complete" | "pause" | "restart" | "cancel" | "initial"
-        cache: MotionAnimate
+        cache: AnimateProps
     }
 }
 interface IScopeMod<T = any> {
     animations: AnimationPlaybackControls[]
     current: {
         localRef: T
-        animate: MotionAnimate
+        animate: AnimateProps
         style: MotionStyle
         transition: ValueAnimationTransition
     }

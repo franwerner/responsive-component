@@ -1,4 +1,4 @@
-import { ResponsiveConfig } from "..";
+import { ResponsiveConfig } from "@/props.type";
 import { BreakPointsKeys, ISizesBreakPoints, breakPoints } from "../constant/breakpoints.constant";
 
 interface ICalculateBreakPoints {

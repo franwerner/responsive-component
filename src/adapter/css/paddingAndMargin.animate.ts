@@ -1,4 +1,4 @@
-import { MotionAnimate } from "../..";
+import { AnimateProps } from "@/props.type";
 import getDirections, { Directions } from "./utils/getDirections.utils";
 import { MotionStyle } from "framer-motion";
 
@@ -7,7 +7,7 @@ interface IGetProperty {
     direction: `margin${Directions}` | `padding${Directions}`
 }
 
-const paddingAndMargin = <T extends MotionAnimate | MotionStyle | (MotionAnimate & MotionStyle)>(style: T) => {
+const paddingAndMargin = <T extends AnimateProps | MotionStyle | (AnimateProps & MotionStyle)>(style: T) => {
 
 
     const getProperty = ({ property, direction }: IGetProperty) => {

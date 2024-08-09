@@ -1,4 +1,4 @@
-import isObject from "my-utilities/src/utils/isObject";
+import {isObject} from "my-utilities";
 import border from "./border.animate";
 import paddingAndMargin from "./paddingAndMargin.animate";
 

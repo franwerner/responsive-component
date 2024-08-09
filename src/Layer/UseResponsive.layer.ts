@@ -1,10 +1,10 @@
-import isObject from "my-utilities/src/utils/isObject";
-import { breakPoints } from "../constant/breakpoints.constant.js";
-import useBreakPoints from "../hooks/useBreakPoints.hook.js";
-import useSyncBreakPoint from "../hooks/useSyncBreakPoint.js";
-import { AllProps, DefaultProps, HTMLMotionComponents } from "../index.js";
-import { calculateBreakPointsForWidth } from "../utils/calculateBreakPoints.utils.js";
-import joinProperties from "../utils/joinProperties.utils.js";
+import { isObject } from "my-utilities";
+import { breakPoints } from "@/constant/breakpoints.constant.js";
+import useBreakPoints from "@/hooks/useBreakPoints.hook.js";
+import useSyncBreakPoint from "@/hooks/useSyncBreakPoint.js";
+import { AllProps, DefaultProps, HTMLMotionComponents } from "@/props.type";
+import { calculateBreakPointsForWidth } from "@/utils/calculateBreakPoints.utils.js";
+import joinProperties from "@/utils/joinProperties.utils.js";
 
 type OmitProps = "as" | "_REF"
 function useResponsiveLayer<T extends HTMLMotionComponents>(props: Omit<AllProps<T>, OmitProps>): DefaultProps<T> & { lastestBreakPoint: string }

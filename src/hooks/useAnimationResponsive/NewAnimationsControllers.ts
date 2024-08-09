@@ -1,10 +1,10 @@
 import { AnimationPlaybackControls } from "framer-motion"
-import { MotionAnimate } from "../.."
+import { AnimateProps } from "@/props.type"
 import { IRefAnimationControls } from "./useAnimateResponsive.hook"
 
 interface INewAnimationsControllers {
     current: IRefAnimationControls["current"]
-    controlsHandler: (value?: MotionAnimate) => AnimationPlaybackControls
+    controlsHandler: (value?: AnimateProps) => AnimationPlaybackControls
 }
 
 interface IReturnNewAnimationsControllers extends INewAnimationsControllers {
@@ -19,7 +19,7 @@ interface IReturnNewAnimationsControllers extends INewAnimationsControllers {
 type KeysAnimationState = IRefAnimationControls["current"]["animationState"][]
 
 class NewAnimationsControllers implements IReturnNewAnimationsControllers {
-    controlsHandler: (value?: MotionAnimate) => AnimationPlaybackControls
+    controlsHandler: (value?: AnimateProps) => AnimationPlaybackControls
     current: IRefAnimationControls["current"]
 
     constructor({ current, controlsHandler }: INewAnimationsControllers) {

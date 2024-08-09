@@ -1,8 +1,7 @@
-import isColor from "my-utilities/src/utils/isColor"
-import isNumber from "my-utilities/src/utils/isNumber"
-import { MotionAnimate } from ".."
+import {isColor,isNumber} from "my-utilities"
+import { AnimateProps } from "../props.type"
 
-export const DefaultValues: MotionAnimate = { //Estos son valores que no puede resetear por defecto correctamente.
+export const DefaultValues: AnimateProps = { //Estos son valores que no puede resetear por defecto correctamente.
     borderBottom: "0px solid #FFF",
     borderTop: "0px solid #FFF",
     borderLeft: "0px solid #FFF",
@@ -20,7 +19,7 @@ export const DefaultValues: MotionAnimate = { //Estos son valores que no puede r
     color: "#000",
 }
 interface IResettableProperties {
-    animate?: MotionAnimate,
+    animate?: AnimateProps,
 }
 
 const resettableProperties = ({ animate = {} }: IResettableProperties) => { 
@@ -41,9 +40,9 @@ const verificateValue = (value: any) => {
     else return ""
 }
 
-const resetAnimate = (cache: MotionAnimate = {}) => {
+const resetAnimate = (cache: AnimateProps = {}) => {
 
-    const reset: MotionAnimate = {}
+    const reset: AnimateProps = {}
 
     for (const k in cache) {
         const key = k as keyof typeof cache

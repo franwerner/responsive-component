@@ -38,7 +38,6 @@ for (let i = 0; i < breakPointsKeys.length; i++) {
     }
 }
 
-console.log(breakPoints)
 export { breakPoints, breakpointsSimple, breakPointsKeys }
 export type { ISizesBreakPoints, BreakPointsKeys }
 
