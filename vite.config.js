@@ -26,6 +26,7 @@ export default defineConfig({
     },
     rollupOptions: {
       external: ['react', 'react-dom',"framer-motion"],
+      watch : {},
       output: {
         globals: {
           react: 'React',

@@ -78,6 +78,7 @@ const ResponsiveComponent =
         props: AllProps<T>
     ) => {
 
+        console.log("HOLA")
         const _REF = props._REF
         const isAnimationControls = _REF && "animations" in _REF
 
