@@ -2,8 +2,8 @@ import { createDomMotionComponent } from "framer-motion";
 import { useEffect, useImperativeHandle, useMemo, useRef } from "react";
 import NewAnimationsControllers, { IReturnNewAnimationsControllers } from "../hooks/useAnimationResponsive/NewAnimationsControllers";
 import { AllProps, HTMLMotionComponents, LiteProps } from "../props.type";
-import useAnimationLayer from "@/Layer/UseAnimation.layer";
-import useResponsiveLayer from "@/Layer/UseResponsive.layer";
+import useAnimationLayer from "@responsive-component/Layer/UseAnimation.layer";
+import useResponsiveLayer from "@responsive-component/Layer/UseResponsive.layer";
 
 
 const useCreateMotionComponent = (as: HTMLMotionComponents) => {
@@ -78,7 +78,6 @@ const ResponsiveComponent =
         props: AllProps<T>
     ) => {
 
-        console.log("HOLA")
         const _REF = props._REF
         const isAnimationControls = _REF && "animations" in _REF
 

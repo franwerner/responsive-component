@@ -1,12 +1,12 @@
 import { AnimationPlaybackControls, MotionStyle, ValueAnimationTransition, useAnimate } from "framer-motion";
 import { useRef } from "react";
-import { AnimateProps } from "@/props.type";
-import { BreakPointsKeys } from "@/constant/breakpoints.constant";
+import { AnimateProps } from "@responsive-component/props.type";
+import { BreakPointsKeys } from "@responsive-component/constant/breakpoints.constant";
 import NewAnimationsControllers, { IReturnNewAnimationsControllers } from "./NewAnimationsControllers";
 import applyAnimations from "./applyAnimations";
 
 /**
- * @description
+ * @responsive-componentdescription
  * 1. Este hooks nos permite cuando y como activamos las animaciones responsivas.
  * 2. Sirve tanto para componentes motion,responsiveComponent y elemento nativos.
  * 3. Una vez activado, las animaciones se adaptaran responsivamente como se indicaron en el objecto.

@@ -1,7 +1,7 @@
 import { MotionStyle } from "framer-motion"
 import { AnimateProps } from "../../props.type"
-import { cssAdapter } from "@/adapter/css/css.adapter"
-import resetAnimate from "@/utils/resetAnimate.utils"
+import { cssAdapter } from "@responsive-component/adapter/css/css.adapter"
+import resetAnimate from "@responsive-component/utils/resetAnimate.utils"
 import { IRefAnimationControls } from "./useAnimateResponsive.hook"
 
 interface IApplyAnimations {

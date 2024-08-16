@@ -1,6 +1,6 @@
 
 import { useEffect, useMemo, useState } from "react"
-import getMediaQuerys, { GetMediaQuery, MediaQueryListEventModify } from "@/utils/getMediaQuerys.utils"
+import getMediaQuerys, { GetMediaQuery, MediaQueryListEventModify } from "@responsive-component/utils/getMediaQuerys.utils"
 
 const useMediaQuery = <T extends string>(query: GetMediaQuery<T>) => {
 

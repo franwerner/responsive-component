@@ -1,4 +1,4 @@
-import { ResponsiveConfig } from "@/props.type";
+import { ResponsiveConfig } from "@responsive-component/props.type";
 import { BreakPointsKeys, ISizesBreakPoints, breakPoints } from "../constant/breakpoints.constant";
 import { isNumber } from "my-utilities";
 

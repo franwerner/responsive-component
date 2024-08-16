@@ -2,8 +2,11 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc'
 import path from "path"
 import dts from 'vite-plugin-dts'
+import base from "../../vite.base.config"
 
-export default defineConfig({
+
+export default defineConfig(
+  {
   plugins: [
     react(),
     dts({
@@ -11,11 +14,6 @@ export default defineConfig({
       exclude : ["src/App.tsx","src/main.tsx"]
     }),
   ],
-  resolve: {
-    alias: {
-      '@': path.resolve(__dirname, 'src'),
-    },
-  },
   build: {
     outDir : "dist",
     lib: {
@@ -26,7 +24,6 @@ export default defineConfig({
     },
     rollupOptions: {
       external: ['react', 'react-dom',"framer-motion"],
-      watch : {},
       output: {
         globals: {
           react: 'React',
@@ -36,4 +33,5 @@ export default defineConfig({
       },
     },
   },
+  ...base
 })

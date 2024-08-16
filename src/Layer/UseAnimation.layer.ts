@@ -1,20 +1,20 @@
 import { useEffect, useMemo, useRef } from "react";
-import { cssAdapter } from "@/adapter/css/css.adapter.js";
-import { DefaultProps, HTMLMotionComponents, AnimateProps } from "@/props.type.js";
-import resetAnimate, { resettableProperties } from "@/utils/resetAnimate.utils.js";
+import { cssAdapter } from "@responsive-component/adapter/css/css.adapter.js";
+import { DefaultProps, HTMLMotionComponents, AnimateProps } from "@responsive-component/props.type.js";
+import resetAnimate, { resettableProperties } from "@responsive-component/utils/resetAnimate.utils.js";
 
 
 /**
- * @description
+ * @responsive-componentdescription
  * El hook `useAnimationLayer` adapta animaciones para asegurar consistencia y fluidez en los componentes. Utiliza 
  * `cssAdapter` para estandarizar las propiedades de animación, garantizando que se apliquen correctamente.
  *
  * **Funcionalidad:**
- * - @Consistencia :  Asegura que todas las animaciones se apliquen de manera uniforme.
- * - @Adaptación : Transforma propiedades de animación en un formato uniforme usando `cssAdapter`.
- * - @Optimización : Utiliza `useMemo` para evitar recalculaciones innecesarias y `useEffect` para actualizar la caché de animaciones.
+ * - @responsive-componentConsistencia :  Asegura que todas las animaciones se apliquen de manera uniforme.
+ * - @responsive-componentAdaptación : Transforma propiedades de animación en un formato uniforme usando `cssAdapter`.
+ * - @responsive-componentOptimización : Utiliza `useMemo` para evitar recalculaciones innecesarias y `useEffect` para actualizar la caché de animaciones.
  *
- * @Beneficio : Garantiza que las animaciones se comporten de manera predecible y suave, evitando problemas de inconsistencias.
+ * @responsive-componentBeneficio : Garantiza que las animaciones se comporten de manera predecible y suave, evitando problemas de inconsistencias.
  */
 
 type AnimationLayerProps<T extends HTMLMotionComponents> = {
