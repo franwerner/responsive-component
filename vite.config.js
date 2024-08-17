@@ -2,7 +2,7 @@ import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react-swc'
 import path from "path"
 import dts from 'vite-plugin-dts'
-import base from "../../vite.base.config"
+import alias from "../../alias.config.js"
 
 
 export default defineConfig(
@@ -14,6 +14,9 @@ export default defineConfig(
       exclude : ["src/App.tsx","src/main.tsx"]
     }),
   ],
+  resolve : {
+    alias
+  },
   build: {
     outDir : "dist",
     lib: {
@@ -33,5 +36,4 @@ export default defineConfig(
       },
     },
   },
-  ...base
 })
