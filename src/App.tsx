@@ -1,5 +1,4 @@
 import ResponsiveComponent from "@responsive-component/components/ResponsiveComponent"
-import {} from "my-utilities"
 
 function App() {
 
