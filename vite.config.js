@@ -5,35 +5,46 @@ import dts from 'vite-plugin-dts'
 import alias from "../../alias.config.js"
 
 
-export default defineConfig(
-  {
-  plugins: [
-    react(),
-    dts({
-      tsconfigPath: "./tsconfig.app.json",
-      exclude : ["src/App.tsx","src/main.tsx"]
-    }),
-  ],
-  resolve : {
-    alias
-  },
-  build: {
-    outDir : "dist",
-    lib: {
-      entry: path.resolve(__dirname, 'lib/index.ts'),
-      name: 'index',
-      formats: ['es', 'umd'],
-      fileName: (format) => `index.${format}.js`,
+
+export default defineConfig(({command}) => {
+
+  const isBuild = command == "build" ? 
+    {
+      "@responsive-component" : path.resolve(__dirname,"src")
+    }
+    : alias
+
+  return {
+    plugins: [
+      react(),
+      dts({
+        tsconfigPath: "./tsconfig.app.json",
+        exclude: ["src/App.tsx", "src/main.tsx"]
+      }),
+    ],
+    resolve: {
+      alias: isBuild,
     },
-    rollupOptions: {
-      external: ['react', 'react-dom',"framer-motion"],
-      output: {
-        globals: {
-          react: 'React',
-          'react-dom': 'ReactDOM',
-          'framer-motion': 'FramerMotion',
+    build: {
+      outDir: "dist",
+      lib: {
+        entry: path.resolve(__dirname, 'lib/index.ts'),
+        name: 'index',
+        formats: ['es', 'umd'],
+        fileName: (format) => `index.${format}.js`,
+      },
+      rollupOptions: {
+        external: ['react', 'react-dom', "framer-motion"],
+        output: {
+          globals: {
+            react: 'React',
+            'react-dom': 'ReactDOM',
+            'framer-motion': 'FramerMotion',
+          },
         },
       },
     },
-  },
+  }
+
 })
+
