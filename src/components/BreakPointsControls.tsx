@@ -9,6 +9,7 @@ interface IBreakPointsControls {
 }
 const list = Object.keys(breakPoints)
 
+
 const BreakPointsControls: FC<IBreakPointsControls> = ({ children }) => {
 
     const lastestBreakPoint = useSynchronizeBreakPoint()
