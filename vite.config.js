@@ -29,7 +29,7 @@ export default defineConfig(async ({ command }) => {
     plugins: [
       react(),
       dts({
-        tsconfigPath: "./ts/tsconfig.prod.json",
+        tsconfigPath: "./ts/tsconfig.build.json",
         exclude: ["src/App.tsx", "src/main.tsx"]
       }),
     ],
