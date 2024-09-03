@@ -5,16 +5,16 @@ import resetAnimate, { resettableProperties } from "@responsive-component/utils/
 
 
 /**
- * @responsive-componentdescription
+ * @description
  * El hook `useAnimationLayer` adapta animaciones para asegurar consistencia y fluidez en los componentes. Utiliza 
  * `cssAdapter` para estandarizar las propiedades de animación, garantizando que se apliquen correctamente.
  *
  * **Funcionalidad:**
- * - @responsive-componentConsistencia :  Asegura que todas las animaciones se apliquen de manera uniforme.
- * - @responsive-componentAdaptación : Transforma propiedades de animación en un formato uniforme usando `cssAdapter`.
- * - @responsive-componentOptimización : Utiliza `useMemo` para evitar recalculaciones innecesarias y `useEffect` para actualizar la caché de animaciones.
+ * - @Consistencia :  Asegura que todas las animaciones se apliquen de manera uniforme.
+ * - @Adaptación : Transforma propiedades de animación en un formato uniforme usando `cssAdapter`.
+ * - @Optimización : Utiliza `useMemo` para evitar recalculaciones innecesarias y `useEffect` para actualizar la caché de animaciones.
  *
- * @responsive-componentBeneficio : Garantiza que las animaciones se comporten de manera predecible y suave, evitando problemas de inconsistencias.
+ * Beneficio : Garantiza que las animaciones se comporten de manera predecible y suave, evitando problemas de inconsistencias.
  */
 
 type AnimationLayerProps<T extends HTMLMotionComponents> = {

@@ -4,9 +4,9 @@ import path from "path"
 import dts from 'vite-plugin-dts'
 
 const loadAliasConfig = async () => {
-  let load = {}
+  let load = null
   try {
-    const module = await import("../../alias.config.js")
+    const module = await import("../../alias.config.jsj")
     load = module.default
   } catch (error) {
 
@@ -19,7 +19,7 @@ export default defineConfig(async ({ command }) => {
 
   const alias = await loadAliasConfig()
 
-  const isBuild = command == "build" ?
+  const isBuild = command == "build" || !alias ?
     {
       "@responsive-component": path.resolve(__dirname, "src")
     }
