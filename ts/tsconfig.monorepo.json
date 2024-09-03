@@ -19,8 +19,9 @@
       "noFallthroughCasesInSwitch": true,
       "baseUrl": ".",
       "paths": {
-        "@responsive-component/*": ["./src/*"],
+        "@responsive-component/*": ["../src/*"],
+        "my-utilities" : ["../../my-utilities/lib/index.ts"]
       }
     },
-    "include": ["lib","src"],
+    "include": ["../src","../../my-utilities"],
   }

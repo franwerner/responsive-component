@@ -24,14 +24,12 @@ export default defineConfig(async ({ command }) => {
       "@responsive-component": path.resolve(__dirname, "src")
     }
     : alias
-
-
-
+    
   return {
     plugins: [
       react(),
       dts({
-        tsconfigPath: "./tsconfig.prod.json",
+        tsconfigPath: "./ts/tsconfig.prod.json",
         exclude: ["src/App.tsx", "src/main.tsx"]
       }),
     ],
