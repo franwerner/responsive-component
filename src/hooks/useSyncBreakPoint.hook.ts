@@ -19,7 +19,9 @@ const useSyncBreakPoint = (callback?: SyncBreakPointCallback) => {
 
     const [notify, setNotify] = useState<SyncBreakPoints>()
 
-    const  observer = useObserverContext()
+    const observer = useObserverContext()
+
+
 
     useEffect(() => {
         const listener: ObserverCallback<SyncBreakPoints> = (e) => {

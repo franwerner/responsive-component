@@ -10,7 +10,7 @@ const useMediaQuery = <T extends string>(query: GetMediaQuery<T>) => {
 
     useEffect(() => {
 
-        if (!InitialState) return
+        if (!InitialState || Object.keys(InitialState).length === 0) return
 
         InitialState !== mediaQuerys && setMediaQuerys(InitialState)
 

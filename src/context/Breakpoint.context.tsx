@@ -1,6 +1,6 @@
 import { createContext, FC, useContext, useEffect, useState } from "react";
 import { BreakPointsKeys } from "../constant/breakpoints.constant";
-import { useObserverContext } from "./Observer.context";
+import {  useObserverContext } from "./Observer.context";
 
 interface breakPointContext {
     lastestBreakPoint?: BreakPointsKeys,
@@ -12,7 +12,7 @@ const BreakPointContext = createContext<breakPointContext>({
     updateBreakPoint: () => { }
 })
 
-const useGetBreakPointContext = () => useContext(BreakPointContext)
+const useBreakPointContext = () => useContext(BreakPointContext)
 
 const BreakpointProvider: FC<{ children: React.ReactNode }> = ({ children }) => {
 
@@ -39,5 +39,5 @@ const BreakpointProvider: FC<{ children: React.ReactNode }> = ({ children }) => 
 };
 export default BreakpointProvider
 
-export { BreakPointContext, useGetBreakPointContext };
+export { BreakPointContext, useBreakPointContext };
 

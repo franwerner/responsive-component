@@ -1,5 +1,5 @@
 import { createDomMotionComponent } from "framer-motion";
-import { useEffect, useImperativeHandle, useMemo, useRef } from "react";
+import { useEffect, useImperativeHandle, useMemo, useRef, } from "react";
 import NewAnimationsControllers, { IReturnNewAnimationsControllers } from "../hooks/useAnimationResponsive/NewAnimationsControllers";
 import { AllProps, HTMLMotionComponents, LiteProps } from "../props.type";
 import useAnimationLayer from "@responsive-component/Layer/UseAnimation.layer";
@@ -82,7 +82,6 @@ const ResponsiveComponent =
         const isAnimationControls = _REF && "animations" in _REF
 
         useEffect(() => {
-
             if (isAnimationControls) {
                 console.error(new Error("It looks like you are using AnimationsControls, you should use it with ResponsiveComponentControls"))
             }
