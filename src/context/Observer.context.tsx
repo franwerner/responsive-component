@@ -1,40 +1,28 @@
-import { listeners } from "process";
-import { Context, createContext, FC, ReactNode, useCallback, useContext, useEffect, useMemo, useRef } from "react";
+import { Context, createContext, FC, MutableRefObject, ReactNode, useContext, useRef } from "react";
 
-export type ObserverCallback<T = any> = (value: T) => void;
-export type ObserverEvent = string | Context<any>
-
-
+type ObserverCallback<T = any> = (value: T) => void;
+type ObserverEventKey = string | Context<any>
+type ObserverEvents = Map<ObserverEventKey, Set<ObserverCallback>>
 interface IObserverContext {
-    subscribe: <T> (event: ObserverEvent, cb: ObserverCallback<T>) => void
-    unsubscribe: <T> (event: ObserverEvent, cb: ObserverCallback<T>) => void
-    notify: <T> (event: ObserverEvent, value: T,) => void,
+    subscribe: <T> (event: ObserverEventKey, cb: ObserverCallback<T>) => void
+    unsubscribe: <T> (event: ObserverEventKey, cb: ObserverCallback<T>) => void
+    notify: <T> (event: ObserverEventKey, value: T,) => void,
 }
 
-const ObserverContext = createContext<{
-    listeners: Map<ObserverEvent, Set<ObserverCallback>>,
-    tools: IObserverContext
-}>({
-    listeners: new Map(),
-    tools: {
-        subscribe: (event: ObserverEvent, cb) => { },
-        unsubscribe: (event: ObserverEvent, cb) => { },
-        notify: (event: ObserverEvent, value: any) => { }
-    }
+const ObserverContext = createContext<IObserverContext>({
+    subscribe: (event: ObserverEventKey, cb) => { },
+    unsubscribe: (event: ObserverEventKey, cb) => { },
+    notify: (event: ObserverEventKey, value: any) => { }
 })
 
-const EventContext = createContext((event: ObserverEvent) => { })
+type IEventsContext = MutableRefObject<ObserverEvents>
 
-const useCreateObserverEvent = (event: ObserverEvent) => {
-    const setEvent = useContext(EventContext)
-    useEffect(() => {
-        setEvent(event)
-    }, [event])
-}
+const EventContext = createContext<IEventsContext>({ current: new Map() })
 
 const useObserverContext = () => useContext(ObserverContext)
+const useObserverEventsContext = () => useContext(EventContext)
 
-const ObserverProvider: FC<{ children: ReactNode, events?: ObserverEvent[] }> = ({ children, events }) => {
+const ObserverProvider: FC<{ children: ReactNode, events?: ObserverEventKey[] }> = ({ children, events }) => {
 
     const defaultEvents = () => {
         if (events) {
@@ -45,53 +33,36 @@ const ObserverProvider: FC<{ children: ReactNode, events?: ObserverEvent[] }> = 
         } else {
             return new Map()
         }
-
     }
 
-    const listeners = useRef<{
-        listeners: Map<ObserverEvent, Set<ObserverCallback>>,
-        tools: IObserverContext
-    }>({
-        listeners: defaultEvents(),
-        tools: {
+    const eventsRef = useRef<ObserverEvents>(defaultEvents())
+
+    const observer: IObserverContext = {
             subscribe: (event, cb) => {
-                const t = listeners.current;
-                console.log(t)
-                t.listeners.get(event)?.add(cb)
+                getListener(event)?.add(cb)
             },
             unsubscribe: (event, cb) => {
-                const t = listeners.current;
-                t.listeners.get(event)?.delete(cb)
+                getListener(event)?.delete(cb)
             },
             notify: (event, value) => {
-                const t = listeners.current;
-                t.listeners.get(event)?.forEach(cb => cb(value))
+                console.log(eventsRef.current.get(event))
+                getListener(event)?.forEach(cb => cb(value))
             }
-        }
-    })
-
-
-    const addEvent = useCallback((event: ObserverEvent) => {
-
-        if (!listeners.current.listeners.has(event)) {
-            listeners.current.listeners.set(event, new Set<ObserverCallback>([]))
-        }
-    }, [])
-
-    const getListener = (event: ObserverEvent) => {
-        const t = listeners.current.listeners
-        return t.get(event)
     }
 
+    const getListener = (event: ObserverEventKey) => {
+        return eventsRef.current.get(event)
+    }
 
     return (
-        <EventContext.Provider value={addEvent}>
-            <ObserverContext.Provider value={listeners.current}>
+        <EventContext.Provider value={eventsRef}>
+            <ObserverContext.Provider value={observer}>
                 {children}
             </ObserverContext.Provider>
         </EventContext.Provider>
     )
 }
 
-export { useCreateObserverEvent, useObserverContext };
+export { useObserverContext, useObserverEventsContext };
+export type { ObserverCallback, ObserverEventKey, ObserverEvents };
 export default ObserverProvider

@@ -3,11 +3,10 @@ import BreakPointsControls from "./components/BreakPointsControls"
 import BreakpointProvider, { BreakPointContext } from "./context/Breakpoint.context"
 import ObserverProvider from "./context/Observer.context"
 
-
 function App() {
 
   return (
-    <ObserverProvider events={[]}>
+    <ObserverProvider events={[BreakPointContext]}>
       <BreakpointProvider>
         <BreakPointsControls>
           <ResponsiveComponent

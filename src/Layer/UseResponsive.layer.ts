@@ -1,9 +1,6 @@
-import { breakPoints } from "@responsive-component/constant/breakpoints.constant.js";
-import { useCreateObserverEvent } from "@responsive-component/context/Observer.context";
 import useBreakPoints from "@responsive-component/hooks/useBreakPoints.hook.js";
-import useSyncBreakPoint from "@responsive-component/hooks/useSyncBreakPoint";
+import useSyncBreakPointForWidth from "@responsive-component/hooks/useSyncBreakPointForWidth";
 import { AllProps, DefaultProps, HTMLMotionComponents } from "@responsive-component/props.type";
-import { calculateBreakPointsForWidth } from "@responsive-component/utils/calculateBreakPoints.utils.js";
 import joinProperties from "@responsive-component/utils/joinProperties.utils.js";
 import { isObject } from "my-utilities";
 
@@ -16,15 +13,10 @@ function useResponsiveLayer<T extends HTMLMotionComponents>(
 ) {
     const activeBreakpoints = Object.keys(responsive || {});
 
-    const syncBreakPoint = useSyncBreakPoint(({ cache, current }) => {
-        const width = breakPoints[current].minWidth
-        const calculate = Object.keys(calculateBreakPointsForWidth({ activeBreakpoints, responsiveConfig, width }))
-        if (calculate.length > 0) return calculate
-        return cache 
-    })
+    const syncBreakPoint = useSyncBreakPointForWidth({ activeBreakpoints, responsiveConfig })
 
     const { actives } = useBreakPoints({ activeBreakpoints, responsiveConfig });
-
+    
     const currentBreakPoint = syncBreakPoint ?? actives
 
     const JSONlastestBreakPoint = JSON.stringify(currentBreakPoint);
@@ -41,8 +33,7 @@ function useResponsiveLayer<T extends HTMLMotionComponents>(
             return joinProperties({ props: acc, replaceProps: currentBreakPoint });
         }, props);
     };
-
-
+    
     return {
         ...calculateResponsive() as DefaultProps<T>,
         lastestBreakPoint: JSONlastestBreakPoint
