@@ -1,6 +1,6 @@
 import { createContext, FC, useContext, useEffect, useState } from "react";
 import { BreakPointsKeys } from "../constant/breakpoints.constant";
-import {  useObserverContext } from "./Observer.context";
+import {  useObserverContext } from "../observer/Observer.context";
 
 interface breakPointContext {
     lastestBreakPoint?: BreakPointsKeys,

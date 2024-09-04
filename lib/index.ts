@@ -8,8 +8,8 @@ export { default as ResponsiveComponentBundle } from "../src/components/Responsi
 /*@Types*/
 export * from "../src/props.type"
 /*@Hooks*/
-export * from "../src/hooks/useSyncBreakPoint.hook"
-export { default as useSyncBreakPoint } from "../src/hooks/useSyncBreakPoint.hook"
+export * from "../src/hooks/useSelector.hook"
+export { default as useSelector } from "../src/hooks/useSelector.hook"
 export { default as useBreakPoints } from "../src/hooks/useBreakPoints.hook"
 export { default as useMediaQuery } from "../src/hooks/useMediaQuery.hook"
 export { default as useAnimateResponsive } from "../src/hooks/useAnimationResponsive/useAnimateResponsive.hook"

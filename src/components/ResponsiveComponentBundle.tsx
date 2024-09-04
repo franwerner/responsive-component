@@ -1,5 +1,5 @@
 import BreakpointProvider, { BreakPointContext } from "@responsive-component/context/Breakpoint.context";
-import ObserverProvider, { ObserverEvents } from "@responsive-component/context/Observer.context";
+import ObserverProvider, { ObserverEvents } from "@responsive-component/observer/Observer.context";
 import { FC, ReactNode } from "react";
 
 /**
