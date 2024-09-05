@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react"
-import { ObserverCallback, useObserverContext } from "../Observer.context"
+import { ObserverCallback, useObserverContext } from "../context/Observer.context"
 import { BreakPointContext } from "@responsive-component/context/Breakpoint.context"
 
 type ObserverValue = any
