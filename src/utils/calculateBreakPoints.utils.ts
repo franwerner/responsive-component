@@ -1,27 +1,30 @@
 import { ResponsiveConfig } from "@responsive-component/props.type";
-import { BreakPointsKeys, ISizesBreakPoints, breakPoints } from "../constant/breakpoints.constant";
+import { BreakPointsKeys, breakPoints, SizesBreakPoints } from "../constant/breakpoints.constant";
 import { isNumber } from "my-utilities";
 
-interface ICalculateBreakPoints {
+interface CalculateBreakPoints {
     activeBreakpoints: BreakPointsKeys[],
     responsiveConfig?: ResponsiveConfig
 }
 
-type NewISizes = {
-    [K in keyof ISizesBreakPoints]?: ISizesBreakPoints[K] | false
+interface MaxAndMin  {
+    minWidth?: SizesBreakPoints["minWidth"]
+    maxWidth?: number
 };
 
-const calculateGeneral = ({ activeBreakpoints, responsiveConfig = {} }: ICalculateBreakPoints) => {
+const calculateGeneral = ({ activeBreakpoints, responsiveConfig = {} }: CalculateBreakPoints) => {
+    //ordena y calcula los breakpoint segun la configuracion indicada, para que sepa que breakpoint estan antes o se añaden depues.
+    //El Unico criterio a tener en cuenta es que si hay un maxWidth = true, siempre va antes que los elemetos que tienen un minWidth.
+    return activeBreakpoints.map(key => {
 
- return activeBreakpoints.map(key => {
-        const { maxWidth, minWidth } = breakPoints[key] 
+        const { maxWidth, minWidth } = breakPoints[key]
 
         const defaultConfig = { maxWidth: false, minWidth: true };
 
         const config = responsiveConfig[key] ?? defaultConfig;
 
-        const maxRelative = config.maxWidth && maxWidth
-        const minRelative = config.minWidth && minWidth;
+        const maxRelative = config.maxWidth ? maxWidth : undefined
+        const minRelative = config.minWidth ? minWidth : undefined;
 
         return {
             breakpoint: key,
@@ -38,20 +41,18 @@ const GroupByBreakPoint = (array: ReturnType<typeof calculateGeneral>) => {
             maxWidth: current.maxWidth,
         };
         return acc;
-    }, {} as Record<BreakPointsKeys, NewISizes>);
+    }, {} as Record<BreakPointsKeys, MaxAndMin>);
 }
 
-const calculateBreakPoints = ({ activeBreakpoints, responsiveConfig }: ICalculateBreakPoints) => {
+
+const calculateBreakPoints = ({ activeBreakpoints, responsiveConfig }: CalculateBreakPoints) => {
     return GroupByBreakPoint(calculateGeneral({ activeBreakpoints, responsiveConfig }));
 }
 
-interface ICalculateBreakPointsForWidth extends ICalculateBreakPoints {
+interface CalculateBreakPointsForWidth extends CalculateBreakPoints {
     width: number;
 }
-const calculateBreakPointsForWidth = ({ width: w, activeBreakpoints, responsiveConfig }: ICalculateBreakPointsForWidth) => {
-
-    const width = Math.abs(w)
-
+const calculateBreakPointsForWidth = ({ width, activeBreakpoints, responsiveConfig }: CalculateBreakPointsForWidth) => {
     return GroupByBreakPoint(
         calculateGeneral({ activeBreakpoints, responsiveConfig })
             .filter(({ maxWidth, minWidth }) => {
@@ -59,8 +60,8 @@ const calculateBreakPointsForWidth = ({ width: w, activeBreakpoints, responsiveC
                 const isMaxWidth = isNumber(maxWidth) ? maxWidth : 0;
 
                 const maxAndMin = (width >= isMinWidth && width <= isMaxWidth);
-                const min = !maxWidth && width >= isMinWidth;
-                const max = !minWidth && width <= isMaxWidth;
+                const min = !maxWidth && width >= isMinWidth; //=> si es infinito la condicion nunca se cumpliria
+                const max = !minWidth && width <= isMaxWidth; //=> si es 0 la condicion nunca se cumplira.
 
                 return max || min || maxAndMin;
             })
@@ -68,5 +69,5 @@ const calculateBreakPointsForWidth = ({ width: w, activeBreakpoints, responsiveC
 };
 
 export default calculateBreakPoints;
-export { calculateBreakPointsForWidth, type ICalculateBreakPoints };
+export { calculateBreakPointsForWidth, type CalculateBreakPoints };
 

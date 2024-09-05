@@ -1,7 +1,9 @@
 import { motion } from "framer-motion";
 import { FC, ReactNode } from "react";
-import {  breakPointsKeys } from "../constant/breakpoints.constant";
-import { useBreakPointContext } from "@responsive-component/context/Breakpoint.context";
+import { breakPointsKeys } from "../constant/breakpoints.constant";
+import { useDispatch, useSelector } from "react-observer-context";
+import { breakPointContext, breakPointActions } from "@responsive-component/context/BreakPointProvider.context";
+
 
 interface IBreakPointsControls {
     children?: ReactNode
@@ -9,13 +11,14 @@ interface IBreakPointsControls {
 
 const BreakPointsControls: FC<IBreakPointsControls> = ({ children }) => {
 
-    const { lastestBreakPoint, updateBreakPoint } = useBreakPointContext()
+    const lastestBreakPoint = useSelector(breakPointContext, (store) => store.breakPoint)
+    const dispatch = useDispatch(breakPointContext, breakPointActions.setBreakPoint)
 
     return (
         <div style={{ background: "white" }}>
             {breakPointsKeys.map(i =>
                 <motion.button
-                    onClick={() => updateBreakPoint(i)}
+                    onClick={() => dispatch(i)}
                     animate={{
                         scale: 0.7,
                         padding: "20px",

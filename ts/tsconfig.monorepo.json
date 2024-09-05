@@ -3,8 +3,9 @@
     "compilerOptions": {
       "paths": {
         "@responsive-component/*": ["../src/*"],
-        "my-utilities" : ["../../my-utilities/lib/index.ts"]
+        "my-utilities" : ["../../my-utilities/lib/index.ts"],
+        "react-observer-context" : ["../../react-observer-context/lib/index.ts"]
       }
     },
-    "include": ["../src","../../my-utilities"],
+    "include": ["../src","../../my-utilities","../../react-observer-context"],
   }

@@ -6,7 +6,7 @@ import dts from 'vite-plugin-dts'
 const loadAliasConfig = async () => {
   let load = null
   try {
-    const module = await import("../../alias.config.jsj")
+    const module = await import("../../alias.config.js")
     load = module.default
   } catch (error) {
 

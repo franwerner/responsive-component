@@ -1,8 +1,11 @@
+import { breakPoints } from "@responsive-component/constant/breakpoints.constant";
+import { breakPointContext } from "@responsive-component/context/BreakPointProvider.context";
 import useBreakPoints from "@responsive-component/hooks/useBreakPoints.hook.js";
-import useSyncBreakPointForWidth from "@responsive-component/hooks/useSyncBreakPointForWidth.hook";
 import { AllProps, DefaultProps, HTMLMotionComponents } from "@responsive-component/props.type";
+import { calculateBreakPointsForWidth } from "@responsive-component/utils/calculateBreakPoints.utils";
 import joinProperties from "@responsive-component/utils/joinProperties.utils.js";
 import { isObject } from "my-utilities";
+import { useSelector } from "react-observer-context";
 
 type OmitProps = "as" | "_REF"
 function useResponsiveLayer<T extends HTMLMotionComponents>(props: Omit<AllProps<T>, OmitProps>): DefaultProps<T> & { lastestBreakPoint: string }
@@ -13,9 +16,13 @@ function useResponsiveLayer<T extends HTMLMotionComponents>(
 ) {
     const activeBreakpoints = Object.keys(responsive || {});
 
-    const syncBreakPoint = useSyncBreakPointForWidth({ activeBreakpoints, responsiveConfig })
+    const syncBreakPoint = useSelector(breakPointContext, (store) => {
+        const bk = store.breakPoint
+        const width = bk ? breakPoints[bk].maxWidth : 0
+        return Object.keys(calculateBreakPointsForWidth({ activeBreakpoints, responsiveConfig, width }))
+    })
 
-    const { actives} = useBreakPoints({ activeBreakpoints, responsiveConfig, watch: !syncBreakPoint });
+    const { actives } = useBreakPoints({ activeBreakpoints, responsiveConfig, watch: !syncBreakPoint });
 
     const currentBreakPoint = syncBreakPoint ?? actives
 

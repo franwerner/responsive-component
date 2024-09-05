@@ -16,7 +16,7 @@ const breakpointsSimple = {
 
 type BreakpointsList = typeof breakpointsSimple;
 
-interface ISizesBreakPoints {
+interface SizesBreakPoints {
     minWidth: BreakpointsList[keyof BreakpointsList],
     maxWidth: number
 }
@@ -25,7 +25,7 @@ type BreakPointsKeys = keyof typeof breakpointsSimple
 
 const breakPointsKeys = Object.keys(breakpointsSimple)
 
-const breakPoints = {} as { [K in BreakPointsKeys]: ISizesBreakPoints }
+const breakPoints = {} as { [K in BreakPointsKeys]: SizesBreakPoints }
 
 for (let i = 0; i < breakPointsKeys.length; i++) {
 
@@ -38,6 +38,6 @@ for (let i = 0; i < breakPointsKeys.length; i++) {
     }
 }
 
-export { breakPoints, breakpointsSimple, breakPointsKeys }
-export type { ISizesBreakPoints, BreakPointsKeys }
+export { breakPoints, breakPointsKeys }
+export type { SizesBreakPoints, BreakPointsKeys}
 
