@@ -20,11 +20,11 @@ function useResponsiveLayer<T extends HTMLMotionComponents>(
         const bk = store.breakPoint
         const width = bk ? breakPoints[bk].maxWidth : 0
         return Object.keys(calculateBreakPointsForWidth({ activeBreakpoints, responsiveConfig, width }))
-    })
+    }) ?? []
 
-    const { actives } = useBreakPoints({ activeBreakpoints, responsiveConfig, watch: !syncBreakPoint });
+    const actives = useBreakPoints({ activeBreakpoints, responsiveConfig, watch: syncBreakPoint.length == 0 });
 
-    const currentBreakPoint = syncBreakPoint ?? actives
+    const currentBreakPoint = syncBreakPoint.length == 0 ? actives : syncBreakPoint
 
     const JSONlastestBreakPoint = JSON.stringify(currentBreakPoint);
 

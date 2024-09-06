@@ -60,8 +60,8 @@ const calculateBreakPointsForWidth = ({ width, activeBreakpoints, responsiveConf
                 const isMaxWidth = isNumber(maxWidth) ? maxWidth : 0;
 
                 const maxAndMin = (width >= isMinWidth && width <= isMaxWidth);
-                const min = !maxWidth && width >= isMinWidth; //=> si es infinito la condicion nunca se cumpliria
-                const max = !minWidth && width <= isMaxWidth; //=> si es 0 la condicion nunca se cumplira.
+                const min = !maxWidth && width >= isMinWidth;
+                const max = !minWidth && width <= isMaxWidth; 
 
                 return max || min || maxAndMin;
             })

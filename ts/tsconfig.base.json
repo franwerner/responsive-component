@@ -22,5 +22,6 @@
         "noUnusedParameters": true,
         "noFallthroughCasesInSwitch": true,
         "baseUrl": ".",
+        "esModuleInterop": true,
     },
 }

@@ -2,7 +2,7 @@
 import { useEffect, useMemo, useState } from "react"
 import getMediaQuerys, { GetMediaQuery, MediaQueryListEventModify } from "@responsive-component/utils/getMediaQuerys.utils"
 
-const useMediaQuery = <T extends string>(query: GetMediaQuery<T>) => {
+const useMediaQuery = <T extends string>(query: GetMediaQuery<T>,watch : boolean = true) => {
 
     const InitialState = useMemo(() => getMediaQuerys(query), [JSON.stringify(query)])
 
@@ -10,7 +10,7 @@ const useMediaQuery = <T extends string>(query: GetMediaQuery<T>) => {
 
     useEffect(() => {
 
-        if (!InitialState || Object.keys(InitialState).length === 0) return
+        if (!InitialState || !watch) return
 
         InitialState !== mediaQuerys && setMediaQuerys(InitialState)
 
@@ -37,9 +37,9 @@ const useMediaQuery = <T extends string>(query: GetMediaQuery<T>) => {
             }
         }
 
-    }, [InitialState])
+    }, [InitialState,watch])
 
-    return mediaQuerys
+    return watch ? mediaQuerys : {} as typeof InitialState
 
 }
 

@@ -1,4 +1,4 @@
 {
   "files": [],
-  "references": [{"path": "./ts/tsconfig.dev.json"}],
+  "references": [{"path": "./ts/tsconfig.monorepo.json"}],
 }
