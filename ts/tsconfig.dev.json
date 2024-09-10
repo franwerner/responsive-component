@@ -5,5 +5,5 @@
         "@responsive-component/*": ["../src/*"],
       }
     },
-    "include": ["../src"],
+    "include": ["../src","src/global.d.ts"],
   }

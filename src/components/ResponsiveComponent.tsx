@@ -48,7 +48,7 @@ const ResponsiveComponentControls =
     }
 
 
-const ResponsiveComponentLite =
+const ResponsiveComponentLite = //Lo podemos usar para cuando necesitemos la implementacion de resteo de animaciones correctamente.
     <T extends HTMLMotionComponents = "div">(
         { as = 'div' as T, _REF, ...props }: LiteProps<T>,
     ) => {

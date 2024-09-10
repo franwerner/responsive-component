@@ -29,7 +29,7 @@ const breakPoints = {} as { [K in BreakPointsKeys]: SizesBreakPoints }
 
 for (let i = 0; i < breakPointsKeys.length; i++) {
 
-    const nextBreakPoint = i < (breakPointsKeys.length - 1) ? breakpointsSimple[breakPointsKeys[i + 1]] : 100 * 100
+    const nextBreakPoint = i < (breakPointsKeys.length - 1) ? breakpointsSimple[breakPointsKeys[i + 1]] : window.screen.width
 
     const key = breakPointsKeys[i]
     breakPoints[key] = {
@@ -39,5 +39,5 @@ for (let i = 0; i < breakPointsKeys.length; i++) {
 }
 
 export { breakPoints, breakPointsKeys }
-export type { SizesBreakPoints, BreakPointsKeys}
+export type { SizesBreakPoints, BreakPointsKeys }
 

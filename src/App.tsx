@@ -1,6 +1,6 @@
 import ResponsiveComponent from "@responsive-component/components/ResponsiveComponent"
 import BreakPointsControls from "./components/BreakPointsControls"
-import BreakPointProvider from "./context/BreakPointProvider.context"
+import {BreakPointProvider} from "./context/BreakPointsTheme.context"
 
 function App() {
 
@@ -24,12 +24,14 @@ function App() {
             },
             md: {
               animate: {
-                backgroundColor: "#000"
+                backgroundColor: "#008000"
               }
             }
           }}
         >
-          Testing component
+          <p style={{ height: "300px" }}>
+            Testing componentsdasdsdsadsdasdasdasdasdasdasdasdasdasdasdasd
+          </p>
         </ResponsiveComponent>
       </BreakPointsControls>
     </BreakPointProvider>

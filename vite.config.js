@@ -30,7 +30,7 @@ export default defineConfig(async ({ command }) => {
       react(),
       dts({
         tsconfigPath: "./ts/tsconfig.build.json",
-        exclude: ["src/App.tsx", "src/main.tsx"]
+        exclude: ["src/App.tsx", "src/main.tsx"],
       }),
     ],
     resolve: {
