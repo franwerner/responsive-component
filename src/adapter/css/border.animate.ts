@@ -1,6 +1,6 @@
 import {isString} from "my-utilities"
 import getDirections from "./utils/getDirections.utils"
-import { AnimateProps } from "@responsive-component/props.type"
+import { AnimateProps } from "@responsive-component/types"
 import { MotionStyle } from "framer-motion"
 
 const searchColor = (input: any) => {

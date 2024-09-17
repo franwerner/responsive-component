@@ -1,28 +1,22 @@
-import { useSelector } from "@responsive-component/context/BreakPointsTheme.context";
 import useBreakPoints from "@responsive-component/hooks/useBreakPoints.hook.js";
-import { AllProps, DefaultProps, HTMLMotionComponents } from "@responsive-component/props.type";
-import { calculateBreakPointsForWidth } from "@responsive-component/utils/calculateBreakPoints.utils";
+import { AllProps, DefaultProps, HTMLMotionComponents } from "@responsive-component/types";
 import joinProperties from "@responsive-component/utils/joinProperties.utils.js";
+import transformBreakPoints from "@responsive-component/utils/transformBreakPoints.utilts";
 import { isObject } from "my-utilities";
+
 
 type OmitProps = "as" | "_REF"
 function useResponsiveLayer<T extends HTMLMotionComponents>(props: Omit<AllProps<T>, OmitProps>): DefaultProps<T> & { lastestBreakPoint: string }
 function useResponsiveLayer<T extends HTMLMotionComponents>(props: Omit<AllProps<T>, OmitProps | "controls">): DefaultProps<T> & { lastestBreakPoint: string }
 
 function useResponsiveLayer<T extends HTMLMotionComponents>(
-    { responsive, responsiveConfig, ...props }: AllProps<T>
+    { responsive, responsiveConfig, breakpoints, ...props }: AllProps<T>
 ) {
     const activeBreakpoints = Object.keys(responsive || {});
 
-    const syncBreakPoint = useSelector((store) => {
-        const { list, currentBreakPoint } = store.breakpoints
-        const width = currentBreakPoint ? list[currentBreakPoint].minWidth : 0
-        return Object.keys(calculateBreakPointsForWidth({ activeBreakpoints, responsiveConfig, width }))
-    }) ?? []
+    const transformBreakPoint = transformBreakPoints(breakpoints)
 
-    const actives = useBreakPoints({ activeBreakpoints, responsiveConfig, watch: syncBreakPoint.length == 0 });
-
-    const currentBreakPoint = syncBreakPoint.length == 0 ? actives : syncBreakPoint
+    const currentBreakPoint = useBreakPoints({ activeBreakpoints, responsiveConfig, breakPoints: transformBreakPoint });
 
     const JSONlastestBreakPoint = JSON.stringify(currentBreakPoint);
 

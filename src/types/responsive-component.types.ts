@@ -1,7 +1,7 @@
 import { MotionProps, MotionValue, TargetAndTransition, motion } from "framer-motion";
 import { AllHTMLAttributes, AriaAttributes, ComponentProps, DOMAttributes, MutableRefObject, ReactNode, RefObject, SVGAttributes } from "react";
-import { BreakPointsKeys } from "./constant/breakpoints.constant";
 import { RequiredAllProperties } from "my-utilities";
+import { Breakpoints } from "./index";
 
 type HTMLMotionComponents = keyof typeof motion
 
@@ -13,7 +13,7 @@ type RemoveNotStylesKeys<T> = {
     [K in keyof T as K extends (AllKeysHtmlAtt | Function) ? never : K]?: T[K]
 }
 
-type OmitMotionProps = Omit<MotionProps, "variants" | "custom" | "animate" | "exit" | "initial" | "whileFocus" | "whileHover" | "whileInView" | "whileTap" | "whileDrag">
+type OmitMotionProps = Omit<MotionProps,  "custom" | "animate" | "exit" | "initial" | "whileFocus" | "whileHover" | "whileInView" | "whileTap" | "whileDrag">
 
 type AnimateProps = RemoveNotStylesKeys<TargetAndTransition>
 
@@ -35,13 +35,13 @@ type DefaultMotionPropsModification = {
 type MotionPropsModification = RemoveFunctionsProperties<RequiredAllProperties<DefaultMotionPropsModification>> //Se remueve las funciones,ya que no requieren ser diferentes entre los breakpoints.
 
 type ResponsiveMotionProps = {
-    [K in BreakPointsKeys]?: MotionPropsModification
+    [K in Breakpoints]?: MotionPropsModification
 }
 
 type BreakPointConfig = { maxWidth?: boolean, minWidth?: boolean }
 
 type ResponsiveConfig = {
-    [K in BreakPointsKeys]?: BreakPointConfig
+    [K in Breakpoints]?: BreakPointConfig
 }
 
 type RefResponsiveComponent = { _REF?: MutableRefObject<any> | RefObject<any> }
@@ -55,9 +55,10 @@ type ResponsiveProps<T extends HTMLMotionComponents> = {
 
 type AllProps<T extends HTMLMotionComponents = HTMLMotionComponents> = {
     as?: T;
-    children?: ReactNode |  MotionValue<number | string>
+    children?: ReactNode | MotionValue<number | string>
+    breakpoints: { [K in Breakpoints]: number }
 } & ResponsiveProps<T>;
 
 type LiteProps<T extends HTMLMotionComponents = HTMLMotionComponents> = Omit<AllProps<T>, "responsive" | "responsiveConfig">
 
-export type {DefaultProps, RefResponsiveComponent, HTMLMotionComponents, AllProps, LiteProps, ResponsiveProps, ResponsiveConfig, AnimateProps };
+export type { DefaultProps, RefResponsiveComponent, HTMLMotionComponents, AllProps, LiteProps, ResponsiveProps, ResponsiveConfig, AnimateProps };

@@ -1,9 +1,10 @@
 import { AnimationPlaybackControls, MotionStyle, ValueAnimationTransition, useAnimate } from "framer-motion";
 import { useRef } from "react";
-import { AnimateProps } from "@responsive-component/props.type";
-import { BreakPointsKeys } from "@responsive-component/constant/breakpoints.constant";
+import { AnimateProps } from "@responsive-component/types";
 import NewAnimationsControllers, { IReturnNewAnimationsControllers } from "./NewAnimationsControllers";
 import applyAnimations from "./applyAnimations";
+import { Breakpoints } from "@responsive-component/types/breakpoint.types";
+
 
 /**
  * @responsive-componentdescription
@@ -13,7 +14,7 @@ import applyAnimations from "./applyAnimations";
  */
 
 type ResponsiveAnimate = {
-    [K in BreakPointsKeys]?: AnimateProps
+    [K in Breakpoints]?: AnimateProps
 }
 
 interface IRefAnimationControls {

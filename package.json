@@ -3,9 +3,17 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
-  "main": "dist/index.umd.js",
-  "module": "dist/index.es.js",
-  "types": "dist/lib/index.d.ts",
+  "files": [
+    "dist/**/*"
+  ],
+  "exports": {
+    ".": {
+      "import": "./dist/index.es.js",
+      "require": "./dist/index.umd.js",
+      "types": "./dist/lib/index.d.ts"
+    },
+    "./types": "./dist/src/types/index.d.ts"
+  },
   "scripts": {
     "dev": "vite",
     "build": "tsc --project ./ts/tsconfig.build.json && vite build ",
@@ -19,7 +27,7 @@
   },
   "devDependencies": {
     "@eslint/js": "^9.8.0",
-    "@microsoft/api-extractor": "^7.47.5",
+    "@microsoft/api-extractor": "^7.47.9",
     "@types/react": "^18.3.3",
     "@types/react-dom": "^18.3.0",
     "@vitejs/plugin-react-swc": "^3.5.0",
