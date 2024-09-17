@@ -1,7 +1,7 @@
-import { ResponsiveConfig } from "@responsive-component/types";
+import { ResponsiveConfig } from "@/types";
 import { isNumber } from "my-utilities";
 import { TransformBreakPoints } from "./transformBreakPoints.utils";
-import { Breakpoints } from "@responsive-component/types/breakpoint.types";
+import { Breakpoints } from "@/types/breakpoint.types";
 
 interface CalculateBreakPoints {
     activeBreakpoints: Breakpoints[],

@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useRef } from "react";
-import { cssAdapter } from "@responsive-component/adapter/css/css.adapter.js";
-import { DefaultProps, HTMLMotionComponents, AnimateProps } from "@responsive-component/types";
-import resetAnimate, { resettableProperties } from "@responsive-component/utils/resetAnimate.utils.js";
+import { cssAdapter } from "@/adapter/css/css.adapter.js";
+import { DefaultProps, HTMLMotionComponents, AnimateProps } from "@/types";
+import resetAnimate, { resettableProperties } from "@/utils/resetAnimate.utils.js";
 
 
 /**

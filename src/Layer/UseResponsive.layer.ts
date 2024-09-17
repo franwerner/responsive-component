@@ -1,7 +1,7 @@
-import useBreakPoints from "@responsive-component/hooks/useBreakPoints.hook.js";
-import { AllProps, DefaultProps, HTMLMotionComponents } from "@responsive-component/types";
-import joinProperties from "@responsive-component/utils/joinProperties.utils.js";
-import transformBreakPoints from "@responsive-component/utils/transformBreakPoints.utils";
+import useBreakPoints from "@/hooks/useBreakPoints.hook.js";
+import { AllProps, DefaultProps, HTMLMotionComponents } from "@/types";
+import joinProperties from "@/utils/joinProperties.utils.js";
+import transformBreakPoints from "@/utils/transformBreakPoints.utils";
 import { isObject } from "my-utilities";
 
 

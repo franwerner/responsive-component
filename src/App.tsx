@@ -1,4 +1,4 @@
-import ResponsiveComponent from "@responsive-component/components/ResponsiveComponent"
+import ResponsiveComponent from "@/components/ResponsiveComponent"
 
 function App() {
 

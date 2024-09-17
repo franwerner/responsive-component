@@ -1,4 +1,4 @@
-import transformBreakPoints from "@responsive-component/utils/transformBreakPoints.utils"
+import transformBreakPoints from "@/utils/transformBreakPoints.utils"
 
 type Breakpoints = "xs" | "sm" | "md" | "lg" | "xl" | "2xl"
 

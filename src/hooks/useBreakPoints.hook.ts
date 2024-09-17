@@ -1,7 +1,7 @@
 import { useMemo } from "react";
 import useMediaQuery from "./useMediaQuery.hook";
 import calculateBreakPoints, { CalculateBreakPoints } from "../utils/calculateBreakPoints.utils";
-import { Breakpoints } from "@responsive-component/types/breakpoint.types";
+import { Breakpoints } from "@/types/breakpoint.types";
 
 const useBreakPoints = ({ activeBreakpoints, responsiveConfig, breakPoints, watch = true }: CalculateBreakPoints & { watch?: boolean }) => {
 

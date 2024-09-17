@@ -24,7 +24,7 @@
       "baseUrl": ".",
       "esModuleInterop": true,
       "paths": {
-        "@responsive-component/*": ["./src/*"],
+        "@/*": ["./src/*"],
       }
   },
   "include": ["./src","./lib"],

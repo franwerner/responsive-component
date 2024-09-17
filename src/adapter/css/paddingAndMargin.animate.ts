@@ -1,4 +1,4 @@
-import { AnimateProps } from "@responsive-component/types";
+import { AnimateProps } from "@/types";
 import getDirections, { Directions } from "./utils/getDirections.utils";
 import { MotionStyle } from "framer-motion";
 

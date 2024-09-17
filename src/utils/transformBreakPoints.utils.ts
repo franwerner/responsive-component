@@ -1,4 +1,4 @@
-import { Breakpoints } from "@responsive-component/types/breakpoint.types"
+import { Breakpoints } from "@/types/breakpoint.types"
 
 type TransformBreakPoints = {
     minWidth: number,

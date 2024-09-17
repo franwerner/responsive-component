@@ -15,7 +15,7 @@ export default defineConfig(() => {
     ],
     resolve: {
       alias: {
-        "@responsive-component": path.resolve(__dirname, "src")
+        "@": path.resolve(__dirname, "src")
       }
     },
     build: {

@@ -1,5 +1,5 @@
 import { AnimationPlaybackControls } from "framer-motion"
-import { AnimateProps } from "@responsive-component/types"
+import { AnimateProps } from "@/types"
 import { IRefAnimationControls } from "./useAnimateResponsive.hook"
 
 interface INewAnimationsControllers {
