@@ -9,14 +9,19 @@
   "exports": {
     ".": {
       "import": "./dist/index.es.js",
-      "require": "./dist/index.umd.js",
+      "require": "./dist/index.cjs.js",
       "types": "./dist/lib/index.d.ts"
     },
-    "./types": "./dist/src/types/index.d.ts"
+    "./types": "./dist/src/types/index.d.ts",
+    "./breakpoints": {
+      "import": "./dist/breakpoints.es.js",
+      "require": "./dist/breakpoints.cjs.js",
+      "types": "./dist/src/constant/index.d.ts"
+    }
   },
   "scripts": {
     "dev": "vite",
-    "build": "tsc --project ./ts/tsconfig.build.json && vite build ",
+    "build": "tsc && vite build ",
     "lint": "eslint .",
     "preview": "vite preview"
   },

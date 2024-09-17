@@ -1,9 +1,0 @@
-{
-  "extends" : "./tsconfig.base.json",
-    "compilerOptions": {
-      "paths": {
-        "@responsive-component/*": ["../src/*"],
-      }
-    },
-    "include": ["../src","../global.d.ts","../lib"],
-  }

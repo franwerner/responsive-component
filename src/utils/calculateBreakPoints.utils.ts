@@ -1,6 +1,6 @@
 import { ResponsiveConfig } from "@responsive-component/types";
 import { isNumber } from "my-utilities";
-import { TransformBreakPoints } from "./transformBreakPoints.utilts";
+import { TransformBreakPoints } from "./transformBreakPoints.utils";
 import { Breakpoints } from "@responsive-component/types/breakpoint.types";
 
 interface CalculateBreakPoints {
@@ -70,6 +70,7 @@ const calculateBreakPointsForWidth = ({ width, activeBreakpoints, responsiveConf
     );
 };
 
+export const testAAA = { f: "fdf" }
 export default calculateBreakPoints;
 export { calculateBreakPointsForWidth, type CalculateBreakPoints };
 
