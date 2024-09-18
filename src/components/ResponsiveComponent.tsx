@@ -1,7 +1,7 @@
 import { createDomMotionComponent } from "framer-motion";
 import { useEffect, useImperativeHandle, useMemo, useRef, } from "react";
 import NewAnimationsControllers, { IReturnNewAnimationsControllers } from "../hooks/useAnimationResponsive/NewAnimationsControllers";
-import { AllProps, HTMLMotionComponents, LiteProps } from "@/types";
+import { AllProps, HTMLMotionComponents, LiteProps } from "@/types/responsive-component.types";
 import useAnimationLayer from "@/Layer/UseAnimation.layer";
 import useResponsiveLayer from "@/Layer/UseResponsive.layer";
 
@@ -13,8 +13,8 @@ const useCreateMotionComponent = (as: HTMLMotionComponents) => {
 }
 
 const ResponsiveComponentControls =
-    <T extends HTMLMotionComponents>(
-        { as = 'div' as T, controls, _REF, ...props }: AllProps<T> & { controls: IReturnNewAnimationsControllers }) => {
+    <T extends HTMLMotionComponents = "div",U = {}>(
+        { as = 'div' as T, controls, _REF, ...props }: AllProps<T,U> & { controls: IReturnNewAnimationsControllers }) => {
 
         const localRef = useRef<HTMLElement>()
 
@@ -49,8 +49,8 @@ const ResponsiveComponentControls =
 
 
 const ResponsiveComponentLite = //Lo podemos usar para cuando necesitemos la implementacion de resteo de animaciones correctamente.
-    <T extends HTMLMotionComponents = "div">(
-        { as = 'div' as T, _REF, ...props }: LiteProps<T>,
+    <T extends HTMLMotionComponents = "div",U = {}>(
+        { as = 'div' as T, _REF, ...props }: LiteProps<T,U>,
     ) => {
         const animatedProps = useAnimationLayer(props as any)
 
@@ -60,8 +60,8 @@ const ResponsiveComponentLite = //Lo podemos usar para cuando necesitemos la imp
     }
 
 const ResponsiveComponentAll =
-    <T extends HTMLMotionComponents = "div">(
-        { as = 'div' as T, _REF, ...props }: AllProps<T>) => {
+    <T extends HTMLMotionComponents = "div", U = {}>(
+        { as = 'div' as T, _REF, ...props }: AllProps<T, U>) => {
 
         const responsiveProps = useResponsiveLayer(props);
 
@@ -74,8 +74,8 @@ const ResponsiveComponentAll =
 
 
 const ResponsiveComponent =
-    <T extends HTMLMotionComponents = "div">(
-        props: AllProps<T>
+    <T extends HTMLMotionComponents = "div", U = {}>(
+        props: AllProps<T, U>
     ) => {
 
         const _REF = props._REF

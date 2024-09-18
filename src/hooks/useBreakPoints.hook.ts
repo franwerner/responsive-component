@@ -1,19 +1,18 @@
 import { useMemo } from "react";
 import useMediaQuery from "./useMediaQuery.hook";
 import calculateBreakPoints, { CalculateBreakPoints } from "../utils/calculateBreakPoints.utils";
-import { Breakpoints } from "@/types/breakpoint.types";
 
-const useBreakPoints = ({ activeBreakpoints, responsiveConfig, breakPoints, watch = true }: CalculateBreakPoints & { watch?: boolean }) => {
+const useBreakPoints = <T>({ activeBreakpoints, responsiveConfig, breakPoints }: CalculateBreakPoints<T>) => {
 
   const querys = useMemo(() => calculateBreakPoints({ activeBreakpoints, responsiveConfig, breakPoints })
     , [JSON.stringify(activeBreakpoints), JSON.stringify(responsiveConfig)])
 
-  const queryBreakPoints = useMediaQuery(querys, watch)
+  const queryBreakPoints = useMediaQuery(querys)
 
   const entries = Object.entries(queryBreakPoints)
 
-  return entries.map(([key, value]) => value.matches && key)
-    .filter((i): i is Breakpoints => Boolean(i))
+  return (entries.map(([key, value]) => value.matches && key)
+    .filter((i) => Boolean(i))) as (keyof T)[]
 }
 
 export default useBreakPoints

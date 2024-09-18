@@ -1,5 +1,5 @@
 import {isColor,isNumber} from "my-utilities"
-import { AnimateProps } from "@/types"
+import { AnimateProps } from "@/types/responsive-component.types"
 
 export const DefaultValues: AnimateProps = { //Estos son valores que no puede resetear por defecto correctamente.
     borderBottom: "0px solid #FFF",

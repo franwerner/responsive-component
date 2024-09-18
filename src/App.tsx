@@ -1,4 +1,5 @@
 import ResponsiveComponent from "@/components/ResponsiveComponent"
+import {createBreakpoints} from "./utils/createBreakpoints.utils"
 
 function App() {
 
@@ -12,9 +13,11 @@ function App() {
   }
 
 
+  const f = createBreakpoints(breakPointDefault)
+
   return (
     <ResponsiveComponent
-      breakpoints={breakPointDefault}
+      breakpoints={f}
       whileHover={{
         paddingLeft: 150
       }}

@@ -23,7 +23,7 @@ export default defineConfig(() => {
       lib: {
         entry: {
           index: path.resolve(__dirname, 'lib/index.ts'),
-          breakpoints: path.resolve(__dirname, "src/constant/index.ts"),
+          breakpoints: path.resolve(__dirname, "lib/breakpoints.ts"),
         },
         name: 'index',
         formats: ['es', 'cjs'],

@@ -1,10 +1,8 @@
 import { AnimationPlaybackControls, MotionStyle, ValueAnimationTransition, useAnimate } from "framer-motion";
 import { useRef } from "react";
-import { AnimateProps } from "@/types";
+import { AnimateProps } from "@/types/responsive-component.types";
 import NewAnimationsControllers, { IReturnNewAnimationsControllers } from "./NewAnimationsControllers";
 import applyAnimations from "./applyAnimations";
-import { Breakpoints } from "@/types/breakpoint.types";
-
 
 /**
  * @description
@@ -13,8 +11,8 @@ import { Breakpoints } from "@/types/breakpoint.types";
  * 3. Una vez activado, las animaciones se adaptaran responsivamente como se indicaron en el objecto.
  */
 
-type ResponsiveAnimate = {
-    [K in Breakpoints]?: AnimateProps
+type ResponsiveAnimate<T> = {
+    [K in keyof T]?: AnimateProps
 }
 
 interface IRefAnimationControls {
