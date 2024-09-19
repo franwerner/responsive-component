@@ -1,7 +1,7 @@
-import { useEffect, useMemo, useRef } from "react";
 import { cssAdapter } from "@/adapter/css/css.adapter.js";
-import { DefaultProps, HTMLMotionComponents, AnimateProps } from "@/types/responsive-component.types";
-import resetAnimate, { resettableProperties } from "@/utils/resetAnimate.utils.js";
+import { AnimateProps, DefaultProps, HTMLMotionComponents, LiteProps } from "@/types/responsive-component.types";
+import resetAnimate from "@/utils/resetAnimate.utils.js";
+import { useEffect, useMemo, useRef } from "react";
 
 
 /**
@@ -21,56 +21,64 @@ type AnimationLayerProps<T extends HTMLMotionComponents> = {
     lastestBreakPoint?: string
 } & DefaultProps<T>
 
-const useAnimationLayer = <T extends HTMLMotionComponents>({ lastestBreakPoint, ...props }: AnimationLayerProps<T>) => {
+function useAnimationLayer<T extends HTMLMotionComponents>(props: Omit<LiteProps<T>, "as" | "_REF">): DefaultProps<T>
+function useAnimationLayer<T extends HTMLMotionComponents>(props: AnimationLayerProps<T>): DefaultProps<T>
+
+function useAnimationLayer<T extends HTMLMotionComponents>({ lastestBreakPoint, ...props }: AnimationLayerProps<T>) {
 
     const {
-        style = {},
-        animate = {},
-        initial = {},
-        whileHover = {},
-        whileFocus = {},
-        whileDrag = {},
-        whileInView = {},
-        whileTap = {}
+        style,
+        animate,
+        initial,
+        whileHover,
+        whileFocus,
+        whileDrag,
+        whileInView,
+        whileTap
     } = props;
 
-    const dependencies = [lastestBreakPoint, JSON.stringify(animate)]
+    const adapters = {
+        whileHover: cssAdapter(whileHover),
+        whileDrag: cssAdapter(whileDrag),
+        whileTap: cssAdapter(whileTap),
+        style: cssAdapter(style),
+        initial: cssAdapter(initial),
+        animate: cssAdapter(animate),
+        whileFocus: cssAdapter(whileFocus),
+        whileInView: cssAdapter(whileInView),
+    }
 
-    const ref = useRef<AnimateProps>({})
+    const reseteableProperties = useRef<AnimateProps>({})
 
+    const resetAnimations = useMemo(() => {
+        const ref = reseteableProperties.current
+        const filterStyledProperties = Object.entries(ref).filter(([key]) => !(key in adapters.style))
+        const res = resetAnimate(Object.fromEntries(filterStyledProperties))
+        return res
+    }, [lastestBreakPoint])
 
-    const animateAdapter = useMemo(() => cssAdapter(animate), dependencies)
-    const styleAdapter = useMemo(() => cssAdapter(style), [JSON.stringify(style)])
-    const initialAdapter = useMemo(() => cssAdapter(initial), [JSON.stringify(initial)]);
-    const whileHoverAdapter = useMemo(() => cssAdapter(whileHover), [JSON.stringify(whileHover)]);
-    const whileFocusAdapter = useMemo(() => cssAdapter(whileFocus), [JSON.stringify(whileFocus)]);
-    const whileDragAdapter = useMemo(() => cssAdapter(whileDrag), [JSON.stringify(whileDrag)]);
-    const whileInViewAdapter = useMemo(() => cssAdapter(whileInView), [JSON.stringify(whileInView)]);
-    const whileTapAdapter = useMemo(() => cssAdapter(whileTap), [JSON.stringify(whileTap)]);
 
     useEffect(() => {
         if (!lastestBreakPoint) return
-        const newCache = resettableProperties({ animate: animateAdapter })
-        ref.current = { ...ref.current, ...newCache }
-    }, dependencies);
+        const { animate, whileFocus, whileInView, whileHover, whileDrag, whileTap } = adapters
+        for (const value of [animate, whileInView, whileHover, whileDrag, whileTap,whileFocus]) {
+            Object.assign(reseteableProperties.current, value)
+            /**
+             * Almacenamos las propiedades para el breakponint posterior,
+             * para que la propiedad animate reciba todas las animaciones(whileDrag,whileTap,animate...) que se aplicaron y pueda darle un valor por defecto.
+             * **/
+        }
+    }, [lastestBreakPoint]);
 
-    const reset = useMemo(() => {
-        const filterStyledProperties = Object.entries(ref.current).filter(([key]) => !(key in styleAdapter))
-        return resetAnimate(Object.fromEntries(filterStyledProperties))
-    }, [...dependencies])
 
 
     return {
         ...props,
-        animate: { ...reset, ...animateAdapter },
-        initial: initialAdapter,
-        whileHover: whileHoverAdapter,
-        whileFocus: whileFocusAdapter,
-        whileDrag: whileDragAdapter,
-        whileInView: whileInViewAdapter,
-        whileTap: whileTapAdapter,
-    } as DefaultProps<T> //Si no aplicamos el AS, el proceso de empaquetado no se hara por que no puede inferir algo tan complejo.
+        ...adapters,
+        animate: { ...resetAnimations, ...adapters.animate }
+    }
 
 }
+
 
 export default useAnimationLayer

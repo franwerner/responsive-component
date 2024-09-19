@@ -18,20 +18,8 @@ export const DefaultValues: AnimateProps = { //Estos son valores que no puede re
     height: "auto",
     color: "#000",
 }
-interface IResettableProperties {
-    animate?: AnimateProps,
-}
 
-const resettableProperties = ({ animate = {} }: IResettableProperties) => { 
-//Solo se almacenan las propieades que estan en DefaultValues o son un array.
-    const filterBoilerPlate = Object.entries(animate).filter(([key, value]) => {
-        const isArray = Array.isArray(value)
-        const isDefaultValues = key in DefaultValues
-        return (isArray || isDefaultValues)
-    })
 
-    return Object.fromEntries(filterBoilerPlate)
-}
 
 const verificateValue = (value: any) => {
     const isArray = Array.isArray(value) ? value[0] : value
@@ -48,12 +36,12 @@ const resetAnimate = (cache: AnimateProps = {}) => {
         const key = k as keyof typeof cache
         const cacheValue = cache[key]
         const isDefaultValue = DefaultValues[key]
-        const res = isDefaultValue || verificateValue(cacheValue)
-        Object.assign(reset, { [key]: res })
+        if(isDefaultValue || Array.isArray(cacheValue)){
+            const res = isDefaultValue || verificateValue(cacheValue)
+            Object.assign(reset, { [key]: res })
+        }
     }
     return reset
 
 }
-export { resettableProperties }
 export default resetAnimate
-

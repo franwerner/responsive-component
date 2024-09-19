@@ -23,7 +23,7 @@ const calculateGeneral = <T>({ activeBreakpoints, responsiveConfig = {}, breakPo
     //El Unico criterio a tener en cuenta es que si hay un maxWidth = true, siempre va antes que los elemetos que tienen un minWidth.
     return activeBreakpoints.map(key => {
 
-        const { maxWidth, minWidth } = breakPoints[key]
+        const { maxWidth, minWidth } = breakPoints[key] || {}
 
         const defaultConfig = { maxWidth: false, minWidth: true };
 

@@ -5,27 +5,24 @@ import { isObject } from "my-utilities";
 
 
 type OmitProps = "as" | "_REF"
-function useResponsiveLayer<T extends HTMLMotionComponents>(props: Omit<AllProps<T>, OmitProps>): DefaultProps<T> & { lastestBreakPoint: string }
-function useResponsiveLayer<T extends HTMLMotionComponents>(props: Omit<AllProps<T>, OmitProps | "controls">): DefaultProps<T> & { lastestBreakPoint: string }
+function useResponsiveLayer<T extends HTMLMotionComponents, U>(props: Omit<AllProps<T, U>, OmitProps>): DefaultProps<T> & { lastestBreakPoint: string }
+function useResponsiveLayer<T extends HTMLMotionComponents, U>(props: Omit<AllProps<T, U>, OmitProps | "controls">): DefaultProps<T> & { lastestBreakPoint: string }
 
-function useResponsiveLayer<T extends HTMLMotionComponents,U>(
-    { responsive, responsiveConfig, breakpoints, ...props }: AllProps<T,U>
+function useResponsiveLayer<T extends HTMLMotionComponents, U = never>(
+    { responsive, responsiveConfig, breakpoints, ...props }: AllProps<T, U>
 ) {
-    const activeBreakpoints = Object.keys(responsive);
+    const activeBreakpoints = Object.keys(responsive || {});
 
     const currentBreakPoint = useBreakPoints({ activeBreakpoints, responsiveConfig, breakPoints: breakpoints });
 
     const JSONlastestBreakPoint = JSON.stringify(currentBreakPoint);
 
     const calculateResponsive = () => {
-        if (!responsive || !isObject(responsive)) return props;
+        if (!isObject(responsive)) return props;
 
         return currentBreakPoint.reduce((acc, breakpoint) => {
-            const currentBreakPoint = responsive?.[breakpoint];
-            const verification = isObject(currentBreakPoint);
-
-            if (!verification) return acc;
-
+            const currentBreakPoint = responsive[breakpoint];
+            if (!isObject(currentBreakPoint)) return acc;
             return joinProperties({ props: acc, replaceProps: currentBreakPoint });
         }, props);
     };

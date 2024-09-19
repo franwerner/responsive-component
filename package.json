@@ -3,21 +3,12 @@
   "private": true,
   "version": "0.0.0",
   "type": "module",
+  "main": "dist/index.umd.js",
+  "module": "dist/index.es.js",
+  "types": "dist/lib/index.d.ts",
   "files": [
     "dist/**/*"
   ],
-  "exports": {
-    ".": {
-      "import": "./dist/index.es.js",
-      "require": "./dist/index.cjs.js",
-      "types": "./dist/lib/index.d.ts"
-    },
-    "./breakpoints": {
-      "import": "./dist/breakpoints.es.js",
-      "require": "./dist/breakpoints.cjs.js",
-      "types": "./dist/src/constant/index.d.ts"
-    }
-  },
   "scripts": {
     "dev": "vite",
     "build": "tsc && vite build ",
@@ -25,7 +16,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "framer-motion": "^10.18.0",
+    "framer-motion": "^11.5.4",
     "react": "^18.3.1",
     "react-dom": "^18.3.1"
   },

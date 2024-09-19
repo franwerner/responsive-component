@@ -1,7 +1,11 @@
 import ResponsiveComponent from "@/components/ResponsiveComponent"
-import {createBreakpoints} from "./utils/createBreakpoints.utils"
+import { createBreakpoints } from "./utils/createBreakpoints.utils"
+import { useState } from "react"
+import { AnimatePresence } from "framer-motion"
 
 function App() {
+
+  const [ch, setCh] = useState(true)
 
   const breakPointDefault = {
     "xs": 440,
@@ -12,37 +16,56 @@ function App() {
     "2xl": 1536,
   }
 
-
   const f = createBreakpoints(breakPointDefault)
 
-  return (
-    <ResponsiveComponent
-      breakpoints={f}
-      whileHover={{
-        paddingLeft: 150
-      }}
-      animate={{
-        backgroundColor: "#FF0000",
-        paddingLeft: 30
-      }}
+  /**
+   * NO SE DEBEN AGREGAR PROPIEADES NUEVAS ENTRE RENDERIZADOS.
+   * DEBIDO A QUE EL USEFFECT QUE MANEJA INTERNAMENTE DE EL RESTEO DE LAS PROPIEADES SOLO ALMACENA LAS PROPIEDADES ENTRANTES CADA VEZ QUE CAMBIE EL BREAKPOINT
+   * POR LO TANTO AGREGAR PROPIEDADES NUEVAS NO ES VALIDO Y GENERA INCONSISTENCIAS.
+   * PARA HACERLO DE FORMA CORRECTA ES PROPORCIONADO LA PROPIEDAD IGUAL Y AGREGANDOLE LOGICA PARA UN VALOR POR DEFECTO.
+   * {
+   * backgroundColor : state ? "#FF0000" : "#FFF"
+   * }
+   * 
+   */
 
-      responsive={{
-        xs: {
-          animate: {
-            backgroundColor: "#d3d3"
-          }
-        },
-        md: {
-          animate: {
-            backgroundColor: "#008000"
-          }
-        }
-      }}
-    >
-      <p style={{ height: "300px" }}>
-        Testing componentsdasdsdsadsdasdasdasdasdasdasdasdasdasdasdasd
-      </p>
-    </ResponsiveComponent>
+
+  return (
+    <>
+      <button onClick={() => setCh(prev => !prev)}>Click</button>
+      <AnimatePresence>
+      {
+        ch &&
+          <ResponsiveComponent
+            as="div"
+            breakpoints={f}
+            responsiveConfig={{
+              xs: {
+                maxWidth: true
+              }
+            }}
+            animate={{
+              padding: 0
+            }}
+            responsive={{
+              lg: {
+                animate: {
+                  padding: 30
+                },
+               
+              },
+              xs: {
+                animate: {
+                  paddingTop: 34,
+                },
+              }
+            }}
+          >
+            Testing componentsdasdsdsadsdasdasdasdasdasdasdasdasdasdasdasd
+          </ResponsiveComponent>
+      }
+      </AnimatePresence>
+    </>
   )
 }
 

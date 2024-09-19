@@ -21,13 +21,10 @@ export default defineConfig(() => {
     build: {
       outDir: "dist",
       lib: {
-        entry: {
-          index: path.resolve(__dirname, 'lib/index.ts'),
-          breakpoints: path.resolve(__dirname, "lib/breakpoints.ts"),
-        },
-        name: 'index',
-        formats: ['es', 'cjs'],
-        fileName: (format, filename) => `${filename}.${format}.js`,
+        entry:path.resolve(__dirname, 'lib/index.ts'),
+        name : "index",
+        formats: ['es', 'umd'],
+        fileName: (format) => `index.${format}.js`,
       },
       rollupOptions: {
         external: ['react', 'react-dom', "framer-motion"],
