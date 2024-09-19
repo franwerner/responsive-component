@@ -37,31 +37,11 @@ function App() {
       {
         ch &&
           <ResponsiveComponent
-            as="div"
-            breakpoints={f}
-            responsiveConfig={{
-              xs: {
-                maxWidth: true
-              }
-            }}
-            animate={{
-              padding: 0
-            }}
-            responsive={{
-              lg: {
-                animate: {
-                  padding: 30
-                },
-               
-              },
-              xs: {
-                animate: {
-                  paddingTop: 34,
-                },
-              }
-            }}
+          breakpoints={f}
           >
-            Testing componentsdasdsdsadsdasdasdasdasdasdasdasdasdasdasdasd
+           {() => {
+                return <div>asdsad</div>
+           }}
           </ResponsiveComponent>
       }
       </AnimatePresence>

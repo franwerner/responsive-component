@@ -1,8 +1,8 @@
 import { isNumber } from "my-utilities";
 import { AdaptedBreakpoints } from "./createBreakpoints.utils";
-import { ResponsiveConfig } from "@/types/responsive-component.types"
+import { ResponsiveConfig } from "@/types/responsive.type"
 
-interface CalculateBreakPoints<T> {
+interface CalculateBreakPoints<T extends AdaptedBreakpoints<T>> {
     activeBreakpoints: (keyof T)[],
     responsiveConfig?: ResponsiveConfig<T>,
     breakPoints: AdaptedBreakpoints<T>
@@ -18,7 +18,7 @@ type ReturnTypeCalculateGeneral<T> = {
     maxWidth?: number
 }[]
 
-const calculateGeneral = <T>({ activeBreakpoints, responsiveConfig = {}, breakPoints }: CalculateBreakPoints<T>): ReturnTypeCalculateGeneral<T> => {
+const calculateGeneral = <T extends AdaptedBreakpoints<T>>({ activeBreakpoints, responsiveConfig = {}, breakPoints }: CalculateBreakPoints<T>): ReturnTypeCalculateGeneral<T> => {
     //ordena y calcula los breakpoint segun la configuracion indicada, para que sepa que breakpoint estan antes o se añaden depues.
     //El Unico criterio a tener en cuenta es que si hay un maxWidth = true, siempre va antes que los elemetos que tienen un minWidth.
     return activeBreakpoints.map(key => {
@@ -51,14 +51,14 @@ const GroupByBreakPoint = <T>(array: ReturnTypeCalculateGeneral<T>) => {
 }
 
 
-const calculateBreakPoints = <T>({ activeBreakpoints, responsiveConfig, breakPoints }: CalculateBreakPoints<T>) => {
+const calculateBreakPoints = <T extends AdaptedBreakpoints<T>>({ activeBreakpoints, responsiveConfig, breakPoints }: CalculateBreakPoints<T>) => {
     return GroupByBreakPoint(calculateGeneral({ activeBreakpoints, responsiveConfig, breakPoints }));
 }
 
-interface CalculateBreakPointsForWidth<T> extends CalculateBreakPoints<T> {
+interface CalculateBreakPointsForWidth<T extends AdaptedBreakpoints<T>> extends CalculateBreakPoints<T> {
     width: number;
 }
-const calculateBreakPointsForWidth = <T>({ width, activeBreakpoints, responsiveConfig, breakPoints }: CalculateBreakPointsForWidth<T>) => {
+const calculateBreakPointsForWidth = <T extends AdaptedBreakpoints<T>>({ width, activeBreakpoints, responsiveConfig, breakPoints }: CalculateBreakPointsForWidth<T>) => {
     return GroupByBreakPoint(
         calculateGeneral({ activeBreakpoints, responsiveConfig, breakPoints })
             .filter(({ maxWidth, minWidth }) => {

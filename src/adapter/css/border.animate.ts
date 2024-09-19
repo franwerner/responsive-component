@@ -1,6 +1,6 @@
 import {isString} from "my-utilities"
 import getDirections from "./utils/getDirections.utils"
-import { AnimateProps } from "@/types/responsive-component.types"
+import { AnimateProperties } from "@/types/animate.type"
 import { MotionStyle } from "framer-motion"
 
 const searchColor = (input: any) => {
@@ -15,7 +15,7 @@ const searchStyle = (input: any) => {
     }
 }
 
-const border = <T extends AnimateProps | MotionStyle | (AnimateProps & MotionStyle)>(css: T) => {
+const border = <T extends AnimateProperties | MotionStyle | (AnimateProperties & MotionStyle)>(css: T) => {
 
     const borderGlobal = css["border"]
     const borderColorGlobal = css["borderColor"]

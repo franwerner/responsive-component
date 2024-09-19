@@ -1,7 +1,7 @@
 import {isColor,isNumber} from "my-utilities"
-import { AnimateProps } from "@/types/responsive-component.types"
+import { AnimateProperties } from "@/types/animate.type"
 
-export const DefaultValues: AnimateProps = { //Estos son valores que no puede resetear por defecto correctamente.
+export const DefaultValues: AnimateProperties = { //Estos son valores que no puede resetear por defecto correctamente.
     borderBottom: "0px solid #FFF",
     borderTop: "0px solid #FFF",
     borderLeft: "0px solid #FFF",
@@ -19,8 +19,6 @@ export const DefaultValues: AnimateProps = { //Estos son valores que no puede re
     color: "#000",
 }
 
-
-
 const verificateValue = (value: any) => {
     const isArray = Array.isArray(value) ? value[0] : value
     if (isColor(isArray)) return "#FFF"
@@ -28,9 +26,9 @@ const verificateValue = (value: any) => {
     else return ""
 }
 
-const resetAnimate = (cache: AnimateProps = {}) => {
+const resetAnimate = (cache: AnimateProperties = {}) => {
 
-    const reset: AnimateProps = {}
+    const reset: AnimateProperties = {}
 
     for (const k in cache) {
         const key = k as keyof typeof cache

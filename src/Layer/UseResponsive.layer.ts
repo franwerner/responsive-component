@@ -1,15 +1,14 @@
+import { ResponsiveComponentProps } from "@/components/ResponsiveComponent";
 import useBreakPoints from "@/hooks/useBreakPoints.hook.js";
-import { AllProps, DefaultProps, HTMLMotionComponents } from "@/types/responsive-component.types"
+import { HTMLResponsiveComponent } from "@/types/responsive.type";
+import { AnimateComponentProps } from "@/types/animate.type";
+import { AdaptedBreakpoints } from "@/utils/createBreakpoints.utils";
 import joinProperties from "@/utils/joinProperties.utils.js";
 import { isObject } from "my-utilities";
 
 
-type OmitProps = "as" | "_REF"
-function useResponsiveLayer<T extends HTMLMotionComponents, U>(props: Omit<AllProps<T, U>, OmitProps>): DefaultProps<T> & { lastestBreakPoint: string }
-function useResponsiveLayer<T extends HTMLMotionComponents, U>(props: Omit<AllProps<T, U>, OmitProps | "controls">): DefaultProps<T> & { lastestBreakPoint: string }
-
-function useResponsiveLayer<T extends HTMLMotionComponents, U = never>(
-    { responsive, responsiveConfig, breakpoints, ...props }: AllProps<T, U>
+function useResponsiveLayer<T extends HTMLResponsiveComponent, U extends AdaptedBreakpoints<U> = never>(
+    { responsive, responsiveConfig, breakpoints, ...props }: Omit<ResponsiveComponentProps<T, U>,"as">
 ) {
     const activeBreakpoints = Object.keys(responsive || {});
 
@@ -28,7 +27,7 @@ function useResponsiveLayer<T extends HTMLMotionComponents, U = never>(
     };
 
     return {
-        ...calculateResponsive() as DefaultProps<T>,
+        ...(calculateResponsive() as unknown) as AnimateComponentProps<T>,
         lastestBreakPoint: JSONlastestBreakPoint
     }
 };

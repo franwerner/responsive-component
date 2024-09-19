@@ -1,6 +1,8 @@
 import { cssAdapter } from "@/adapter/css/css.adapter.js";
-import { AnimateProps, DefaultProps, HTMLMotionComponents, LiteProps } from "@/types/responsive-component.types";
+import { AnimateProperties, AnimateComponentProps } from "@/types/animate.type";
+import { HTMLResponsiveComponent } from "@/types/responsive.type";
 import resetAnimate from "@/utils/resetAnimate.utils.js";
+import { MotionComponentProps } from "@/components/MotionComponent";
 import { useEffect, useMemo, useRef } from "react";
 
 
@@ -17,14 +19,15 @@ import { useEffect, useMemo, useRef } from "react";
  * Beneficio : Garantiza que las animaciones se comporten de manera predecible y suave, evitando problemas de inconsistencias.
  */
 
-type AnimationLayerProps<T extends HTMLMotionComponents> = {
+type AnimationLayerProps<T extends HTMLResponsiveComponent> = {
     lastestBreakPoint?: string
-} & DefaultProps<T>
+} & AnimateComponentProps<T>
 
-function useAnimationLayer<T extends HTMLMotionComponents>(props: Omit<LiteProps<T>, "as" | "_REF">): DefaultProps<T>
-function useAnimationLayer<T extends HTMLMotionComponents>(props: AnimationLayerProps<T>): DefaultProps<T>
+function useAnimationLayer<T extends HTMLResponsiveComponent>(props: Omit<AnimationLayerProps<T>, "as">): AnimateComponentProps<T>
+function useAnimationLayer<T extends HTMLResponsiveComponent>(props: Omit<MotionComponentProps<T>, "as">): AnimateComponentProps<T>
 
-function useAnimationLayer<T extends HTMLMotionComponents>({ lastestBreakPoint, ...props }: AnimationLayerProps<T>) {
+
+function useAnimationLayer<T extends HTMLResponsiveComponent>({ lastestBreakPoint, ...props }: AnimationLayerProps<T>) {
 
     const {
         style,
@@ -48,7 +51,7 @@ function useAnimationLayer<T extends HTMLMotionComponents>({ lastestBreakPoint, 
         whileInView: cssAdapter(whileInView),
     }
 
-    const reseteableProperties = useRef<AnimateProps>({})
+    const reseteableProperties = useRef<AnimateProperties>({})
 
     const resetAnimations = useMemo(() => {
         const ref = reseteableProperties.current
@@ -61,7 +64,7 @@ function useAnimationLayer<T extends HTMLMotionComponents>({ lastestBreakPoint, 
     useEffect(() => {
         if (!lastestBreakPoint) return
         const { animate, whileFocus, whileInView, whileHover, whileDrag, whileTap } = adapters
-        for (const value of [animate, whileInView, whileHover, whileDrag, whileTap,whileFocus]) {
+        for (const value of [animate, whileInView, whileHover, whileDrag, whileTap, whileFocus]) {
             Object.assign(reseteableProperties.current, value)
             /**
              * Almacenamos las propiedades para el breakponint posterior,

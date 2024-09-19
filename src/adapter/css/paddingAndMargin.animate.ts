@@ -1,4 +1,4 @@
-import { AnimateProps } from "@/types/responsive-component.types";
+import { AnimateProperties } from "@/types/animate.type";
 import getDirections, { Directions } from "./utils/getDirections.utils";
 import { MotionStyle } from "framer-motion";
 
@@ -7,7 +7,7 @@ interface IGetProperty {
     direction: `margin${Directions}` | `padding${Directions}`
 }
 
-const paddingAndMargin = <T extends AnimateProps | MotionStyle | (AnimateProps & MotionStyle)>(style: T) => {
+const paddingAndMargin = <T extends AnimateProperties | MotionStyle | (AnimateProperties & MotionStyle)>(style: T) => {
 
 
     const getProperty = ({ property, direction }: IGetProperty) => {
