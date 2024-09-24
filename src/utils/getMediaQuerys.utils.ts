@@ -30,12 +30,13 @@ const viewPort = (i: ViewPortType) => {
 
     const and = queryMin && queryMax ? "and" : ""
 
-    const isMaxLessThanMin = (maxWidth || Infinity) < (minWidth || 0)
+    const isMaxLessThanMin =  (maxWidth ?? Infinity) < (minWidth ?? 0)
 
     if (!queryMin && !queryMax) {
         return
     } else if (isMaxLessThanMin) {
-        return console.warn(`The maximum is less than the minimum`);
+         console.warn(`The maximum is less than the minimum`);
+         return
     }
 
     return `${queryMin} ${and} ${queryMax}`

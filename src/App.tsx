@@ -34,18 +34,19 @@ function App() {
           drag="y"
           dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
           dragTransition={{ bounceStiffness: 600, bounceDamping: 20 }}
+          whileTap={
+            { borderRadius: "0%" }
+          }
+
           responsive={{
             lg: {
               animate: {
                 border: "10px solid #f3f3",
                 borderColor: "#FF0000 #000",
-                borderTop : "10px solid #d3d3",
+                borderTop: "10px solid #d3d3",
                 display: "flex",
                 borderRadius: "50%",
               },
-              whileDrag : {
-                borderRadius: "20%"
-              }
 
             },
             sm: {

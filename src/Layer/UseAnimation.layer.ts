@@ -1,10 +1,10 @@
-import { cssAdapter } from "@/adapter/css/css.adapter.js";
+import { cssAdapter } from "@/helper/css-adapter/css-adapter.helper.js";
 import { AnimateProperties } from "@/types/animate.type";
 import { HTMLResponsiveComponent } from "@/types/responsive.type";
 import { AdaptedBreakpoints } from "@/utils/createBreakpoints.utils";
-import resetAnimate, { onlyResetteableProperties } from "@/utils/resetAnimate.utils.js";
 import { useMemo, useRef } from "react";
 import { ReturnTypeResponsiveLayer } from "./UseResponsive.layer";
+import resetAnimate, { onlyResetteableProperties } from "@/helper/resetAnimate.helper";
 
 type ReturnTypeAnimationLayer<T extends HTMLResponsiveComponent, U extends AdaptedBreakpoints<U>> = Omit<ReturnTypeResponsiveLayer<T, U>, "currentBreakPoints">
 
