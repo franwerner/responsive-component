@@ -1,6 +1,6 @@
-import {isNumber,isObject,isString} from "my-utilities"
+import { isNumber, isObject, isString } from "my-utilities"
 
-type size = number | false
+type size = number | false | undefined
 
 type ViewPortType = { minWidth?: size, maxWidth?: size }
 
@@ -24,12 +24,13 @@ const viewPort = (i: ViewPortType) => {
 
     const { maxWidth, minWidth } = i
 
-    const queryMin = isNumber(minWidth) && minWidth >= 0 && isFinite(minWidth) ? `(min-width: ${minWidth}px)` : ""
-    const queryMax = isNumber(maxWidth) && maxWidth >= 0 && isFinite(maxWidth) ? `(max-width: ${maxWidth}px)` : ""
+    const verification = (input: size) => isNumber(input) && input >= 0 && isFinite(input)
+    const queryMin = verification(minWidth) ? `(min-width: ${minWidth}px)` : ""
+    const queryMax = verification(maxWidth) ? `(max-width: ${maxWidth}px)` : ""
 
     const and = queryMin && queryMax ? "and" : ""
 
-    const isMaxLessThanMin = (maxWidth || Infinity) < (minWidth || -Infinity)
+    const isMaxLessThanMin = (maxWidth || Infinity) < (minWidth || 0)
 
     if (!queryMin && !queryMax) {
         return
@@ -49,10 +50,11 @@ const getMediaQuerys = <T extends string>(query: GetMediaQuery<T>) => {
 
         const value = query[key]
 
-        const isCustom = isString(value) ? value : (isObject(value) && viewPort(value))
+        const isCustom = isString(value) && value
+        const isViewPort = isObject(value) && viewPort(value)
         const defaultQuery = "(max-width: -1px)" //Sirve para que el matches siempre sea false en caso de que no se aplique nada
 
-        const media = window.matchMedia(isCustom || defaultQuery) as MediaQueryListModify
+        const media = window.matchMedia(isCustom || isViewPort || defaultQuery) as MediaQueryListModify
         media.name = key
         mediaQuerys[key] = media
     }

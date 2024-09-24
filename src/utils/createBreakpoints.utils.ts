@@ -11,15 +11,17 @@ export const createBreakpoints = <T extends { [K in keyof T]: number }>(breakPoi
 
     let transform = {} as AdaptedBreakpoints<T>
 
-    const breakPointsKeys = Object.keys(breakPoints || {})
+    const breakPointsKeys = Object.keys(breakPoints || {}).sort((a, b) => breakPoints[a] - breakPoints[b])
 
     for (let i = 0; i < breakPointsKeys.length; i++) {
-        const nextBreakPoint = i < (breakPointsKeys.length - 1) ? breakPoints[breakPointsKeys[i + 1]] as number : window.screen.width
+        const nextBreakPoint = i < (breakPointsKeys.length - 1) ?
+            Math.floor(breakPoints[breakPointsKeys[i + 1]] as number) - 0.2 :
+            window.screen.width
 
         const key = breakPointsKeys[i] as keyof T
         transform[key] = {
-            minWidth: breakPoints[key],
-            maxWidth: nextBreakPoint - 1
+            minWidth: Math.floor(breakPoints[key]),
+            maxWidth: nextBreakPoint
 
         }
     }

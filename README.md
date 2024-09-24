@@ -13,7 +13,7 @@
 # Características Principales:
 Compatibilidad con Estilos `CSS` siempre y cuando no esten definidos en la propiedad animate.
 Debido a que las propiedad identicas a las animadas que se resetean o se esten aplicando tiene mayor prioridad siempre.
-Entonces `RECOMIENDO` el uso de `CSS` siempre y cuando no esten definidas en animate para evitar inconsistencias.
+Entonces `RECOMIENDO` el uso de `CSS` siempre y cuando no esten definidas en propiedades animables para evitar inconsistencias.
 
 # Resteo de priopiedades:
 El resteo de las propiedades animadas se basan en la acomulacion del uso entre diferentes breakpoints.

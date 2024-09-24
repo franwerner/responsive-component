@@ -1,6 +1,10 @@
-import {isObject} from "my-utilities";
-import border from "./border.animate";
-import paddingAndMargin from "./paddingAndMargin.animate";
+import { isObject } from "my-utilities";
+import border from "./styles/border.style";
+import padding from "./styles/padding.style";
+import margin from "./styles/margin.style";
+import inset from "./styles/inset.style";
+import borderRadius from "./styles/border-radius.style";
+
 
 /**
  * @description 
@@ -16,17 +20,29 @@ import paddingAndMargin from "./paddingAndMargin.animate";
  *    En cambio utilizando @method cssAdapter , nos ayudara a adaptar las propiedades según el caso, evitando colisiones con los reseteos de otros breakpoints.
  */
 
+const filterkeys = [
+    "border",
+    "borderColor",
+    "borderStyle",
+    "padding",
+    "margin",
+    "inset",
+    "borderRadius",
+    ...(["TopLeft", "TopRight", "BottomLeft", "BottomRight"].map(i => `border${i}Radius`))
+]
 
 export const cssAdapter = <T extends object>(css?: T): T => {
     if (!css || !isObject(css)) return {} as T
 
-    const filterkeys = ["border", "borderColor", "borderStyle", "padding", "margin"]
 
     const restCss = Object.fromEntries(Object.entries(css).filter(([key]) => !filterkeys.includes(key.toString())))
 
     const res = {
+        ...borderRadius(css),
+        ...inset(css),
         ...border(css),
-        ...paddingAndMargin(css),
+        ...padding(css),
+        ...margin(css),
         ...restCss,
     }
 

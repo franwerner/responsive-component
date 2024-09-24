@@ -1,36 +1,42 @@
 import { ResponsiveComponentProps } from "@/components/ResponsiveComponent";
 import useBreakPoints from "@/hooks/useBreakPoints.hook.js";
 import { HTMLResponsiveComponent } from "@/types/responsive.type";
-import { AnimateComponentProps } from "@/types/animate.type";
 import { AdaptedBreakpoints } from "@/utils/createBreakpoints.utils";
 import joinProperties from "@/utils/joinProperties.utils.js";
-import { isObject } from "my-utilities";
+import { isFunction, isObject } from "my-utilities";
+import { useEffect } from "react";
 
+type ReturnTypeResponsiveLayer<T extends HTMLResponsiveComponent, U extends AdaptedBreakpoints<U> = never> =
+    Omit<ResponsiveComponentProps<T, U>, "responsive" | "responsiveConfig" | "breakpoints" | "observerBreakpoints">
+    & { currentBreakPoints: (keyof U)[] }
 
 function useResponsiveLayer<T extends HTMLResponsiveComponent, U extends AdaptedBreakpoints<U> = never>(
-    { responsive, responsiveConfig, breakpoints, ...props }: Omit<ResponsiveComponentProps<T, U>,"as">
-) {
+    { responsive, responsiveConfig, breakpoints, observerBreakpoints, ...props }: ResponsiveComponentProps<T, U>
+): ReturnTypeResponsiveLayer<T, U> {
     const activeBreakpoints = Object.keys(responsive || {});
 
-    const currentBreakPoint = useBreakPoints({ activeBreakpoints, responsiveConfig, breakPoints: breakpoints });
+    const currentBreakPoints = useBreakPoints({ activeBreakpoints, responsiveConfig, breakPoints: breakpoints });
 
-    const JSONlastestBreakPoint = JSON.stringify(currentBreakPoint);
+    useEffect(() => {
+        isFunction(observerBreakpoints) && observerBreakpoints(currentBreakPoints[currentBreakPoints.length - 1])
+    }, [JSON.stringify(currentBreakPoints)])
+
 
     const calculateResponsive = () => {
         if (!isObject(responsive)) return props;
-
-        return currentBreakPoint.reduce((acc, breakpoint) => {
-            const currentBreakPoint = responsive[breakpoint];
-            if (!isObject(currentBreakPoint)) return acc;
-            return joinProperties({ props: acc, replaceProps: currentBreakPoint });
+        return currentBreakPoints.reduce((acc, breakpoint) => {
+            const currentBreakPoints = responsive[breakpoint];
+            if (!isObject(currentBreakPoints)) return acc;
+            return joinProperties({ props: acc, replaceProps: currentBreakPoints });
         }, props);
     };
 
     return {
-        ...(calculateResponsive() as unknown) as AnimateComponentProps<T>,
-        lastestBreakPoint: JSONlastestBreakPoint
+        ...calculateResponsive(),
+        currentBreakPoints: currentBreakPoints
     }
 };
 
+export type { ReturnTypeResponsiveLayer }
 export default useResponsiveLayer;
 

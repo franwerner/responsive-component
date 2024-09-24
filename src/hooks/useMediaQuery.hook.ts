@@ -2,28 +2,44 @@
 import { useEffect, useMemo, useState } from "react"
 import getMediaQuerys, { GetMediaQuery, MediaQueryListEventModify } from "@/utils/getMediaQuerys.utils"
 
-const useMediaQuery = <T extends string>(query: GetMediaQuery<T>,watch : boolean = true) => {
+
+const useMediaQuery = <T extends string>(query: GetMediaQuery<T>, watch: boolean = true) => {
 
     const InitialState = useMemo(() => getMediaQuerys(query), [JSON.stringify(query)])
 
     const [mediaQuerys, setMediaQuerys] = useState(InitialState)
 
     useEffect(() => {
-
         if (!InitialState || !watch) return
 
         InitialState !== mediaQuerys && setMediaQuerys(InitialState)
 
-        const onChange = (e: MediaQueryListEventModify) => {
-            setMediaQuerys(prev => {
-                const key = e.target.name
-                return {
-                    ...prev,
-                    [key]: e.target
-                };
-            });
-        }
+        /**
+         * @description
+         * Si multiples mediaQueries se ejecutan al mismo tiempo, primero se almacenaran en @stackMediaQuerys y unicamente en la primera ejecuccion se creara el @timeout .
+         * Luego una vez se libere la @macrotask de los eventos stackeados, se ejecuta el callback del timeout (Siempre el timeout se encoloca luego de los eventos procesados en simultaneo.)
+         */
 
+        let stackMediaQuerys = [] as MediaQueryListEventModify[]
+        let timeOut: NodeJS.Timeout | null = null
+
+        const onChange = (e: MediaQueryListEventModify) => {
+            stackMediaQuerys.push(e)
+            if (timeOut) return
+            timeOut = setTimeout(() => {
+                timeOut = null
+                setMediaQuerys(prev => {
+                    const newStack = stackMediaQuerys.reduce((acc, current) => {
+                        return {
+                            ...acc,
+                            [current.target.name]: current.target
+                        }
+                    }, prev)
+                    stackMediaQuerys = []
+                    return newStack
+                });
+            })
+        }
 
         for (const key in InitialState) {
             const media = InitialState[key]
@@ -35,12 +51,16 @@ const useMediaQuery = <T extends string>(query: GetMediaQuery<T>,watch : boolean
                 const media = InitialState[key]
                 media.removeEventListener("change", onChange as EventListener)
             }
+            if (timeOut) clearTimeout(timeOut)
         }
 
-    }, [InitialState,watch])
+    }, [InitialState, watch])
 
     return watch ? mediaQuerys : {} as typeof InitialState
 
 }
 
 export default useMediaQuery
+
+
+

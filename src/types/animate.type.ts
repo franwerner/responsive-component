@@ -11,7 +11,7 @@ type RemoveNotStylesKeys<T> = {
     [K in keyof T as K extends (AllKeysHtmlAtt | Function) ? never : K]?: T[K]
 }
 
-type OmitMotionProps = Omit<MotionProps, "custom" | "animate" | "exit" | "initial" | "whileFocus" | "whileHover" | "whileInView" | "whileTap" | "whileDrag" >
+type OmitMotionProps = Omit<MotionProps, "custom" | "animate" | "exit" | "initial" | "whileFocus" | "whileHover" | "whileInView" | "whileTap" | "whileDrag">
 
 type AnimateProperties = RemoveNotStylesKeys<TargetAndTransition>
 
@@ -26,12 +26,12 @@ type AnimatableOnly = {
     whileDrag?: AnimateProperties
 }
 
-type AnimateComponentProps<T extends HTMLResponsiveComponent = "div"> = Omit<ComponentProps<T>,"children"> & (OmitMotionProps & AnimatableOnly)
+type AnimateComponentProps<T extends HTMLResponsiveComponent = "div"> = ComponentProps<T> & (OmitMotionProps & AnimatableOnly)
 
 
 
 export type {
     AnimateComponentProps,
-    AnimateProperties, 
+    AnimateProperties,
     AnimatableOnly
 }
