@@ -36,7 +36,7 @@ export const cssAdapter = <T extends object>(css?: T): T => {
 
 
     const restCss = Object.fromEntries(Object.entries(css).filter(([key]) => !filterkeys.includes(key.toString())))
-
+        
     const res = {
         ...borderRadius(css),
         ...inset(css),

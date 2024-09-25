@@ -1,5 +1,5 @@
 
-const getDirectionsValues = (value: string, index: number) => {
+const getDirectionsValues = (value: string, index: number):string | undefined => {
 
     const split = value.trim().split(" ")
     const splitLength = split.length

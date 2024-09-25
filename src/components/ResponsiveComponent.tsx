@@ -47,6 +47,8 @@ function ResponsiveComponent
         props: ResponsiveComponentProps<T, U>
     ) {
 
+
+
     const responsiveProps = useResponsiveLayer(props);
     const childrenProps = useChildrenLayer(responsiveProps)
     const {as = "div",...rest} = useAnimationLayer(childrenProps)

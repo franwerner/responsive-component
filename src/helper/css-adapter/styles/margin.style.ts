@@ -13,14 +13,17 @@ const margin = <T extends AnimateProperties | MotionStyle | (AnimateProperties &
     const isMarginString = isString(marginValue)
 
     return getDirections((direction, index) => {
+
         const marginDirection = `margin${direction}` as const
 
-        const directionValue = isMarginString && getDirectionsValues(marginValue, index)
+        const marginDirectionStyle = style[marginDirection]
 
-        if (isMarginString && !directionValue) return 
+        const finalValue = isMarginString && !marginDirectionStyle ? getDirectionsValues(marginValue, index) : marginValue
+
+        if (!finalValue) return
 
         return {
-            [marginDirection]: directionValue || marginValue
+            [marginDirection]: finalValue
         }
     })
 

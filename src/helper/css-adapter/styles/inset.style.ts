@@ -7,25 +7,23 @@ import { isString } from "my-utilities"
 const inset = <T extends AnimateProperties | MotionStyle | (AnimateProperties & MotionStyle)>(style: T) => {
 
     const insetValue = style["inset"]
+    
+    if (!insetValue) return {}
 
     const isInsetString = isString(insetValue)
-
-    if (!insetValue) return {}
 
     return getDirections((direction, index) => {
 
         const directionLowerCase = direction.toLowerCase() as keyof typeof style
 
-        const directionStyle = style?.[directionLowerCase]
+        const directionStyle = style[directionLowerCase]
 
-        if (directionStyle) return
+        const finalValue = isInsetString && !directionStyle ? getDirectionsValues(insetValue, index) : insetValue
 
-        const directionValue = isInsetString && getDirectionsValues(insetValue, index)
-
-        if (!directionValue && isInsetString) return
+        if (!finalValue) return
 
         return {
-            [directionLowerCase]: directionValue || insetValue
+            [directionLowerCase]: finalValue
         }
     })
 

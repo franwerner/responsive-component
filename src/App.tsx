@@ -20,6 +20,7 @@ function App() {
 
   const f = createBreakpoints(breakPointDefault)
 
+
   return (
     <>
       <button onClick={() => setCh(prev => !prev)} style={{ backgroundColor: ch ? "#FF0000" : "#ffff" }}>Click</button>
@@ -31,21 +32,21 @@ function App() {
               maxWidth: true
             },
           }}
+          whileTap = {{
+            height : "100vh"
+          }}
           drag="y"
           dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
           dragTransition={{ bounceStiffness: 600, bounceDamping: 20 }}
-          whileTap={
-            { borderRadius: "0%" }
-          }
-
           responsive={{
             lg: {
               animate: {
-                border: "10px solid #f3f3",
-                borderColor: "#FF0000 #000",
-                borderTop: "10px solid #d3d3",
+                borderTop: "10px solid #f3f3",
+                borderTopColor : "#0e0e",
+                borderColor: "#FF0000 #000 #0e0e",
+                borderStyle : "dotted dashed solid",
                 display: "flex",
-                borderRadius: "50%",
+                height : "30vh"
               },
 
             },

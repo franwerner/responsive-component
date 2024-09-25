@@ -11,13 +11,17 @@ const padding = <T extends AnimateProperties | MotionStyle | (AnimateProperties 
 
     const isPaddingString = isString(paddingValue)
     return getDirections((direction, index) => {
-        const paddingDirection = `padding${direction}` as const
-        const directionValue = isPaddingString && getDirectionsValues(paddingValue, index)
 
-        if (!directionValue && isPaddingString) return
+        const paddingDirection = `padding${direction}` as const
+
+        const paddingDirectionStyle = style[paddingDirection]
+
+        const finalValue = isPaddingString && !paddingDirectionStyle ? getDirectionsValues(paddingValue, index) : paddingValue
+
+        if (!finalValue) return
 
         return {
-            [paddingDirection]: directionValue || paddingValue
+            [paddingDirection]: finalValue
         }
     })
 
