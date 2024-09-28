@@ -1,10 +1,10 @@
-import { AnimateProperties } from "@/types/animate.type"
+import { AnimationProperties } from "@/types/animate.type"
 import { MotionStyle } from "framer-motion"
 import getDirections from "../utils/getDirections.utils"
 import getDirectionsValues from "../utils/getDirectionsValues.utils"
 import { isString } from "my-utilities"
 
-const inset = <T extends AnimateProperties | MotionStyle | (AnimateProperties & MotionStyle)>(style: T) => {
+const inset = <T extends AnimationProperties | MotionStyle | (AnimationProperties & MotionStyle)>(style: T) => {
 
     const insetValue = style["inset"]
     
@@ -20,7 +20,7 @@ const inset = <T extends AnimateProperties | MotionStyle | (AnimateProperties & 
 
         const finalValue = isInsetString && !directionStyle ? getDirectionsValues(insetValue, index) : insetValue
 
-        if (!finalValue) return
+        if (!finalValue && finalValue !== 0) return
 
         return {
             [directionLowerCase]: finalValue

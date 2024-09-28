@@ -1,10 +1,10 @@
-import { AnimateProperties } from "@/types/animate.type"
+import { AnimationProperties } from "@/types/animate.type"
 import getDirections from "../utils/getDirections.utils"
 import { MotionStyle } from "framer-motion"
 import getDirectionsValues from "../utils/getDirectionsValues.utils"
 import { isString } from "my-utilities"
 
-const margin = <T extends AnimateProperties | MotionStyle | (AnimateProperties & MotionStyle)>(style: T) => {
+const margin = <T extends AnimationProperties | MotionStyle | (AnimationProperties & MotionStyle)>(style: T) => {
 
     const marginValue = style["margin"]
 
@@ -20,7 +20,7 @@ const margin = <T extends AnimateProperties | MotionStyle | (AnimateProperties &
 
         const finalValue = isMarginString && !marginDirectionStyle ? getDirectionsValues(marginValue, index) : marginValue
 
-        if (!finalValue) return
+        if (!finalValue && finalValue !== 0) return
 
         return {
             [marginDirection]: finalValue

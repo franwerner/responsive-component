@@ -1,8 +1,9 @@
 import { isColor, isNumber } from "my-utilities"
-import { AnimateProperties } from "@/types/animate.type"
+import { AnimationProperties } from "@/types/animate.type"
+import { MotionStyle } from "framer-motion"
 
 
-export const DefaultValues: AnimateProperties = {
+export const DefaultValues: AnimationProperties = {
     borderBottom: "0px solid #FFF",
     borderTop: "0px solid #FFF",
     borderLeft: "0px solid #FFF",
@@ -29,25 +30,24 @@ const verificateValue = (value: unknown) => {
     else return "0px"
 }
 
-const onlyResetteableProperties = (animateProperties: AnimateProperties) => {
+const onlyResetteableProperties = (animateProperties: AnimationProperties | MotionStyle) => {
     const filterBoilerPlate = Object.entries(animateProperties).filter(([key, value]) => {
         const isArray = Array.isArray(value)
 
         const isDefaultValues = key in DefaultValues
         return (isArray || isDefaultValues)
     })
-
     return Object.fromEntries(filterBoilerPlate)
 }
 
-const resetAnimate = (cache: AnimateProperties = {}) => {
+const resetAnimate = (cache: AnimationProperties = {}) => {
 
-    const reset: AnimateProperties = {}
+    const reset: AnimationProperties = {}
 
     for (const k in cache) {
         const key = k as keyof typeof cache
         const cacheValue = cache[key]
-        const isDefaultValue = DefaultValues[key] 
+        const isDefaultValue = DefaultValues[key]
         const res = isDefaultValue ?? verificateValue(cacheValue)
         Object.assign(reset, { [key]: res })
     }

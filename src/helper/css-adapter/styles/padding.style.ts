@@ -1,14 +1,13 @@
 import { MotionStyle } from "framer-motion";
 import getDirections from "../utils/getDirections.utils";
-import { AnimateProperties } from "@/types/animate.type";
+import { AnimationProperties } from "@/types/animate.type";
 import { isString } from "my-utilities";
 import getDirectionsValues from "../utils/getDirectionsValues.utils";
 
-const padding = <T extends AnimateProperties | MotionStyle | (AnimateProperties & MotionStyle)>(style: T) => {
+const padding = <T extends AnimationProperties | MotionStyle | (AnimationProperties & MotionStyle)>(style: T) => {
 
     const paddingValue = style["padding"]
     if (!paddingValue) return {}
-
     const isPaddingString = isString(paddingValue)
     return getDirections((direction, index) => {
 
@@ -18,7 +17,7 @@ const padding = <T extends AnimateProperties | MotionStyle | (AnimateProperties 
 
         const finalValue = isPaddingString && !paddingDirectionStyle ? getDirectionsValues(paddingValue, index) : paddingValue
 
-        if (!finalValue) return
+        if (!finalValue && finalValue !== 0) return
 
         return {
             [paddingDirection]: finalValue

@@ -1,8 +1,8 @@
-## Tareas pendientes
+## TAREAS
 
-- [] Adaptar las variants a los breakpoints.
-- [] 
-- [] 
+- [x] Adaptar las variants a los breakpoints.
+- [x] Adaptar propieades de css
+- []  
 - [] 
 - [] 
 - [] 

@@ -11,27 +11,51 @@ type RemoveNotStylesKeys<T> = {
     [K in keyof T as K extends (AllKeysHtmlAtt | Function) ? never : K]?: T[K]
 }
 
-type OmitMotionProps = Omit<MotionProps, "custom" | "animate" | "exit" | "initial" | "whileFocus" | "whileHover" | "whileInView" | "whileTap" | "whileDrag">
+type OmitMotionProps = Omit<MotionProps, "variants" | "animate" | "exit" | "initial" | "whileFocus" | "whileHover" | "whileInView" | "whileTap" | "whileDrag">
 
-type AnimateProperties = RemoveNotStylesKeys<TargetAndTransition>
+type AnimationProperties = RemoveNotStylesKeys<TargetAndTransition>
 
-type AnimatableOnly = {
-    animate?: AnimateProperties
-    exit?: AnimateProperties
-    initial?: AnimateProperties
-    whileFocus?: AnimateProperties
-    whileHover?: AnimateProperties
-    whileInView?: AnimateProperties
-    whileTap?: AnimateProperties
-    whileDrag?: AnimateProperties
+type AnimationVariantsLabel<T extends AnimationVariants<any> = never> = Extract<keyof T, string> | (Extract<keyof T, string>)[]
+
+type VariantsAndProperties<T extends AnimationVariants<any>> = AnimationProperties | AnimationVariantsLabel<T>
+
+type AnimatableOnly<T extends AnimationVariants<any> = never> = {
+    animate?: VariantsAndProperties<T>
+    exit?: VariantsAndProperties<T>
+    initial?: VariantsAndProperties<T>
+    whileFocus?: VariantsAndProperties<T>
+    whileHover?: VariantsAndProperties<T>
+    whileInView?: VariantsAndProperties<T>
+    whileTap?: VariantsAndProperties<T>
+    whileDrag?: VariantsAndProperties<T>
+    variants?: T
 }
 
-type AnimateComponentProps<T extends HTMLResponsiveComponent = "div"> = ComponentProps<T> & (OmitMotionProps & AnimatableOnly)
+type AnimationConsumer<T = any> = (custom: T) => AnimationProperties
+type AnimationVariant = AnimationProperties | AnimationConsumer
+type AnimationVariants<T> = {
+    [K in keyof T]?:
+    T[K] extends AnimationConsumer<infer P> ? AnimationConsumer<P> : //Nos ayuda con las funciones, para que se infierar como consumer.
+    T[K] extends AnimationProperties ? T[K] :
+    T[K] extends AnimationConsumer ?
+    T[K] :
+    never
 
+};
+type AnimationComponentProps<
+    T extends HTMLResponsiveComponent = "div",
+    U extends AnimationVariants<any> = never
+> = ComponentProps<T> & (OmitMotionProps & AnimatableOnly<U>)
 
 
 export type {
-    AnimateComponentProps,
-    AnimateProperties,
-    AnimatableOnly
+    AnimatableOnly,
+    AnimationComponentProps,
+    AnimationProperties,
+    AnimationVariants,
+    AnimationVariant,
+    AnimationVariantsLabel,
+    AnimationConsumer,
+    VariantsAndProperties
 }
+

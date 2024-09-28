@@ -1,5 +1,5 @@
 import { isString } from "my-utilities"
-import { AnimateProperties } from "@/types/animate.type"
+import { AnimationProperties } from "@/types/animate.type"
 import { MotionStyle } from "framer-motion"
 import getDirections from "../utils/getDirections.utils"
 import getDirectionsValues from "../utils/getDirectionsValues.utils"
@@ -18,7 +18,7 @@ const searchStyle = (input: unknown) => {
 
 const borderTypes = ["Color", "Style"] as const
 
-const border = <T extends AnimateProperties | MotionStyle | (AnimateProperties & MotionStyle)>(style: T) => {
+const border = <T extends AnimationProperties | MotionStyle | (AnimationProperties & MotionStyle)>(style: T) => {
 
     const borderGlobal = style["border"]
     const borderColorGlobal = style["borderColor"]

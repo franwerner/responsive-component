@@ -1,4 +1,4 @@
-import { AnimateProperties } from "@/types/animate.type";
+import { AnimationProperties } from "@/types/animate.type";
 import { MotionStyle } from "framer-motion";
 import { isNumber, isString } from "my-utilities";
 import getDirectionsValues from "../utils/getDirectionsValues.utils";
@@ -12,7 +12,7 @@ const transformNumberToPixel = (input: unknown): string | string[] | undefined =
     } else if (isString(input)) return input
 }
 
-const borderRadius = <T extends AnimateProperties | MotionStyle | (AnimateProperties & MotionStyle)>(style: T) => {
+const borderRadius = <T extends AnimationProperties | MotionStyle | (AnimationProperties & MotionStyle)>(style: T) => {
 
     const borderRadiusValue = style?.["borderRadius"]
 
@@ -28,7 +28,7 @@ const borderRadius = <T extends AnimateProperties | MotionStyle | (AnimateProper
 
         const getDirectionsValue = isBorderRadiusString && !borderRadiusDirectionStyle ? getDirectionsValues(borderRadiusValue, index) : (borderRadiusDirectionStyle ?? borderRadiusValue)
 
-        if (!getDirectionsValue) return 
+        if (!getDirectionsValue && getDirectionsValue !== 0) return 
 
         return {
             [borderRadiusDirection]: transformNumberToPixel(getDirectionsValue)
