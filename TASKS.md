@@ -2,7 +2,7 @@
 
 - [x] Adaptar las variants a los breakpoints.
 - [x] Adaptar propieades de css
-- []  
+- [] Crear un motion-component generico para el uso del reseteo de propiedades.  
 - [] 
 - [] 
 - [] 

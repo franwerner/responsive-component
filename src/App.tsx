@@ -3,14 +3,6 @@ import { useState } from "react"
 import { AnimationVariants } from "./types/animate.type"
 import { createBreakpoints } from "./utils/createBreakpoints.utils"
 
-/**
- * Deberia obtener verificar siempre en base la prop si es un string.
- * En caso de que lo sea verifica si es una variante y une el objecto de la variante con el objecto del breakpoint.
- * 
- *  */
-
-
-
 function App() {
 
   const [ch, setCh] = useState(false)
@@ -36,7 +28,10 @@ function App() {
       <button onClick={() => setCh(prev => !prev)} style={{ backgroundColor: ch ? "#FF0000" : "#ffff" }}>Click</button>
       {
         <ResponsiveComponent
-          variants={g}
+          variants={{
+            hidden: (custom) => ({ marginTop: custom,backgroundColor : "#FF0000" }),
+            show: { backgroundColor: "#FF0000", },
+          }}
           breakpoints={f}
           // responsiveConfig={{
           //   sm: {
@@ -53,13 +48,13 @@ function App() {
           dragTransition={{ bounceStiffness: 600, bounceDamping: 20 }}
           responsive={{
             lg: {
+              animate : "hidden",
               variants: {
                 hidden: (c) => ({ margin: c + 30, }),
               },
             },
             sm: {
               variants: {
-                hidden: (c) => ({ backgroundColor: "#FF0000", }),
                 show: {}
               },
             }

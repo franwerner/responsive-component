@@ -1,7 +1,7 @@
 import { AdaptedBreakpoints } from "@/utils/createBreakpoints.utils";
 import { MotionProps, MotionStyle, MotionValue } from "framer-motion";
 import { ReactNode } from "react";
-import { AnimatableOnly, AnimationComponentProps, AnimationVariant, AnimationVariants } from "./animate.type";
+import { AnimatableOnly, AnimationComponentProps, AnimationConsumer, AnimationProperties, AnimationVariants } from "./animate.type";
 
 type HTMLResponsiveComponent = keyof JSX.IntrinsicElements
 
@@ -24,7 +24,7 @@ type ResponsiveAnimate<
         [_ in keyof U]?: {
             [L in keyof ResponsiveProperties<C, K>]?:
             ResponsiveProperties<C,
-                Partial<Record<keyof K, AnimationVariant<C>>>
+                Partial<Record<keyof K, AnimationProperties | AnimationConsumer<C>>>
             >[L]
         }
     }

@@ -18,7 +18,7 @@ type AnimationVariantsLabel<K extends AnimationVariants<any> = never> = Extract<
 
 type VariantsLabelAndProperties<K extends AnimationVariants<any>> = AnimationProperties | AnimationVariantsLabel<K>
 
-type AnimatableOnly<C = any, K extends AnimationVariants<any,C> = never> = {
+type AnimatableOnly<C = any, K extends AnimationVariants<any, C> = never> = {
     variants?: K
     animate?: VariantsLabelAndProperties<K>
     exit?: VariantsLabelAndProperties<K>
@@ -30,9 +30,8 @@ type AnimatableOnly<C = any, K extends AnimationVariants<any,C> = never> = {
     whileDrag?: VariantsLabelAndProperties<K>
 }
 
-type AnimationConsumer<C extends any> = (custom?: C) => AnimationProperties
-type AnimationVariant<C> = AnimationProperties | AnimationConsumer<C>
-type AnimationVariants<K extends string = string, C = any> = Partial<Record<K, AnimationVariant<C>>>
+type AnimationConsumer<C extends any> = (custom: C) => AnimationProperties
+type AnimationVariants<K extends string = string, C = any> = Partial<Record<K, AnimationProperties | AnimationConsumer<C>>>
 
 type AnimationComponentProps<
     T extends HTMLResponsiveComponent = "div",
@@ -45,7 +44,6 @@ export type {
     AnimationComponentProps,
     AnimationProperties,
     AnimationVariants,
-    AnimationVariant,
     AnimationVariantsLabel,
     AnimationConsumer,
     VariantsLabelAndProperties,

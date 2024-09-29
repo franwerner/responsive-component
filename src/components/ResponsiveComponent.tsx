@@ -39,8 +39,6 @@ import { AdaptedBreakpoints } from "@/utils/createBreakpoints.utils";
  * };
  */
 
-
-
 type ResponsiveComponentProps<
     T extends HTMLResponsiveComponent = "div",
     U extends AdaptedBreakpoints<any> = never,
@@ -66,6 +64,8 @@ function ResponsiveComponent<
 
     return <EnhancedComponent   {...rest} />
 }
+
+
 
 export default ResponsiveComponent
 export type { ResponsiveComponentProps };

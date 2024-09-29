@@ -3,7 +3,7 @@ import { ResponsiveProperties } from "@/types/responsive.type";
 import { isFunction, isObject } from "my-utilities";
 
 
-const joinVariants = <C = any, K extends AnimationVariants<C> = never>(primary?: K, secondary?: K) => {
+const joinVariants = <C = any, K extends AnimationVariants<any, C> = never>(primary?: K, secondary?: K) => {
 
     const props = { ...primary }
 
@@ -23,19 +23,23 @@ const joinVariants = <C = any, K extends AnimationVariants<C> = never>(primary?:
     return props
 }
 
-const joinResponsiveProperties = <C = any, K extends AnimationVariants<C> = never>(primary: ResponsiveProperties<C, K>, secondary: ResponsiveProperties<C, K>) => {
-
-    const props = { ...primary }
+const joinResponsiveProperties = <
+    C = any,
+    K extends AnimationVariants<any, C> = never
+>(
+    primary: ResponsiveProperties<C, K>,
+    secondary: ResponsiveProperties<C, K>
+) => {
+    const props = { ...primary } as any
 
     for (const k in secondary) {
         const key = k as keyof ResponsiveProperties<C, K>
         const current_p = primary[key]
         const current_s = secondary[key]
+
         if (key === "variants") {
-            const g = current_s
-            props[key] = joinVariants(current_p, current_s)
-        }
-        else if (isObject(current_p) && isObject(current_s)) {
+            props[key] = joinVariants(current_p as AnimationVariants<any, C>, current_s as AnimationVariants<any, C>)
+        } else if (isObject(current_p) && isObject(current_s)) {
             props[key] = { ...current_p, ...current_s }
         } else if (Array.isArray(current_p) && Array.isArray(current_s)) {
             props[key] = [...current_p, ...current_s]
@@ -50,3 +54,5 @@ const joinResponsiveProperties = <C = any, K extends AnimationVariants<C> = neve
 };
 
 export default joinResponsiveProperties
+
+
