@@ -2,7 +2,7 @@ import useCreateMotionComponent from "@/hooks/useCreateMotionComponent.hook";
 import useAnimationLayer from "@/Layer/UseAnimation.layer";
 import useChildrenLayer from "@/Layer/useChildren.layer";
 import useResponsiveLayer from "@/Layer/UseResponsive.layer";
-import { AnimationVariants, AnimationVariant } from "@/types/animate.type";
+import { AnimationVariants } from "@/types/animate.type";
 import { AdditionalProps, HTMLResponsiveComponent, ResponsiveProps, } from "@/types/responsive.type";
 import { AdaptedBreakpoints } from "@/utils/createBreakpoints.utils";
 /**
@@ -44,17 +44,19 @@ import { AdaptedBreakpoints } from "@/utils/createBreakpoints.utils";
 type ResponsiveComponentProps<
     T extends HTMLResponsiveComponent = "div",
     U extends AdaptedBreakpoints<any> = never,
-    K extends AnimationVariants<any> = never
+    C extends any = any,
+    K extends AnimationVariants<any, C> = never
 > =
     Omit<AdditionalProps<T>, "children"> &
-    ResponsiveProps<T, U, K>
+    ResponsiveProps<T, U, C, K>
 
 function ResponsiveComponent<
     T extends HTMLResponsiveComponent = "div",
     U extends AdaptedBreakpoints<any> = never,
-    K extends AnimationVariants<any> = never
+    C extends any = any,
+    K extends AnimationVariants<any, C> = never
 >(
-    props: ResponsiveComponentProps<T, U, K>
+    props: ResponsiveComponentProps<T, U, C, K>
 ) {
 
     const responsiveProps = useResponsiveLayer(props);

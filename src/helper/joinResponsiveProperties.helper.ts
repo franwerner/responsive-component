@@ -1,19 +1,19 @@
-import { AnimationProperties, AnimationVariants, AnimationConsumer } from "@/types/animate.type";
+import { AnimationProperties, AnimationVariants } from "@/types/animate.type";
 import { ResponsiveProperties } from "@/types/responsive.type";
 import { isFunction, isObject } from "my-utilities";
 
 
-const joinVariants = <T extends AnimationVariants<any>>(primary: T, secondary: T) => {
+const joinVariants = <C = any,K extends object = never>(primary?: AnimationVariants<K,C>, secondary?: AnimationVariants<K,C>) => {
 
     const props = {...primary}
 
     for (const key in secondary) {
-        const current_p = primary[key]
+        const current_p = primary?.[key]
         const current_s = secondary[key]
         if (isObject(current_p) && isObject(current_s)) {
             props[key] = { ...current_p, ...current_s }
-        } else if (isFunction<AnimationConsumer>(current_p) && isFunction<AnimationConsumer>(current_s)) {
-            props[key] = (custom: any): AnimationProperties => {
+        } else if (isFunction(current_p) && isFunction(current_s)) {
+            props[key] = (custom: C): AnimationProperties => {
                 return { ...current_p(custom), ...current_s(custom) }
             }
         } else {
@@ -23,15 +23,16 @@ const joinVariants = <T extends AnimationVariants<any>>(primary: T, secondary: T
     return props
 }
 
-const joinResponsiveProperties = <T extends AnimationVariants<any>>(primary: ResponsiveProperties<T>, secondary: ResponsiveProperties<T>) => {
+const joinResponsiveProperties = <C = any,K extends AnimationVariants<any,C> = never>(primary: ResponsiveProperties<C,K>, secondary: ResponsiveProperties<C,K>) => {
 
     const props = {...primary}
 
     for (const k in secondary) {
-        const key = k as keyof ResponsiveProperties<T>
+        const key = k as keyof ResponsiveProperties<C,K>
         const current_p = primary[key]
         const current_s = secondary[key]
         if (key === "variants") {
+            const g = current_s
             props[key] = joinVariants(current_p, current_s)
         }
         else if (isObject(current_p) && isObject(current_s)) {
@@ -44,7 +45,7 @@ const joinResponsiveProperties = <T extends AnimationVariants<any>>(primary: Res
 
     }
 
-    return props
+    return props as ResponsiveProperties<C,K>
 
 };
 

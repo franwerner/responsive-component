@@ -7,8 +7,9 @@ import { AnimationVariants } from "@/types/animate.type";
 const useChildrenLayer = <
     T extends HTMLResponsiveComponent,
     U extends AdaptedBreakpoints<U>,
-    K extends AnimationVariants<any> = never
->(props: ReturnTypeResponsiveLayer<T, U, K>) => {
+    C = any,
+    K extends AnimationVariants<C,any> = never
+>(props: ReturnTypeResponsiveLayer<T, U, C, K>) => {
 
     const { children, currentBreakPoints } = props
 

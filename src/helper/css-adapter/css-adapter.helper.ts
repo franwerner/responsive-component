@@ -1,11 +1,11 @@
-import { isObject, isString } from "my-utilities";
-import border from "./styles/border.style";
-import padding from "./styles/padding.style";
-import margin from "./styles/margin.style";
-import inset from "./styles/inset.style";
-import borderRadius from "./styles/border-radius.style";
-import { MotionStyle } from "framer-motion";
 import { AnimationProperties } from "@/types/animate.type";
+import { MotionStyle } from "framer-motion";
+import { isObject } from "my-utilities";
+import borderRadius from "./styles/border-radius.style";
+import border from "./styles/border.style";
+import inset from "./styles/inset.style";
+import margin from "./styles/margin.style";
+import padding from "./styles/padding.style";
 
 
 /**

@@ -7,45 +7,53 @@ type AllAtributes = SVGAttributes<AriaAttributes & DOMAttributes<"svg">> & AllHT
 
 type AllKeysHtmlAtt = Exclude<keyof AllAtributes, "width" | "height" | "x" | "y" | "display" | "scale" | "color" | "opacity">
 
-type RemoveNotStylesKeys<T> = {
+type OnlyStyleProperties<T> = {
     [K in keyof T as K extends (AllKeysHtmlAtt | Function) ? never : K]?: T[K]
 }
 
-type OmitMotionProps = Omit<MotionProps, "variants" | "animate" | "exit" | "initial" | "whileFocus" | "whileHover" | "whileInView" | "whileTap" | "whileDrag">
+type OmitMotionProps = Omit<MotionProps, "custom" | "variants" | "animate" | "exit" | "initial" | "whileFocus" | "whileHover" | "whileInView" | "whileTap" | "whileDrag">
 
-type AnimationProperties = RemoveNotStylesKeys<TargetAndTransition>
+type AnimationProperties = OnlyStyleProperties<TargetAndTransition>
 
-type AnimationVariantsLabel<T extends AnimationVariants<any> = never> = Extract<keyof T, string> | (Extract<keyof T, string>)[]
+type AnimationVariantsLabel<K extends AnimationVariants<any> = never> = Extract<keyof K, string> | (Extract<keyof K, string>)[]
 
-type VariantsAndProperties<T extends AnimationVariants<any>> = AnimationProperties | AnimationVariantsLabel<T>
+type VariantsLabelAndProperties<K extends AnimationVariants<any> = never> = AnimationProperties | AnimationVariantsLabel<K>
 
-type AnimatableOnly<T extends AnimationVariants<any> = never> = {
-    animate?: VariantsAndProperties<T>
-    exit?: VariantsAndProperties<T>
-    initial?: VariantsAndProperties<T>
-    whileFocus?: VariantsAndProperties<T>
-    whileHover?: VariantsAndProperties<T>
-    whileInView?: VariantsAndProperties<T>
-    whileTap?: VariantsAndProperties<T>
-    whileDrag?: VariantsAndProperties<T>
-    variants?: T
+type AnimatableOnly<C = any, K extends AnimationVariants<any, C> = never> = {
+    variants?: K
+    animate?: VariantsLabelAndProperties<K>
+    exit?: VariantsLabelAndProperties<K>
+    initial?: VariantsLabelAndProperties<K>
+    whileFocus?: VariantsLabelAndProperties<K>
+    whileHover?: VariantsLabelAndProperties<K>
+    whileInView?: VariantsLabelAndProperties<K>
+    whileTap?: VariantsLabelAndProperties<K>
+    whileDrag?: VariantsLabelAndProperties<K>
 }
 
-type AnimationConsumer<T = any> = (custom: T) => AnimationProperties
+const G: AnimatableOnly<string, { hidden: AnimationConsumer }> = {
+    variants: {
+        hidden: (f: number) => ({})
+    }
+}
+
+type AnimationConsumer<C = any> = (custom: C) => AnimationProperties
 type AnimationVariant = AnimationProperties | AnimationConsumer
-type AnimationVariants<T> = {
-    [K in keyof T]?:
-    T[K] extends AnimationConsumer<infer P> ? AnimationConsumer<P> : //Nos ayuda con las funciones, para que se infierar como consumer.
-    T[K] extends AnimationProperties ? T[K] :
-    T[K] extends AnimationConsumer ?
-    T[K] :
+type AnimationVariants<K, C = any> = {
+    [Key in keyof K]?:
+    K[Key] extends  Function ? AnimationConsumer<C> :
+    K[Key] extends AnimationProperties ?
+    AnimationProperties :
+    K[Key] extends AnimationConsumer ?
+    AnimationConsumer<C> :
     never
 
 };
 type AnimationComponentProps<
     T extends HTMLResponsiveComponent = "div",
-    U extends AnimationVariants<any> = never
-> = ComponentProps<T> & (OmitMotionProps & AnimatableOnly<U>)
+    C = any,
+    K extends AnimationVariants<any, C> = never
+> = ComponentProps<T> & (OmitMotionProps & AnimatableOnly<C, K>) & { custom: C }
 
 
 export type {
@@ -56,6 +64,6 @@ export type {
     AnimationVariant,
     AnimationVariantsLabel,
     AnimationConsumer,
-    VariantsAndProperties
+    VariantsLabelAndProperties
 }
 

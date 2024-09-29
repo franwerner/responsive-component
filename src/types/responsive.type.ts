@@ -5,27 +5,30 @@ import { AnimatableOnly, AnimationProperties, AnimationComponentProps, Animation
 
 type HTMLResponsiveComponent = keyof JSX.IntrinsicElements
 
-type ResponsiveProperties<T extends AnimationVariants<any> = never> = {
+type ResponsiveProperties<C = any,K extends AnimationVariants<any,C> = never> = {
     style?: MotionStyle,
     dragConstraints?: MotionProps["dragConstraints"],
     transition?: MotionProps["transition"],
     dragTransition?: MotionProps["dragTransition"]
-    custom?: any
-} & AnimatableOnly<T>
+} & AnimatableOnly<C,K>
 
 type ResponsiveAnimate<
-    T extends AdaptedBreakpoints<any>,
-    U extends AnimationVariants<any> = never
+    U extends AdaptedBreakpoints<any>,
+    C = any,
+    K extends AnimationVariants<any, C> = never
 > = {
-        [K in keyof T]?: {
-            [L in keyof ResponsiveProperties<U>]?: ResponsiveProperties<
+        [_ in keyof U]?: {
+            [L in keyof ResponsiveProperties<C,K>]?: ResponsiveProperties<C,
                 {
-                    [K2 in keyof U]?: //Re-definimos lo AnimationVariants en cada breakpont para que sean independiente de los definidos globalmente, solo contara con el tipado del custom.
-                    U[K2] extends AnimationConsumer<infer Custom> ?
+                    [K2 in keyof K]?:
+                    K[K2] extends AnimationConsumer<infer Custom> ?
                     AnimationConsumer<Custom> :
-                    U[K2] extends AnimationProperties ?
+                    K[K2] extends AnimationProperties ?
                     AnimationProperties :
-                    U[K2] // Dejamo el tipado ya generado , que siempre sera AnimationProperties o AnimationConsumer
+                    K[K2]/**
+                    Deja el tipado ya generado previamente por el usuario en base a createVariants o usando AnimationVariants<generico>,
+                    Los otros casos son para cuando los consumer y properties se crean directamente en el component, al no definir un tipado explicamente se crearan aca.
+                    */
                 }
             >[L]
         }
@@ -48,14 +51,15 @@ type ChildrenResponsive<U extends AdaptedBreakpoints<any>> = ((breakpoint?: keyo
 type ResponsiveProps<
     T extends HTMLResponsiveComponent = "div",
     U extends AdaptedBreakpoints<any> = never,
-    K extends AnimationVariants<any> = never
+    C = any,
+    K extends AnimationVariants<any, C> = never
 > = {
-    responsive?: ResponsiveAnimate<U, K>;
+    responsive?: ResponsiveAnimate<U, C, K>;
     responsiveConfig?: ResponsiveConfig<U>;
     breakpoints: U
     observerBreakpoints?: ObserverBreakpoints<U>
     children?: AdditionalProps<T>["children"] | ChildrenResponsive<U> | (ChildrenResponsive<U> | AdditionalProps<T>["children"])[]
-} & Omit<AnimationComponentProps<T, K>, "children">
+} & Omit<AnimationComponentProps<T, C, K>, "children">
 
 
 

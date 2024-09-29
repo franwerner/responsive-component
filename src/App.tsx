@@ -24,14 +24,14 @@ function App() {
     "xl": 1280,
   }
 
-  const variants = createVariants({
-    hidden: (custom: number) => ({ margin: custom, }),
-    show: { alignContent: "center" }
+  const variants = createVariants<number>({
+    hidden: (custom) => ({ margin: custom, }),
+   show : {}
   })
 
-  const g: AnimationVariants<{ hidden: AnimationConsumer<number>, show: AnimationProperties }> = {
+  const g: AnimationVariants<{ hidden: AnimationConsumer,show: AnimationProperties },number> = {
     hidden: (custom) => ({ marginTop: custom }),
-    show: { backgroundColor: "#FF0000" },
+    show: { backgroundColor: "#FF0000", },
 
   }
 
@@ -41,7 +41,10 @@ function App() {
       <button onClick={() => setCh(prev => !prev)} style={{ backgroundColor: ch ? "#FF0000" : "#ffff" }}>Click</button>
       {
         <ResponsiveComponent
-          variants={g}
+          variants={{
+            hidden: (custom) => ({ margin: custom, }),
+            show: { alignContent: "center", }
+          }}
           breakpoints={f}
           // responsiveConfig={{
           //   sm: {
@@ -60,17 +63,15 @@ function App() {
             lg: {
               animate: "hidden",
               variants: {
+                hidden: (c) => ({margin : c + 30}),
 
               },
-              custom: 25
             },
             sm: {
               variants: {
-                hidden: (c) => ({}),
+                hidden: (c) => ({backgroundColor : "#FF0000"}),
                 show : {}
-                 
               },
-              custom: 30
             }
           }
           }

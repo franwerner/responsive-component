@@ -1,9 +1,9 @@
-import { AnimationProperties, AnimationVariants, VariantsAndProperties } from "@/types/animate.type"
+import { AnimationProperties, AnimationVariants, VariantsLabelAndProperties } from "@/types/animate.type"
 import { isFunction, isString } from "my-utilities"
 
 
-const resolveVariants = <T extends AnimationVariants<any>>(variants: T = ({} as T), custom: any):
-    (animable_type: VariantsAndProperties<T>) => (AnimationProperties | undefined) => {
+const resolveVariants = <C = any,K extends AnimationVariants<any,C> = never>(variants: K = ({} as K), custom: C):
+    (animable_type?: VariantsLabelAndProperties<K>) => (AnimationProperties | undefined) => {
 
     return (animable_type) => {
         if (isString(animable_type)) {

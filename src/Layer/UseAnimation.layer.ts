@@ -1,6 +1,6 @@
 import { cssAdapter } from "@/helper/css-adapter/css-adapter.helper.js";
 import resetAnimate, { onlyResetteableProperties } from "@/helper/resetAnimate.helper";
-import { AnimationProperties, AnimationVariants } from "@/types/animate.type";
+import { AnimationProperties, AnimationVariants,  } from "@/types/animate.type";
 import { HTMLResponsiveComponent } from "@/types/responsive.type";
 import { AdaptedBreakpoints } from "@/utils/createBreakpoints.utils";
 import { MotionStyle } from "framer-motion";
@@ -13,27 +13,30 @@ const adapterKeys = (["whileHover", "whileDrag", "whileTap", "whileFocus", "whil
 type ReturnTypeAnimationLayer<
     T extends HTMLResponsiveComponent,
     U extends AdaptedBreakpoints<U>,
-    K extends AnimationVariants<any> = never
-> = Omit<ReturnTypeResponsiveLayer<T, U, K>, "currentBreakPoints" | "variants" | "custom">
+    C = any,
+    K extends AnimationVariants<any,C> = never
+> = Omit<ReturnTypeResponsiveLayer<T, U, C, K>, "currentBreakPoints" | "variants" | "custom">
 
 function useAnimationLayer<
     T extends HTMLResponsiveComponent,
     U extends AdaptedBreakpoints<U>,
-    K extends AnimationVariants<any> = never
->(props: ReturnTypeResponsiveLayer<T, U, K>): ReturnTypeAnimationLayer<T, U, K>
+    C = any,
+    K extends AnimationVariants<any,C> = never
+>(props: ReturnTypeResponsiveLayer<T, U, C, K>): ReturnTypeAnimationLayer<T, U, C, K>
 
 function useAnimationLayer<
     T extends HTMLResponsiveComponent,
     U extends AdaptedBreakpoints<U>,
-    K extends AnimationVariants<any> = never
->({ currentBreakPoints, variants, custom, ...props }: ReturnTypeResponsiveLayer<T, U, K>) {
+    C = any,
+    K extends AnimationVariants<any,C> = never
+>({ currentBreakPoints, variants, custom, ...props }: ReturnTypeResponsiveLayer<T, U, C, K>) {
 
     const reseteableProperties = useRef<AnimationProperties>({})
 
     const animableVariant = resolveVariants(variants, custom)
 
     const adapters = adapterKeys.reduce((acc, current) => {
-        const res = current === "style" ? props[current] : animableVariant(props[current])
+        const res = current === "style" ? props[current] : animableVariant(props[current] )
         return {
             ...acc,
             [current]: cssAdapter(res)
