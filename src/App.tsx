@@ -1,8 +1,7 @@
 import ResponsiveComponent from "@/components/ResponsiveComponent"
 import { useState } from "react"
+import { AnimationVariants } from "./types/animate.type"
 import { createBreakpoints } from "./utils/createBreakpoints.utils"
-import createVariants from "./utils/createVariants.utilts"
-import { AnimationConsumer, AnimationProperties, AnimationVariants } from "./types/animate.type"
 
 /**
  * Deberia obtener verificar siempre en base la prop si es un string.
@@ -10,10 +9,11 @@ import { AnimationConsumer, AnimationProperties, AnimationVariants } from "./typ
  * 
  *  */
 
+
+
 function App() {
 
   const [ch, setCh] = useState(false)
-
 
   const breakPointDefault = {
     "lg": 1024,
@@ -24,16 +24,11 @@ function App() {
     "xl": 1280,
   }
 
-  const variants = createVariants<number>({
-    hidden: (custom) => ({ margin: custom, }),
-   show : {}
-  })
-
-  const g: AnimationVariants<{ hidden: AnimationConsumer,show: AnimationProperties },number> = {
-    hidden: (custom) => ({ marginTop: custom }),
+  const g: AnimationVariants<"hidden" | "show", number> = {
+    hidden: (custom) => ({ marginTop: custom, }),
     show: { backgroundColor: "#FF0000", },
-
   }
+
 
   const f = createBreakpoints(breakPointDefault)
   return (
@@ -41,36 +36,31 @@ function App() {
       <button onClick={() => setCh(prev => !prev)} style={{ backgroundColor: ch ? "#FF0000" : "#ffff" }}>Click</button>
       {
         <ResponsiveComponent
-          variants={{
-            hidden: (custom) => ({ margin: custom, }),
-            show: { alignContent: "center", }
-          }}
+          variants={g}
           breakpoints={f}
           // responsiveConfig={{
           //   sm: {
           //     maxWidth: true
           //   },
           // }}
-          animate={"hidden"}
           whileTap={{
             height: "100vh"
           }}
-          custom={50}
+          animate={"hidden"}
+          custom={1}
           drag="y"
           dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
           dragTransition={{ bounceStiffness: 600, bounceDamping: 20 }}
           responsive={{
             lg: {
-              animate: "hidden",
               variants: {
-                hidden: (c) => ({margin : c + 30}),
-
+                hidden: (c) => ({ margin: c + 30, }),
               },
             },
             sm: {
               variants: {
-                hidden: (c) => ({backgroundColor : "#FF0000"}),
-                show : {}
+                hidden: (c) => ({ backgroundColor: "#FF0000", }),
+                show: {}
               },
             }
           }

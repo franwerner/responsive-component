@@ -3,9 +3,9 @@ import { ResponsiveProperties } from "@/types/responsive.type";
 import { isFunction, isObject } from "my-utilities";
 
 
-const joinVariants = <C = any,K extends object = never>(primary?: AnimationVariants<K,C>, secondary?: AnimationVariants<K,C>) => {
+const joinVariants = <C = any, K extends AnimationVariants<C> = never>(primary?: K, secondary?: K) => {
 
-    const props = {...primary}
+    const props = { ...primary }
 
     for (const key in secondary) {
         const current_p = primary?.[key]
@@ -23,12 +23,12 @@ const joinVariants = <C = any,K extends object = never>(primary?: AnimationVaria
     return props
 }
 
-const joinResponsiveProperties = <C = any,K extends AnimationVariants<any,C> = never>(primary: ResponsiveProperties<C,K>, secondary: ResponsiveProperties<C,K>) => {
+const joinResponsiveProperties = <C = any, K extends AnimationVariants<C> = never>(primary: ResponsiveProperties<C, K>, secondary: ResponsiveProperties<C, K>) => {
 
-    const props = {...primary}
+    const props = { ...primary }
 
     for (const k in secondary) {
-        const key = k as keyof ResponsiveProperties<C,K>
+        const key = k as keyof ResponsiveProperties<C, K>
         const current_p = primary[key]
         const current_s = secondary[key]
         if (key === "variants") {
@@ -45,7 +45,7 @@ const joinResponsiveProperties = <C = any,K extends AnimationVariants<any,C> = n
 
     }
 
-    return props as ResponsiveProperties<C,K>
+    return props as ResponsiveProperties<C, K>
 
 };
 

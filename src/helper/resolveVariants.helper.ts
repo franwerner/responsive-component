@@ -2,7 +2,7 @@ import { AnimationProperties, AnimationVariants, VariantsLabelAndProperties } fr
 import { isFunction, isString } from "my-utilities"
 
 
-const resolveVariants = <C = any,K extends AnimationVariants<any,C> = never>(variants: K = ({} as K), custom: C):
+const resolveVariants = <C extends any = any,K extends AnimationVariants<any,C> = never>(variants: K = ({} as K), custom?: C):
     (animable_type?: VariantsLabelAndProperties<K>) => (AnimationProperties | undefined) => {
 
     return (animable_type) => {

@@ -54,7 +54,7 @@ function ResponsiveComponent<
     T extends HTMLResponsiveComponent = "div",
     U extends AdaptedBreakpoints<any> = never,
     C extends any = any,
-    K extends AnimationVariants<any, C> = never
+    K extends AnimationVariants<any, C> = AnimationVariants<any, C>
 >(
     props: ResponsiveComponentProps<T, U, C, K>
 ) {

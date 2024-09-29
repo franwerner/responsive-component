@@ -33,7 +33,7 @@ function useAnimationLayer<
 
     const reseteableProperties = useRef<AnimationProperties>({})
 
-    const animableVariant = resolveVariants(variants, custom)
+    const animableVariant = resolveVariants<C,AnimationVariants<any,C>>(variants, custom)
 
     const adapters = adapterKeys.reduce((acc, current) => {
         const res = current === "style" ? props[current] : animableVariant(props[current] )

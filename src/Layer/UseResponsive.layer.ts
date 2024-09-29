@@ -11,7 +11,7 @@ type ReturnTypeResponsiveLayer<
     T extends HTMLResponsiveComponent,
     U extends AdaptedBreakpoints<U> = never,
     C = any,
-    K extends AnimationVariants<C,any> = never
+    K extends AnimationVariants<any,C> = never
 > =
     Omit<ResponsiveComponentProps<T, U, C, K>, "responsive" | "responsiveConfig" | "breakpoints" | "observerBreakpoints">
     & { currentBreakPoints: (keyof U)[] }
@@ -20,7 +20,7 @@ function useResponsiveLayer<
     T extends HTMLResponsiveComponent,
     U extends AdaptedBreakpoints<U> = never,
     C = any,
-    K extends AnimationVariants<C,any> = never
+    K extends AnimationVariants<any,C> = never
 >(
     { responsive, responsiveConfig, breakpoints, observerBreakpoints, ...props }: ResponsiveComponentProps<T, U, C, K>
 ): ReturnTypeResponsiveLayer<T, U, C, K> {

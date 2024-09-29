@@ -8,7 +8,7 @@ const useChildrenLayer = <
     T extends HTMLResponsiveComponent,
     U extends AdaptedBreakpoints<U>,
     C = any,
-    K extends AnimationVariants<C,any> = never
+    K extends AnimationVariants<any,C> = never
 >(props: ReturnTypeResponsiveLayer<T, U, C, K>) => {
 
     const { children, currentBreakPoints } = props
