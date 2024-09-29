@@ -1,33 +1,21 @@
 import { AdaptedBreakpoints } from "@/utils/createBreakpoints.utils";
 import { MotionProps, MotionStyle, MotionValue } from "framer-motion";
 import { ReactNode } from "react";
-import { AnimatableOnly, AnimationComponentProps, AnimationConsumer, AnimationProperties, AnimationVariants } from "./animate.type";
+import { AnimatableOnly, AnimationComponentProps, AnimationVariants } from "./animate.type";
 
 type HTMLResponsiveComponent = keyof JSX.IntrinsicElements
 
-type ResponsiveProperties<
-    C = any,
-    K extends AnimationVariants<any, C> = never
-> = {
+type ResponsiveProperties = {
     style?: MotionStyle,
     dragConstraints?: MotionProps["dragConstraints"],
     transition?: MotionProps["transition"],
     dragTransition?: MotionProps["dragTransition"]
-} & AnimatableOnly<C,K>
+} & AnimatableOnly
 
 
 type ResponsiveAnimate<
     U extends AdaptedBreakpoints<any>,
-    C = any,
-    K extends AnimationVariants<any, C> = never
-> = {
-        [_ in keyof U]?: {
-            [L in keyof ResponsiveProperties<C, K>]?:
-            ResponsiveProperties<C,
-                Partial<Record<keyof K, AnimationProperties | AnimationConsumer<C>>>
-            >[L]
-        }
-    }
+> = { [_ in keyof U]?: ResponsiveProperties }
 
 type ResponsiveConfig<U extends AdaptedBreakpoints<any>> = {
     [K in keyof U]?: { maxWidth?: boolean, minWidth?: boolean }
@@ -49,7 +37,7 @@ type ResponsiveProps<
     C = any,
     K extends AnimationVariants<any, C> = never
 > = {
-    responsive?: ResponsiveAnimate<U, C, K>;
+    responsive?: ResponsiveAnimate<U>;
     responsiveConfig?: ResponsiveConfig<U>;
     breakpoints: U
     observerBreakpoints?: ObserverBreakpoints<U>

@@ -1,45 +1,36 @@
 import { cssAdapter } from "@/helper/css-adapter/css-adapter.helper.js";
 import resetAnimate, { onlyResetteableProperties } from "@/helper/resetAnimate.helper";
-import { AnimationProperties, AnimationVariants,  } from "@/types/animate.type";
+import { AnimationProperties } from "@/types/animate.type";
 import { HTMLResponsiveComponent } from "@/types/responsive.type";
 import { AdaptedBreakpoints } from "@/utils/createBreakpoints.utils";
 import { MotionStyle } from "framer-motion";
+import { isObject } from "my-utilities";
 import { useMemo, useRef } from "react";
-import { ReturnTypeResponsiveLayer } from "./UseResponsive.layer";
-import resolveVariants from "@/helper/resolveVariants.helper";
+import { ReturnTypeChildrenlayer } from "./useChildren.layer";
 
-const adapterKeys = (["whileHover", "whileDrag", "whileTap", "whileFocus", "whileInView", "style", "animate"] as const)
+const adapterKeys = ["whileHover", "whileDrag", "whileTap", "whileFocus", "whileInView", "style", "animate"] as const
 
 type ReturnTypeAnimationLayer<
     T extends HTMLResponsiveComponent,
-    U extends AdaptedBreakpoints<U>,
-    C = any,
-    K extends AnimationVariants<any,C> = never
-> = Omit<ReturnTypeResponsiveLayer<T, U, C, K>, "currentBreakPoints" | "variants" | "custom">
+> = Omit<ReturnTypeChildrenlayer<T>, "currentBreakPoints" | "variants" | "custom">
+
+function useAnimationLayer<
+    T extends HTMLResponsiveComponent,
+>(props: ReturnTypeChildrenlayer<T>): ReturnTypeAnimationLayer<T>
+
 
 function useAnimationLayer<
     T extends HTMLResponsiveComponent,
     U extends AdaptedBreakpoints<U>,
-    C = any,
-    K extends AnimationVariants<any,C> = never
->(props: ReturnTypeResponsiveLayer<T, U, C, K>): ReturnTypeAnimationLayer<T, U, C, K>
-
-function useAnimationLayer<
-    T extends HTMLResponsiveComponent,
-    U extends AdaptedBreakpoints<U>,
-    C = any,
-    K extends AnimationVariants<any,C> = never
->({ currentBreakPoints, variants, custom, ...props }: ReturnTypeResponsiveLayer<T, U, C, K>) {
+>({ currentBreakPoints, ...props }: ReturnTypeChildrenlayer<T>) {
 
     const reseteableProperties = useRef<AnimationProperties>({})
 
-    const animableVariant = resolveVariants<C,AnimationVariants<any,C>>(variants, custom)
 
     const adapters = adapterKeys.reduce((acc, current) => {
-        const res = current === "style" ? props[current] : animableVariant(props[current] )
         return {
             ...acc,
-            [current]: cssAdapter(res)
+            [current]: isObject(props[current]) ? cssAdapter(props[current]) : {}
         }
     }, {} as { [K in typeof adapterKeys[number]]: K extends "style" ? MotionStyle : AnimationProperties });
 

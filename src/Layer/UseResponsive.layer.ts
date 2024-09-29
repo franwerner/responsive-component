@@ -1,31 +1,25 @@
-import { ResponsiveComponentProps } from "@/components/ResponsiveComponent";
 import joinResponsiveProperties from "@/helper/joinResponsiveProperties.helper";
 import useBreakPoints from "@/hooks/useBreakPoints.hook.js";
-import { AnimationVariants } from "@/types/animate.type";
 import { HTMLResponsiveComponent, ResponsiveProperties } from "@/types/responsive.type";
 import { AdaptedBreakpoints } from "@/utils/createBreakpoints.utils";
 import { isFunction, isObject } from "my-utilities";
 import { useEffect } from "react";
+import { ReturnTypeVariantsLayer } from "./useVariants.layer";
 
 type ReturnTypeResponsiveLayer<
     T extends HTMLResponsiveComponent,
     U extends AdaptedBreakpoints<U> = never,
-    C = any,
-    K extends AnimationVariants<any,C> = never
 > =
-    Omit<ResponsiveComponentProps<T, U, C, K>, "responsive" | "responsiveConfig" | "breakpoints" | "observerBreakpoints">
+    Omit<ReturnTypeVariantsLayer<T, U>, "responsive" | "responsiveConfig" | "breakpoints" | "observerBreakpoints">
     & { currentBreakPoints: (keyof U)[] }
 
 function useResponsiveLayer<
     T extends HTMLResponsiveComponent,
     U extends AdaptedBreakpoints<U> = never,
-    C = any,
-    K extends AnimationVariants<any,C> = never
 >(
-    { responsive, responsiveConfig, breakpoints, observerBreakpoints, ...props }: ResponsiveComponentProps<T, U, C, K>
-): ReturnTypeResponsiveLayer<T, U, C, K> {
+    { responsive, responsiveConfig, breakpoints, observerBreakpoints, ...props }: ReturnTypeVariantsLayer<T, U>
+): ReturnTypeResponsiveLayer<T, U> {
     const activeBreakpoints = Object.keys(responsive || {});
-
     const currentBreakPoints = useBreakPoints({ activeBreakpoints, responsiveConfig, breakPoints: breakpoints });
 
     useEffect(() => {
@@ -34,45 +28,28 @@ function useResponsiveLayer<
 
 
     const calculateResponsive = () => {
-        if (!isObject(responsive)) return props;
-        const {
-            animate,
-            dragConstraints,
-            dragTransition,
-            exit,
-            initial,
-            style,
-            transition,
-            variants,
-            whileDrag,
-            whileFocus,
-            whileHover,
-            whileInView,
-            whileTap,
-            ...rest } = props
-
-        const onlyResponsiveProperties: ResponsiveProperties<C,K> = {
-            animate,
-            dragConstraints,
-            dragTransition,
-            exit,
-            initial,
-            style,
-            transition,
-            variants,
-            whileDrag,
-            whileFocus,
-            whileHover,
-            whileInView,
-            whileTap,
+        if (!isObject(responsive)) return props
+        const onlyResponsiveProperties: ResponsiveProperties = {
+            animate: props["animate"],
+            dragConstraints: props["dragConstraints"],
+            dragTransition: props["dragTransition"],
+            exit: props["exit"],
+            initial: props["initial"],
+            style: props["style"],
+            transition: props["transition"],
+            whileDrag: props["whileDrag"],
+            whileFocus: props["whileFocus"],
+            whileHover: props["whileHover"],
+            whileInView: props["whileInView"],
+            whileTap: props["whileTap"],
         }
         const res = currentBreakPoints.reduce((acc, breakpoint) => {
-            const currentBreakPoints = responsive[breakpoint] as ResponsiveProperties<C,K>
+            const currentBreakPoints = responsive[breakpoint]
             if (!isObject(currentBreakPoints)) return acc
             return joinResponsiveProperties(acc, currentBreakPoints)
         }, onlyResponsiveProperties)
 
-        return { ...rest, ...res } as ReturnTypeResponsiveLayer<T, U, C, K>
+        return { ...props, ...res }
     };
 
     return {

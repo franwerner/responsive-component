@@ -14,30 +14,40 @@ type OmitMotionProps = Omit<MotionProps, "custom" | "variants" | "animate" | "ex
 
 type AnimationProperties = OnlyStyleProperties<TargetAndTransition>
 
-type AnimationVariantsLabel<K extends AnimationVariants<any> = never> = Extract<keyof K, string> | (Extract<keyof K, string>)[]
+type AnimationVariantsLabel<K extends AnimationVariants<any>> = Extract<keyof K, string> | (Extract<keyof K, string>)[]
 
-type VariantsLabelAndProperties<K extends AnimationVariants<any>> = AnimationProperties | AnimationVariantsLabel<K>
+type AnimatableOnly = {
+    animate?: AnimationProperties
+    exit?: AnimationProperties
+    initial?: AnimationProperties
+    whileFocus?: AnimationProperties
+    whileHover?: AnimationProperties
+    whileInView?: AnimationProperties
+    whileTap?: AnimationProperties
+    whileDrag?: AnimationProperties
+}
 
-type AnimatableOnly<C = any, K extends AnimationVariants<any, C> = never> = {
-    variants?: K
-    animate?: VariantsLabelAndProperties<K>
-    exit?: VariantsLabelAndProperties<K>
-    initial?: VariantsLabelAndProperties<K>
-    whileFocus?: VariantsLabelAndProperties<K>
-    whileHover?: VariantsLabelAndProperties<K>
-    whileInView?: VariantsLabelAndProperties<K>
-    whileTap?: VariantsLabelAndProperties<K>
-    whileDrag?: VariantsLabelAndProperties<K>
+type CreateVariants<K extends string, C = any> = {
+    [_ in K]: AnimationConsumer<C> | AnimationProperties
+  }
+
+type AnimatableOnlyAndVariants<K extends AnimationVariants<any>> = {
+    [Key in keyof AnimatableOnly]?: AnimatableOnly[Key] | AnimationVariantsLabel<K>
 }
 
 type AnimationConsumer<C extends any> = (custom: C) => AnimationProperties
-type AnimationVariants<K extends string = string, C = any> = Partial<Record<K, AnimationProperties | AnimationConsumer<C>>>
+type AnimationVariants<K , C = any> =
+    { [F in keyof K]?: AnimationConsumer<C> | AnimationProperties
 
+    }
 type AnimationComponentProps<
     T extends HTMLResponsiveComponent = "div",
     C = any,
     K extends AnimationVariants<any, C> = never
-> = ComponentProps<T> & (OmitMotionProps & AnimatableOnly<C, K>) & { custom?: C }
+> = ComponentProps<T>
+    & OmitMotionProps
+    & AnimatableOnlyAndVariants<K>
+    & { custom?: C, variants?: K }
 
 export type {
     AnimatableOnly,
@@ -46,6 +56,6 @@ export type {
     AnimationVariants,
     AnimationVariantsLabel,
     AnimationConsumer,
-    VariantsLabelAndProperties,
+    CreateVariants
 }
 

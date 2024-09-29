@@ -2,6 +2,7 @@ import useCreateMotionComponent from "@/hooks/useCreateMotionComponent.hook";
 import useAnimationLayer from "@/Layer/UseAnimation.layer";
 import useChildrenLayer from "@/Layer/useChildren.layer";
 import useResponsiveLayer from "@/Layer/UseResponsive.layer";
+import useVariantsLayer from "@/Layer/useVariants.layer";
 import { AnimationVariants } from "@/types/animate.type";
 import { AdditionalProps, HTMLResponsiveComponent, ResponsiveProps, } from "@/types/responsive.type";
 import { AdaptedBreakpoints } from "@/utils/createBreakpoints.utils";
@@ -52,12 +53,12 @@ function ResponsiveComponent<
     T extends HTMLResponsiveComponent = "div",
     U extends AdaptedBreakpoints<any> = never,
     C extends any = any,
-    K extends AnimationVariants<any, C> = AnimationVariants<any, C>
+    K extends AnimationVariants<any, C> = AnimationVariants<any, C>,
 >(
     props: ResponsiveComponentProps<T, U, C, K>
 ) {
-
-    const responsiveProps = useResponsiveLayer(props);
+    const variantsProps = useVariantsLayer(props)
+    const responsiveProps = useResponsiveLayer(variantsProps);
     const childrenProps = useChildrenLayer(responsiveProps)
     const { as = "div", ...rest } = useAnimationLayer(childrenProps)
     const EnhancedComponent = useCreateMotionComponent(as)

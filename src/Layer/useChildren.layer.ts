@@ -2,14 +2,15 @@ import { HTMLResponsiveComponent } from "@/types/responsive.type";
 import { AdaptedBreakpoints } from "@/utils/createBreakpoints.utils";
 import { isFunction } from "my-utilities";
 import { ReturnTypeResponsiveLayer } from "./UseResponsive.layer";
-import { AnimationVariants } from "@/types/animate.type";
+
+type ReturnTypeChildrenlayer<
+    T extends HTMLResponsiveComponent
+> = ReturnTypeResponsiveLayer<T,any>
 
 const useChildrenLayer = <
     T extends HTMLResponsiveComponent,
     U extends AdaptedBreakpoints<U>,
-    C = any,
-    K extends AnimationVariants<any,C> = never
->(props: ReturnTypeResponsiveLayer<T, U, C, K>) => {
+>(props: ReturnTypeResponsiveLayer<T, U>):ReturnTypeChildrenlayer<T> => {
 
     const { children, currentBreakPoints } = props
 
@@ -27,4 +28,5 @@ const useChildrenLayer = <
     }
 };
 
+export type {ReturnTypeChildrenlayer}
 export default useChildrenLayer

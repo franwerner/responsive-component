@@ -23,7 +23,7 @@ export const DefaultValues: AnimationProperties = {
     right: "auto",
 }
 
-const verificateValue = (value: unknown) => {
+const getValue = (value: unknown) => {
     const isArray = Array.isArray(value) ? value[0] : value
     if (isColor(isArray)) return "#FFF"
     else if (isNumber(isArray)) return 0
@@ -40,15 +40,15 @@ const onlyResetteableProperties = (animateProperties: AnimationProperties | Moti
     return Object.fromEntries(filterBoilerPlate)
 }
 
-const resetAnimate = (cache: AnimationProperties = {}) => {
+const resetAnimate = (animateProperties: AnimationProperties = {}) => {
 
     const reset: AnimationProperties = {}
 
-    for (const k in cache) {
-        const key = k as keyof typeof cache
-        const cacheValue = cache[key]
+    for (const k in animateProperties) {
+        const key = k as keyof AnimationProperties
+        const cacheValue = animateProperties[key]
         const isDefaultValue = DefaultValues[key]
-        const res = isDefaultValue ?? verificateValue(cacheValue)
+        const res = isDefaultValue ?? getValue(cacheValue)
         Object.assign(reset, { [key]: res })
     }
     return reset
