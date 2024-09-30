@@ -1,8 +1,9 @@
 import { AnimationProperties } from "@/types/animate.type";
 import { MotionStyle } from "framer-motion";
 import { isNumber, isString } from "my-utilities";
-import getDirectionsValues from "../utils/getDirectionsValues.utils";
-import getDirections from "../utils/getDirections.utils";
+import extractBoxValues from "../utils/extractBoxValues.utils";
+import iterateOverSides from "../utils/iterateOverSides.utils";
+import isFalsyButNotZero from "../utils/isFalsyButNotZero.utilts";
 
 const transformNumberToPixel = (input: unknown): string | string[] | undefined => {
     if (isNumber(input)) {
@@ -20,15 +21,17 @@ const borderRadius = <T extends AnimationProperties | MotionStyle | (AnimationPr
 
     const directions = ["TopLeft", "TopRight", "BottomRight", "BottomLeft"] as const;
 
-    return getDirections((current,index) => {
+    return iterateOverSides((current, index) => {
 
         const borderRadiusDirection = `border${current}Radius` as const
 
         const borderRadiusDirectionStyle = style[borderRadiusDirection]
 
-        const getDirectionsValue = isBorderRadiusString && !borderRadiusDirectionStyle ? getDirectionsValues(borderRadiusValue, index) : (borderRadiusDirectionStyle ?? borderRadiusValue)
+        const getDirectionsValue = isBorderRadiusString && !borderRadiusDirectionStyle ?
+            extractBoxValues(borderRadiusValue, index) :
+            (borderRadiusDirectionStyle ?? borderRadiusValue)
 
-        if (!getDirectionsValue && getDirectionsValue !== 0) return 
+        if (isFalsyButNotZero(getDirectionsValue)) return
 
         return {
             [borderRadiusDirection]: transformNumberToPixel(getDirectionsValue)

@@ -6,7 +6,7 @@ type Fn<T extends readonly string[] = DefaultDirections> = (direction: T[number]
 
 const defaultDirections: DefaultDirections = ["Top", "Right", "Bottom", "Left"]
 
-const getDirections = <T extends readonly string[] = DefaultDirections>(
+const iterateOverSides = <T extends readonly string[] = DefaultDirections>(
     fn: Fn<T>,
     directions?: T
 ) => {
@@ -18,5 +18,5 @@ const getDirections = <T extends readonly string[] = DefaultDirections>(
 };
 
 
-export default getDirections
+export default iterateOverSides
 

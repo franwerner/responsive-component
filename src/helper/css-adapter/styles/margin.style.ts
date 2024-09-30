@@ -1,26 +1,27 @@
 import { AnimationProperties } from "@/types/animate.type"
-import getDirections from "../utils/getDirections.utils"
+import iterateOverSides from "../utils/iterateOverSides.utils"
 import { MotionStyle } from "framer-motion"
-import getDirectionsValues from "../utils/getDirectionsValues.utils"
+import extractBoxValues from "../utils/extractBoxValues.utils"
 import { isString } from "my-utilities"
+import isFalsyButNotZero from "../utils/isFalsyButNotZero.utilts"
 
 const margin = <T extends AnimationProperties | MotionStyle | (AnimationProperties & MotionStyle)>(style: T) => {
 
     const marginValue = style["margin"]
 
-    if (!marginValue) return {}
+    if (isFalsyButNotZero(marginValue)) return {}
 
     const isMarginString = isString(marginValue)
 
-    return getDirections((direction, index) => {
+    return iterateOverSides((direction, index) => {
 
         const marginDirection = `margin${direction}` as const
 
         const marginDirectionStyle = style[marginDirection]
 
-        const finalValue = isMarginString && !marginDirectionStyle ? getDirectionsValues(marginValue, index) : marginValue
+        const finalValue = isMarginString && !marginDirectionStyle ? extractBoxValues(marginValue, index) : marginValue
 
-        if (!finalValue && finalValue !== 0) return
+        if (isFalsyButNotZero(finalValue)) return
 
         return {
             [marginDirection]: finalValue

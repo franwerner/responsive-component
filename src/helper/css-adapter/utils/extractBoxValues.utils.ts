@@ -1,5 +1,5 @@
 
-const getDirectionsValues = (value: string, index: number):string | undefined => {
+const extractBoxValues = (value: string, index: number):string | undefined => {
 
     const split = value.trim().split(" ")
     const splitLength = split.length
@@ -11,4 +11,4 @@ const getDirectionsValues = (value: string, index: number):string | undefined =>
     else if (splitLength == 3 && index <= index || splitLength == 4) return split[index]
 };
 
-export default getDirectionsValues
+export default extractBoxValues

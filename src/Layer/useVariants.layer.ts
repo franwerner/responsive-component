@@ -5,7 +5,7 @@ import { HTMLResponsiveComponent } from "@/types/responsive.type"
 import { AdaptedBreakpoints } from "@/utils/createBreakpoints.utils"
 import { isObject } from "my-utilities"
 
-const variantsKey: (keyof AnimatableOnly)[] = ["whileHover", "whileDrag", "whileTap", "whileFocus", "whileInView", "initial", "animate"]
+const animableKeys: (keyof AnimatableOnly)[] = ["whileHover", "whileDrag", "whileTap", "whileFocus", "whileInView", "initial", "animate"]
 
 type ReturnTypeVariantsLayer<
     T extends HTMLResponsiveComponent,
@@ -22,7 +22,7 @@ const useVariantsLayer = <
 
     const animableType = resolveVariants<C, AnimationVariants<any>>(variants, custom)
 
-    const process = variantsKey.reduce((acc, current) => {
+    const process = animableKeys.reduce((acc, current) => {
         const currentVariant = props[current]
         return {
             ...acc,

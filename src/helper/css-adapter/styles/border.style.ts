@@ -1,8 +1,8 @@
 import { isString } from "my-utilities"
 import { AnimationProperties } from "@/types/animate.type"
 import { MotionStyle } from "framer-motion"
-import getDirections from "../utils/getDirections.utils"
-import getDirectionsValues from "../utils/getDirectionsValues.utils"
+import iterateOverSides from "../utils/iterateOverSides.utils"
+import extractBoxValues from "../utils/extractBoxValues.utils"
 
 const searchColor = (input: unknown) => {
     if (!isString(input)) return
@@ -24,8 +24,7 @@ const border = <T extends AnimationProperties | MotionStyle | (AnimationProperti
     const borderColorGlobal = style["borderColor"]
     const borderStyleGlobal = style["borderStyle"]
 
-
-    return getDirections((direction, index) => {
+    return iterateOverSides((direction, index) => {
         const borderDirection = `border${direction}` as const
         const borderDirectionStyle = style[borderDirection]
         if (!borderDirectionStyle && !borderGlobal) return
@@ -37,9 +36,10 @@ const border = <T extends AnimationProperties | MotionStyle | (AnimationProperti
             const searchType = current === "Style" ? searchStyle : searchColor
             const globalType = current === "Style" ? borderStyleGlobal : borderColorGlobal
 
-            const finalValue = borderTypeDirectionStyle
+            const finalValue =
+                borderTypeDirectionStyle
                 || searchType(borderDirectionStyle)
-                || (isString(globalType) ? getDirectionsValues(globalType, index) : globalType)
+                || (isString(globalType) ? extractBoxValues(globalType, index) : globalType)
                 || searchType(borderGlobal)
 
             if (!finalValue) return acc
@@ -52,5 +52,7 @@ const border = <T extends AnimationProperties | MotionStyle | (AnimationProperti
 
     })
 }
+
+
 
 export default border

@@ -18,7 +18,7 @@ function App() {
   }
 
   const g: CreateVariants<"hidden" | "show", number> = {
-    hidden: (custom) => ({ marginTop: custom, }),
+    hidden: (custom) => ({ padding : 0, }),
     show: { backgroundColor: "#FF0000", },
   }
 
@@ -30,25 +30,30 @@ function App() {
         <ResponsiveComponent
          variants = {g}
           breakpoints={f}
-          // responsiveConfig={{
-          //   sm: {
-          //     maxWidth: true
-          //   },
-          // }}
-          whileTap={"show"}
+          responsiveConfig={{
+            sm: {
+              maxWidth: true
+            },
+          }}
+          whileTap={{
+            padding : 0
+          }}
           animate={"show"}
           custom={30}
           drag="y"
           dragConstraints={{ left: 0, right: 0, top: 0, bottom: 0 }}
-          dragTransition={{ bounceStiffness: 600, bounceDamping: 20 }}
+          dragTransition={{ bounceStiffness: 600, bounceDamping: 20 ,power : 1}}
           responsive={{
             lg: {
               animate: {
-                border: "10px solid #FF0000"
+                padding : 50,
+                paddingBottom : 0
               }
             },
             sm: {
-
+              animate : {
+                 paddingTop : 30
+              }
             }
           }
           }
@@ -61,3 +66,5 @@ function App() {
 }
 
 export default App
+
+

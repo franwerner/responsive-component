@@ -1,23 +1,24 @@
 import { MotionStyle } from "framer-motion";
-import getDirections from "../utils/getDirections.utils";
+import iterateOverSides from "../utils/iterateOverSides.utils";
 import { AnimationProperties } from "@/types/animate.type";
 import { isString } from "my-utilities";
-import getDirectionsValues from "../utils/getDirectionsValues.utils";
+import extractBoxValues from "../utils/extractBoxValues.utils";
+import isFalsyButNotZero from "../utils/isFalsyButNotZero.utilts";
 
 const padding = <T extends AnimationProperties | MotionStyle | (AnimationProperties & MotionStyle)>(style: T) => {
 
     const paddingValue = style["padding"]
-    if (!paddingValue) return {}
+    if (isFalsyButNotZero(paddingValue)) return {}
     const isPaddingString = isString(paddingValue)
-    return getDirections((direction, index) => {
+    return iterateOverSides((direction, index) => {
 
         const paddingDirection = `padding${direction}` as const
 
         const paddingDirectionStyle = style[paddingDirection]
 
-        const finalValue = isPaddingString && !paddingDirectionStyle ? getDirectionsValues(paddingValue, index) : paddingValue
+        const finalValue = isPaddingString && !paddingDirectionStyle ? extractBoxValues(paddingValue, index) : paddingValue
 
-        if (!finalValue && finalValue !== 0) return
+        if (isFalsyButNotZero(finalValue)) return
 
         return {
             [paddingDirection]: finalValue

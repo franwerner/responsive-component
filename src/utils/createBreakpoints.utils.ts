@@ -1,15 +1,11 @@
 type NonEmptyObject<T> = T extends {} ? (keyof T extends never ? never : T) : never;
 
-
-
 type AdaptedBreakpoints<T> = {
     [K in keyof T]: {
         minWidth: number;
         maxWidth: number;
     }
 }
-
-
 
 export const createBreakpoints = <T extends { [K in keyof T]: number }>(breakPoints: NonEmptyObject<T>) => {
 

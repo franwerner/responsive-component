@@ -26,7 +26,6 @@ function useAnimationLayer<
 
     const reseteableProperties = useRef<AnimationProperties>({})
 
-
     const adapters = adapterKeys.reduce((acc, current) => {
         return {
             ...acc,
@@ -37,8 +36,8 @@ function useAnimationLayer<
     const setAllProperties = () => {
         /**
          * Necesitamos que todas las propiedades se apliquen un reseteo para que quede en referencia para cuando:
-         * - Se inicializa un evento de framer-motion y necesitamos un valor por defecto ya aplicado cuando de deje de accionar.
-         * - Saber cuales propiedades se aplicaron el los breakpoints anteriores, para aplicar el resteo a las que no se utilicen.
+         * - Se inicializa un evento de framer-motion y necesitamos un valor por defecto ya aplicado para cuando de deje de accionar.
+         * - Saber cuales propiedades se aplicaron el los breakpoints anteriores, para aplicar el resteo en otro breakpoint de las propiedades que no se utilicen.
          */
         const { whileDrag, whileFocus, whileHover, whileTap, animate, whileInView } = adapters
         for (const properties of [whileDrag, whileFocus, whileHover, whileTap, whileInView, animate]) {
@@ -58,7 +57,6 @@ function useAnimationLayer<
         ...adapters,
         animate: { ...resetAnimations, ...adapters.animate },
     }
-
 }
 
 
