@@ -2,19 +2,19 @@ import { AnimationProperties, AnimationVariants, AnimationVariantsLabel } from "
 import { isFunction, isString } from "my-utilities"
 
 
-const resolveVariants = <C = any,K extends AnimationVariants<any,C> = never>(variants: K = ({} as K), custom?: C):
+const resolveVariants = <K extends AnimationVariants<any, C> = never,C = undefined>(variants: K = ({} as K), custom?: C):
     (animable_type?: AnimationVariantsLabel<K>) => (AnimationProperties | undefined) => {
 
     return (animable_type) => {
         if (isString(animable_type)) {
             const currentVariant = variants[animable_type]
-            return isFunction(currentVariant) ? currentVariant(custom as any) : currentVariant
+            return isFunction(currentVariant) ? currentVariant(custom as C) : currentVariant
         } else if (Array.isArray(animable_type)) {
             return animable_type.reduce((acc, current) => {
                 const currentVariant = variants[current]
                 return {
                     ...acc,
-                    ...(isFunction(currentVariant) ? currentVariant(custom as any) : currentVariant)
+                    ...(isFunction(currentVariant) ? currentVariant(custom as C) : currentVariant)
                 }
             }, {} as AnimationProperties)
         }

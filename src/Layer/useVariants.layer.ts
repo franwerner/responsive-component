@@ -16,11 +16,11 @@ const useVariantsLayer = <
     T extends HTMLResponsiveComponent,
     U extends AdaptedBreakpoints<any>,
     K extends AnimationVariants<any, C>,
-    C = any,
+    C,
 >
-    ({ variants, custom, ...props }: ResponsiveComponentProps<T, U, C, K>): ReturnTypeVariantsLayer<T, U> => {
+    ({ variants, custom, ...props }: ResponsiveComponentProps<T, U, K, C>): ReturnTypeVariantsLayer<T, U> => {
 
-    const animableType = resolveVariants<C, AnimationVariants<any>>(variants, custom)
+    const animableType = resolveVariants<AnimationVariants<any, C>,C>(variants, custom)
 
     const process = animableKeys.reduce((acc, current) => {
         const currentVariant = props[current]

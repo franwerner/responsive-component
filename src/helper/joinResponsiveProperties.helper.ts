@@ -7,6 +7,12 @@ const joinResponsiveProperties = (
     secondary: ResponsiveProperties
 ) => {
     const props = { ...primary } as any
+    /**
+    * Utilizamos una aserción `any` porque TypeScript no puede garantizar que la asignación de un nuevo valor en el objeto `props`
+    * sea compatible con el tipo esperado en el objeto. Aunque verificamos que `primary` y `secondary` son del mismo tipo,
+    * TypeScript no permite la asignación de nuevos valores a `props` sin una aserción explícita, debido a posibles diferencias
+    * en los tipos de los objetos.
+    */
 
     for (const k in secondary) {
         const key = k as keyof ResponsiveProperties
@@ -20,7 +26,6 @@ const joinResponsiveProperties = (
         } else {
             props[key] = current_s
         }
-
     }
 
     return props as ResponsiveProperties

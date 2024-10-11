@@ -32,18 +32,17 @@ type ObserverBreakpoints<U extends AdaptedBreakpoints<any>> = (breakpoints?: key
 type ChildrenResponsive<U extends AdaptedBreakpoints<any>> = ((breakpoint?: keyof U) => Element | ReactNode)
 
 type ResponsiveProps<
-    T extends HTMLResponsiveComponent = "div",
-    U extends AdaptedBreakpoints<any> = never,
-    C = any,
-    K extends AnimationVariants<any, C> = never
+    T extends HTMLResponsiveComponent,
+    U extends AdaptedBreakpoints<any>,
+    K extends AnimationVariants<any, C> = never,
+    C = undefined,
 > = {
     responsive?: ResponsiveAnimate<U>;
     responsiveConfig?: ResponsiveConfig<U>;
     breakpoints: U
     observerBreakpoints?: ObserverBreakpoints<U>
     children?: AdditionalProps<T>["children"] | ChildrenResponsive<U> | (ChildrenResponsive<U> | AdditionalProps<T>["children"])[]
-} & Omit<AnimationComponentProps<T, C, K>, "children">
-
+} & Omit<AnimationComponentProps<T, K, C>, "children">
 
 
 export type { AdditionalProps, HTMLResponsiveComponent, ObserverBreakpoints, ResponsiveAnimate, ResponsiveConfig, ResponsiveProperties, ResponsiveProps };

@@ -41,21 +41,21 @@ import { AdaptedBreakpoints } from "@/utils/createBreakpoints.utils";
  */
 
 type ResponsiveComponentProps<
-    T extends HTMLResponsiveComponent = "div",
-    U extends AdaptedBreakpoints<any> = never,
-    C extends any = any,
-    K extends AnimationVariants<any, C> = never
+    T extends HTMLResponsiveComponent,
+    U extends AdaptedBreakpoints<any>,
+    K extends AnimationVariants<any, C> = never,
+    C = undefined,
 > =
     Omit<AdditionalProps<T>, "children"> &
-    ResponsiveProps<T, U, C, K>
+    ResponsiveProps<T, U, K, C>
 
 function ResponsiveComponent<
+    U extends AdaptedBreakpoints<any>,
+    K extends AnimationVariants<any, C>,
     T extends HTMLResponsiveComponent = "div",
-    U extends AdaptedBreakpoints<any> = never,
-    C extends any = any,
-    K extends AnimationVariants<any, C> = AnimationVariants<any, C>,
+    C = undefined,
 >(
-    props: ResponsiveComponentProps<T, U, C, K>
+    props: ResponsiveComponentProps<T, U, K, C>
 ) {
     const variantsProps = useVariantsLayer(props)
     const responsiveProps = useResponsiveLayer(variantsProps);
