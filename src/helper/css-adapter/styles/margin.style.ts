@@ -1,11 +1,10 @@
 import { AnimationProperties } from "@/types/animate.type"
 import iterateOverSides from "../utils/iterateOverSides.utils"
-import { MotionStyle } from "framer-motion"
 import extractBoxValues from "../utils/extractBoxValues.utils"
 import { isString } from "my-utilities"
 import isFalsyButNotZero from "../utils/isFalsyButNotZero.utilts"
 
-const margin = <T extends AnimationProperties | MotionStyle | (AnimationProperties & MotionStyle)>(style: T) => {
+const margin = <T extends AnimationProperties>(style: T) => {
 
     const marginValue = style["margin"]
 

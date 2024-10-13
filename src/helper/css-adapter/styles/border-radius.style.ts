@@ -1,5 +1,4 @@
 import { AnimationProperties } from "@/types/animate.type";
-import { MotionStyle } from "framer-motion";
 import { isNumber, isString } from "my-utilities";
 import extractBoxValues from "../utils/extractBoxValues.utils";
 import iterateOverSides from "../utils/iterateOverSides.utils";
@@ -13,7 +12,7 @@ const transformNumberToPixel = (input: unknown): string | string[] | undefined =
     } else if (isString(input)) return input
 }
 
-const borderRadius = <T extends AnimationProperties | MotionStyle | (AnimationProperties & MotionStyle)>(style: T) => {
+const borderRadius = <T extends AnimationProperties>(style: T) => {
 
     const borderRadiusValue = style?.["borderRadius"]
 

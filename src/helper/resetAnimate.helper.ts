@@ -1,7 +1,5 @@
 import { isColor, isNumber } from "my-utilities"
 import { AnimationProperties } from "@/types/animate.type"
-import { MotionStyle } from "framer-motion"
-
 
 export const DefaultValues: AnimationProperties = {
     borderBottom: "0px solid #FFF",
@@ -30,7 +28,7 @@ const getValue = (value: unknown) => {
     else return "0px"
 }
 
-const onlyResetteableProperties = (animateProperties: AnimationProperties | MotionStyle) => {
+const onlyResetteableProperties = (animateProperties: AnimationProperties ) => {
     const filterBoilerPlate = Object.entries(animateProperties).filter(([key, value]) => {
         const isArray = Array.isArray(value)
 

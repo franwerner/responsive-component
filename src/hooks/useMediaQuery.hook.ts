@@ -21,7 +21,7 @@ const useMediaQuery = <T extends string>(query: GetMediaQuery<T>, watch: boolean
          */
 
         let stackMediaQuerys = [] as MediaQueryListEventModify[]
-        let timeOut: NodeJS.Timeout | null = null
+        let timeOut: number | null = null
 
         const onChange = (e: MediaQueryListEventModify) => {
             stackMediaQuerys.push(e)

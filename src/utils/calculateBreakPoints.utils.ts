@@ -64,11 +64,12 @@ const calculateGeneral = <T extends AdaptedBreakpoints<T>>({ activeBreakpoints, 
 
         const maxRelative = config.maxWidth ? maxWidth : undefined
         const minRelative = config.minWidth ? minWidth : undefined;
+        const isNotBetween = config.maxWidth && !config.minWidth ? (minWidth - 0.2) : maxRelative //Le restamos al mininmo -1 para el alcance maximo.
 
         return {
             breakpoint: key,
             minWidth: minRelative,
-            maxWidth: maxRelative,
+            maxWidth: isNotBetween,
         };
     }).sort((a) => (a.maxWidth && !a.minWidth) ? -1 : 0);
 }

@@ -1,5 +1,4 @@
 import { AnimationProperties } from "@/types/animate.type";
-import { MotionStyle } from "framer-motion";
 import { isObject } from "my-utilities";
 import borderRadius from "./styles/border-radius.style";
 import border from "./styles/border.style";
@@ -33,12 +32,10 @@ const filterkeys = [
     ...(["TopLeft", "TopRight", "BottomLeft", "BottomRight"].map(i => `border${i}Radius`))
 ]
 
-export const cssAdapter = <T extends AnimationProperties | MotionStyle >(css?: T) => {
+export const cssAdapter = <T extends AnimationProperties >(css?: T) => {
     if (!css || !isObject(css)) return {} as T
 
-
     const restCss = Object.fromEntries(Object.entries(css).filter(([key]) => !filterkeys.includes(key.toString())))
-
 
     const res = {
         ...borderRadius(css),

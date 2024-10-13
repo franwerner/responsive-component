@@ -1,11 +1,10 @@
 import { AnimationProperties } from "@/types/animate.type"
-import { MotionStyle } from "framer-motion"
 import iterateOverSides from "../utils/iterateOverSides.utils"
 import extractBoxValues from "../utils/extractBoxValues.utils"
 import { isString } from "my-utilities"
 import isFalsyButNotZero from "../utils/isFalsyButNotZero.utilts"
 
-const inset = <T extends AnimationProperties | MotionStyle | (AnimationProperties & MotionStyle)>(style: T) => {
+const inset = <T extends AnimationProperties>(style: T) => {
 
     const insetValue = style["inset"]
     

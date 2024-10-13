@@ -1,6 +1,5 @@
 import { isString } from "my-utilities"
 import { AnimationProperties } from "@/types/animate.type"
-import { MotionStyle } from "framer-motion"
 import iterateOverSides from "../utils/iterateOverSides.utils"
 import extractBoxValues from "../utils/extractBoxValues.utils"
 
@@ -18,7 +17,7 @@ const searchStyle = (input: unknown) => {
 
 const borderTypes = ["Color", "Style"] as const
 
-const border = <T extends AnimationProperties | MotionStyle | (AnimationProperties & MotionStyle)>(style: T) => {
+const border = <T extends AnimationProperties>(style: T) => {
 
     const borderGlobal = style["border"]
     const borderColorGlobal = style["borderColor"]

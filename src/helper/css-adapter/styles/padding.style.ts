@@ -1,11 +1,10 @@
-import { MotionStyle } from "framer-motion";
 import iterateOverSides from "../utils/iterateOverSides.utils";
 import { AnimationProperties } from "@/types/animate.type";
 import { isString } from "my-utilities";
 import extractBoxValues from "../utils/extractBoxValues.utils";
 import isFalsyButNotZero from "../utils/isFalsyButNotZero.utilts";
 
-const padding = <T extends AnimationProperties | MotionStyle | (AnimationProperties & MotionStyle)>(style: T) => {
+const padding = <T extends AnimationProperties>(style: T) => {
 
     const paddingValue = style["padding"]
     if (isFalsyButNotZero(paddingValue)) return {}
