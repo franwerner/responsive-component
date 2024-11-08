@@ -26,7 +26,7 @@ const useMediaQuery = <T extends string>(query: GetMediaQuery<T>, watch: boolean
         const onChange = (e: MediaQueryListEventModify) => {
             stackMediaQuerys.push(e)
             if (timeOut) return
-            timeOut = setTimeout(() => {
+            const setT = setTimeout(() => {
                 timeOut = null
                 setMediaQuerys(prev => {
                     const newStack = stackMediaQuerys.reduce((acc, current) => {
@@ -39,6 +39,8 @@ const useMediaQuery = <T extends string>(query: GetMediaQuery<T>, watch: boolean
                     return newStack
                 });
             })
+            // @ts-ignore
+            timeOut = setT
         }
 
         for (const key in InitialState) {
